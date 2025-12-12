@@ -130,8 +130,58 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* 图片显示区域 */
-        .image-container {
+        /* 多图片显示区域 */
+        .multi-image-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 500px;
+        }
+        
+        .image-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .image-card img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        .image-card img:hover {
+            transform: scale(1.03);
+        }
+        
+        .image-order {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .image-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        /* 单张图片显示区域 */
+        .single-image-container {
             width: 100%;
             display: flex;
             justify-content: center;
@@ -139,7 +189,7 @@
             min-height: 500px;
         }
         
-        .tab-image {
+        .single-tab-image {
             max-width: 100%;
             max-height: 600px;
             object-fit: contain;
@@ -149,7 +199,7 @@
             transition: transform 0.3s;
         }
         
-        .tab-image:hover {
+        .single-tab-image:hover {
             transform: scale(1.02);
         }
         
@@ -277,6 +327,11 @@
         
         .btn-warning:hover {
             background-color: #ad3d00;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
         }
         
         .action-buttons {
@@ -443,19 +498,41 @@
             margin-top: 10px;
         }
         
-        .current-file {
+        .current-files {
             margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
         }
         
-        .current-file img {
+        .current-files-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+        }
+        
+        .file-item img {
             width: 100px;
             height: 100px;
             object-fit: cover;
             border-radius: 6px;
+            margin-bottom: 5px;
+        }
+        
+        .file-item-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
         }
         
         /* 响应式设计 */
@@ -490,6 +567,10 @@
             }
             
             .form-group {
+                min-width: 100%;
+            }
+            
+            .image-card {
                 min-width: 100%;
             }
         }
@@ -580,26 +661,26 @@
         <!-- 网点清单标签页 -->
         <div id="branch-list" class="tab-content active">
             <h2><i class="fas fa-store"></i> 网点清单</h2>
-            <div class="image-container">
-                <img id="branch-image" class="tab-image" src="" alt="网点清单图片">
-                <div id="branch-empty" class="empty-message">
-                    <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                    <p>等待网点清单图片上传</p>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">请在"设置"标签页上传网点清单图片</p>
-                </div>
+            <div class="multi-image-container" id="branch-images-container">
+                <!-- 网点清单图片将通过JavaScript动态插入 -->
+            </div>
+            <div id="branch-empty" class="empty-message">
+                <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p>等待网点清单图片上传</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">请在"设置"标签页上传网点清单图片（最多5张）</p>
             </div>
         </div>
         
         <!-- 资费清单标签页 -->
         <div id="price-list" class="tab-content">
             <h2><i class="fas fa-file-invoice-dollar"></i> 资费清单</h2>
-            <div class="image-container">
-                <img id="price-image" class="tab-image" src="" alt="资费清单图片">
-                <div id="price-empty" class="empty-message">
-                    <i class="fas fa-file-invoice" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                    <p>等待资费清单图片上传</p>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">请在"设置"标签页上传资费清单图片</p>
-                </div>
+            <div class="multi-image-container" id="price-images-container">
+                <!-- 资费清单图片将通过JavaScript动态插入 -->
+            </div>
+            <div id="price-empty" class="empty-message">
+                <i class="fas fa-file-invoice" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p>等待资费清单图片上传</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">请在"设置"标签页上传资费清单图片（最多5张）</p>
             </div>
         </div>
         
@@ -787,19 +868,22 @@
                 <!-- 网点清单图片上传 -->
                 <div class="upload-section">
                     <h3 class="upload-section-title"><i class="fas fa-store"></i> 网点清单图片上传</h3>
-                    <p class="file-info">支持格式：JPG、JPEG、PNG</p>
+                    <p class="file-info">支持格式：JPG、JPEG、PNG | 最多可上传5张图片</p>
                     <div class="upload-area">
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <p>拖放网点清单图片文件到此区域，或点击选择文件</p>
-                        <input type="file" id="branch-upload" class="file-input" accept=".jpg,.jpeg,.png">
-                        <label for="branch-upload" class="file-label">选择网点清单图片</label>
+                        <input type="file" id="branch-upload" class="file-input" accept=".jpg,.jpeg,.png" multiple>
+                        <label for="branch-upload" class="file-label">选择网点清单图片（最多5张）</label>
+                        <p class="file-info">提示：按住Ctrl键可选择多张图片，最多5张</p>
                     </div>
                     
-                    <div class="current-file">
-                        <p>当前网点清单图片：</p>
-                        <img id="current-branch" src="" alt="当前网点清单图片" style="display: none; width: 100px; height: 100px; object-fit: cover; border-radius: 6px;">
+                    <div class="current-files">
+                        <p class="current-files-title">当前网点清单图片：</p>
+                        <div id="branch-file-list" class="file-list">
+                            <!-- 网点清单图片列表将通过JavaScript动态插入 -->
+                        </div>
                         <div id="branch-no-file" style="padding: 10px; background-color: #f0f0f0; border-radius: 6px;">
                             暂无网点清单图片
                         </div>
@@ -807,8 +891,8 @@
                             <button id="update-branch" class="btn btn-success" style="margin-right: 10px;">
                                 <i class="fas fa-sync-alt"></i> 更新网点清单
                             </button>
-                            <button id="delete-branch" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除网点清单
+                            <button id="delete-all-branch" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> 删除所有网点清单
                             </button>
                         </div>
                     </div>
@@ -817,19 +901,22 @@
                 <!-- 资费清单图片上传 -->
                 <div class="upload-section">
                     <h3 class="upload-section-title"><i class="fas fa-file-invoice-dollar"></i> 资费清单图片上传</h3>
-                    <p class="file-info">支持格式：JPG、JPEG、PNG</p>
+                    <p class="file-info">支持格式：JPG、JPEG、PNG | 最多可上传5张图片</p>
                     <div class="upload-area">
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <p>拖放资费清单图片文件到此区域，或点击选择文件</p>
-                        <input type="file" id="price-upload" class="file-input" accept=".jpg,.jpeg,.png">
-                        <label for="price-upload" class="file-label">选择资费清单图片</label>
+                        <input type="file" id="price-upload" class="file-input" accept=".jpg,.jpeg,.png" multiple>
+                        <label for="price-upload" class="file-label">选择资费清单图片（最多5张）</label>
+                        <p class="file-info">提示：按住Ctrl键可选择多张图片，最多5张</p>
                     </div>
                     
-                    <div class="current-file">
-                        <p>当前资费清单图片：</p>
-                        <img id="current-price" src="" alt="当前资费清单图片" style="display: none; width: 100px; height: 100px; object-fit: cover; border-radius: 6px;">
+                    <div class="current-files">
+                        <p class="current-files-title">当前资费清单图片：</p>
+                        <div id="price-file-list" class="file-list">
+                            <!-- 资费清单图片列表将通过JavaScript动态插入 -->
+                        </div>
                         <div id="price-no-file" style="padding: 10px; background-color: #f0f0f0; border-radius: 6px;">
                             暂无资费清单图片
                         </div>
@@ -837,8 +924,8 @@
                             <button id="update-price" class="btn btn-success" style="margin-right: 10px;">
                                 <i class="fas fa-sync-alt"></i> 更新资费清单
                             </button>
-                            <button id="delete-price" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除资费清单
+                            <button id="delete-all-price" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> 删除所有资费清单
                             </button>
                         </div>
                     </div>
@@ -879,8 +966,8 @@
         <!-- 戳戳我标签页 -->
         <div id="contact" class="tab-content">
             <h2><i class="fas fa-hand-point-right"></i> 戳戳我</h2>
-            <div class="image-container">
-                <img id="contact-image" class="tab-image" src="" alt="戳戳我图片">
+            <div class="single-image-container">
+                <img id="contact-image" class="single-tab-image" src="" alt="戳戳我图片">
                 <div id="contact-empty" class="empty-message">
                     <i class="fas fa-hand-point-right" style="font-size: 3rem; margin-bottom: 15px;"></i>
                     <p>等待戳戳我图片上传</p>
@@ -975,7 +1062,9 @@
             isDataAuthenticated: false,
             isSettingsAuthenticated: false,
             cabinetData: [],
-            recipientData: []
+            recipientData: [],
+            branchImages: [], // 网点清单图片数组
+            priceImages: []   // 资费清单图片数组
         };
         
         // 初始化应用
@@ -1056,12 +1145,14 @@
                 submitRecipientInfo();
             });
             
-            // 图片上传功能
-            setupImageUpload('logo-upload', 'update-logo', 'delete-logo', 'site-logo', 'current-logo', 'logo');
-            setupImageUpload('bg-upload', 'update-bg', 'delete-bg', null, null, 'background');
-            setupImageUpload('branch-upload', 'update-branch', 'delete-branch', 'branch-image', 'current-branch', 'branch', 'branch-empty');
-            setupImageUpload('price-upload', 'update-price', 'delete-price', 'price-image', 'current-price', 'price', 'price-empty');
-            setupImageUpload('contact-upload', 'update-contact', 'delete-contact', 'contact-image', 'current-contact', 'contact', 'contact-empty');
+            // 单张图片上传功能
+            setupSingleImageUpload('logo-upload', 'update-logo', 'delete-logo', 'site-logo', 'current-logo', 'logo');
+            setupSingleImageUpload('bg-upload', 'update-bg', 'delete-bg', null, null, 'background');
+            setupSingleImageUpload('contact-upload', 'update-contact', 'delete-contact', 'contact-image', 'current-contact', 'contact', 'contact-empty');
+            
+            // 多张图片上传功能
+            setupMultipleImageUpload('branch-upload', 'update-branch', 'delete-all-branch', 'branch', 'branch-file-list', 'branch-no-file', 'branch-images-container', 'branch-empty');
+            setupMultipleImageUpload('price-upload', 'update-price', 'delete-all-price', 'price', 'price-file-list', 'price-no-file', 'price-images-container', 'price-empty');
             
             // 图片查看功能
             document.getElementById('image-viewer').addEventListener('click', function(e) {
@@ -1098,11 +1189,13 @@
         
         // 从本地存储加载数据
         function loadFromLocalStorage() {
-            // 加载图片
-            loadImage('logo', 'site-logo', 'current-logo');
-            loadImage('branch', 'branch-image', 'current-branch', 'branch-empty');
-            loadImage('price', 'price-image', 'current-price', 'price-empty');
-            loadImage('contact', 'contact-image', 'current-contact', 'contact-empty');
+            // 加载单张图片
+            loadSingleImage('logo', 'site-logo', 'current-logo');
+            loadSingleImage('contact', 'contact-image', 'current-contact', 'contact-empty');
+            
+            // 加载多张图片
+            loadMultipleImages('branch', 'branch-images-container', 'branch-empty', 'branch-file-list', 'branch-no-file');
+            loadMultipleImages('price', 'price-images-container', 'price-empty', 'price-file-list', 'price-no-file');
             
             // 加载背景
             const bgData = localStorage.getItem('background');
@@ -1126,8 +1219,8 @@
             }
         }
         
-        // 加载图片
-        function loadImage(type, displayId, currentId, emptyId = null) {
+        // 加载单张图片
+        function loadSingleImage(type, displayId, currentId, emptyId = null) {
             const imageData = localStorage.getItem(type);
             if (imageData) {
                 document.getElementById(displayId).src = imageData;
@@ -1147,8 +1240,88 @@
             }
         }
         
-        // 设置图片上传功能
-        function setupImageUpload(inputId, updateBtnId, deleteBtnId, displayId, currentId, type, emptyId = null) {
+        // 加载多张图片
+        function loadMultipleImages(type, containerId, emptyId, fileListId, noFileId) {
+            const imagesData = localStorage.getItem(type + 'Images');
+            if (imagesData) {
+                state[type + 'Images'] = JSON.parse(imagesData);
+                updateImagesDisplay(type, containerId, emptyId, fileListId, noFileId);
+            } else {
+                state[type + 'Images'] = [];
+                if (emptyId) document.getElementById(emptyId).style.display = 'block';
+                if (noFileId) document.getElementById(noFileId).style.display = 'block';
+            }
+        }
+        
+        // 更新多张图片显示
+        function updateImagesDisplay(type, containerId, emptyId, fileListId, noFileId) {
+            const images = state[type + 'Images'];
+            const container = document.getElementById(containerId);
+            const fileList = document.getElementById(fileListId);
+            
+            // 更新主显示区域
+            if (container) {
+                container.innerHTML = '';
+                
+                if (images.length === 0) {
+                    if (emptyId) document.getElementById(emptyId).style.display = 'block';
+                } else {
+                    if (emptyId) document.getElementById(emptyId).style.display = 'none';
+                    
+                    images.forEach((imageData, index) => {
+                        const imageCard = document.createElement('div');
+                        imageCard.className = 'image-card';
+                        imageCard.innerHTML = `
+                            <div class="image-order">图片 ${index + 1}</div>
+                            <img src="${imageData}" alt="${getTypeName(type)}图片${index + 1}">
+                            <div class="image-actions">
+                                <button class="btn btn-danger btn-sm" onclick="deleteImage('${type}', ${index})">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        `;
+                        
+                        // 添加点击查看功能
+                        const img = imageCard.querySelector('img');
+                        img.addEventListener('click', function() {
+                            document.getElementById('viewer-image').src = imageData;
+                            document.getElementById('image-viewer').style.display = 'flex';
+                        });
+                        
+                        container.appendChild(imageCard);
+                    });
+                }
+            }
+            
+            // 更新文件列表
+            if (fileList) {
+                fileList.innerHTML = '';
+                
+                if (images.length === 0) {
+                    if (noFileId) document.getElementById(noFileId).style.display = 'block';
+                } else {
+                    if (noFileId) document.getElementById(noFileId).style.display = 'none';
+                    
+                    images.forEach((imageData, index) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <img src="${imageData}" alt="${getTypeName(type)}图片${index + 1}">
+                            <div>图片 ${index + 1}</div>
+                            <div class="file-item-actions">
+                                <button class="btn btn-danger btn-sm" onclick="deleteImage('${type}', ${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        fileList.appendChild(fileItem);
+                    });
+                }
+            }
+        }
+        
+        // 设置单张图片上传功能
+        function setupSingleImageUpload(inputId, updateBtnId, deleteBtnId, displayId, currentId, type, emptyId = null) {
             const fileInput = document.getElementById(inputId);
             const updateBtn = document.getElementById(updateBtnId);
             const deleteBtn = document.getElementById(deleteBtnId);
@@ -1233,14 +1406,112 @@
             });
         }
         
+        // 设置多张图片上传功能
+        function setupMultipleImageUpload(inputId, updateBtnId, deleteAllBtnId, type, fileListId, noFileId, containerId, emptyId) {
+            const fileInput = document.getElementById(inputId);
+            const updateBtn = document.getElementById(updateBtnId);
+            const deleteAllBtn = document.getElementById(deleteAllBtnId);
+            
+            if (updateBtn) {
+                updateBtn.addEventListener('click', function() {
+                    fileInput.click();
+                });
+            }
+            
+            if (deleteAllBtn) {
+                deleteAllBtn.addEventListener('click', function() {
+                    if (state[type + 'Images'].length === 0) {
+                        showNotification(`当前没有${getTypeName(type)}图片`, 'info');
+                        return;
+                    }
+                    
+                    if (confirm(`确定要删除所有${getTypeName(type)}图片吗？`)) {
+                        state[type + 'Images'] = [];
+                        localStorage.removeItem(type + 'Images');
+                        updateImagesDisplay(type, containerId, emptyId, fileListId, noFileId);
+                        showNotification(`所有${getTypeName(type)}图片已删除`, 'success');
+                    }
+                });
+            }
+            
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files.length > 0) {
+                    const files = Array.from(e.target.files);
+                    
+                    // 检查文件数量
+                    if (files.length > 5) {
+                        showNotification('最多只能上传5张图片', 'error');
+                        return;
+                    }
+                    
+                    // 检查文件类型
+                    const invalidFiles = files.filter(file => !file.type.match('image/(jpeg|jpg|png)'));
+                    if (invalidFiles.length > 0) {
+                        showNotification('只支持JPG、JPEG、PNG格式的图片', 'error');
+                        return;
+                    }
+                    
+                    // 检查是否会超过5张的限制
+                    if (state[type + 'Images'].length + files.length > 5) {
+                        showNotification(`最多只能上传5张图片，当前已有${state[type + 'Images'].length}张`, 'error');
+                        return;
+                    }
+                    
+                    const readers = files.map(file => {
+                        return new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                resolve(event.target.result);
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                    });
+                    
+                    Promise.all(readers).then(results => {
+                        // 添加到图片数组
+                        state[type + 'Images'] = state[type + 'Images'].concat(results);
+                        
+                        // 保存到本地存储
+                        localStorage.setItem(type + 'Images', JSON.stringify(state[type + 'Images']));
+                        
+                        // 更新显示
+                        updateImagesDisplay(type, containerId, emptyId, fileListId, noFileId);
+                        
+                        showNotification(`${files.length}张${getTypeName(type)}图片上传成功`, 'success');
+                        
+                        // 清空文件输入
+                        fileInput.value = '';
+                    });
+                }
+            });
+        }
+        
+        // 删除单张图片
+        function deleteImage(type, index) {
+            if (confirm(`确定要删除这张${getTypeName(type)}图片吗？`)) {
+                state[type + 'Images'].splice(index, 1);
+                localStorage.setItem(type + 'Images', JSON.stringify(state[type + 'Images']));
+                
+                // 更新显示
+                const containerId = type + '-images-container';
+                const emptyId = type + '-empty';
+                const fileListId = type + '-file-list';
+                const noFileId = type + '-no-file';
+                
+                updateImagesDisplay(type, containerId, emptyId, fileListId, noFileId);
+                
+                showNotification(`${getTypeName(type)}图片已删除`, 'success');
+            }
+        }
+        
         // 获取类型名称
         function getTypeName(type) {
             const typeNames = {
                 'logo': 'LOGO',
                 'background': '背景图片',
-                'branch': '网点清单图片',
-                'price': '资费清单图片',
-                'contact': '戳戳我图片'
+                'branch': '网点清单',
+                'price': '资费清单',
+                'contact': '戳戳我'
             };
             return typeNames[type] || '图片';
         }
