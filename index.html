@@ -14,27 +14,25 @@
         }
         
         :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #3b82f6;
-            --light-color: #f8fafc;
-            --dark-color: #1e293b;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --gray-color: #94a3b8;
-            --border-color: #e2e8f0;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --border-color: #bdc3c7;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         body {
-            background-color: #f1f5f9;
-            color: var(--dark-color);
-            min-height: 100vh;
-            background-image: url('');
+            background-color: #f9f9f9;
+            color: #333;
+            transition: background-image 0.3s ease;
             background-size: cover;
-            background-attachment: fixed;
             background-position: center;
-            transition: background-image 0.5s ease;
+            background-attachment: fixed;
+            min-height: 100vh;
         }
         
         .container {
@@ -48,84 +46,92 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
             margin-bottom: 20px;
-            border: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
         .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid var(--secondary-color);
+            transition: transform 0.2s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            text-align: center;
         }
         
-        .logo img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            color: var(--dark-color);
+        h1 {
+            color: var(--primary-color);
+            font-size: 28px;
             font-weight: 700;
         }
         
-        .logo span {
-            color: var(--primary-color);
-        }
-        
-        /* 标签页样式 */
+        /* 标签页导航 */
         .tabs {
             display: flex;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            overflow-x: auto;
-            border: 1px solid var(--border-color);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            flex-wrap: wrap;
         }
         
         .tab {
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 18px 25px;
             cursor: pointer;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            font-size: 16px;
             color: var(--dark-color);
+            transition: all 0.3s ease;
+            text-align: center;
+            flex-grow: 1;
+            border-bottom: 3px solid transparent;
         }
         
         .tab:hover {
-            background-color: #f1f5f9;
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
         }
         
         .tab.active {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
         }
         
-        /* 主内容区 */
+        /* 内容区域 */
         .tab-content {
             display: none;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 30px;
             min-height: 500px;
-            border: 1px solid var(--border-color);
         }
         
         .tab-content.active {
@@ -138,30 +144,30 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .tab-title {
-            font-size: 1.5rem;
+        .tab-content h2 {
+            color: var(--primary-color);
             margin-bottom: 20px;
-            color: var(--dark-color);
             padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
         
-        /* 图片显示区 */
+        /* 图片显示区域 */
         .image-display {
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
-            padding: 20px 0;
+            margin-top: 20px;
         }
         
         .image-item {
-            max-width: 100%;
-            cursor: pointer;
+            max-width: 300px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            cursor: pointer;
+            transition: transform 0.3s;
         }
         
         .image-item:hover {
@@ -172,179 +178,9 @@
             width: 100%;
             height: auto;
             display: block;
-            max-height: 500px;
-            object-fit: contain;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray-color);
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #cbd5e1;
-        }
-        
-        /* 数据表格样式 */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .data-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            padding: 15px;
-            text-align: left;
-        }
-        
-        .data-table td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .data-table tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-        
-        .data-table tr:hover {
-            background-color: #f1f5f9;
-        }
-        
-        .status-in {
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        
-        .status-out {
-            background-color: #fee2e2;
-            color: #991b1b;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        
-        /* 表单样式 */
-        .form-container {
-            background-color: #f8fafc;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .form-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--dark-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        
-        /* 按钮样式 */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background-color: #0da271;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-            color: white;
-        }
-        
-        .btn-warning:hover {
-            background-color: #e5940b;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        /* 弹窗样式 */
+        /* 模态框 */
         .modal {
             display: none;
             position: fixed;
@@ -352,7 +188,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -364,1973 +200,1309 @@
         
         .modal-content {
             background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
         }
         
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
-        .modal-title {
-            font-size: 1.5rem;
-            color: var(--dark-color);
-        }
-        
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray-color);
-            width: 30px;
-            height: 30px;
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
         }
         
-        .close-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--dark-color);
-        }
-        
-        /* 密码验证 */
-        .password-container {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .password-input {
+        /* 表格样式 */
+        .data-table {
             width: 100%;
-            max-width: 300px;
-            margin: 20px auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .data-table th, .data-table td {
             padding: 12px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            text-align: center;
+            text-align: left;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 设置页面上传区域 */
-        .upload-section {
-            background-color: #f8fafc;
-            border-radius: 10px;
-            padding: 20px;
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .data-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .status-in {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .status-out {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        /* 表单样式 */
+        .form-group {
             margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, button {
+            padding: 12px 15px;
             border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            width: 100%;
         }
         
-        .upload-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
         
-        .upload-title {
-            font-size: 1.2rem;
-            color: var(--dark-color);
-            display: flex;
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
         }
         
-        .upload-controls {
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        /* 密码访问 */
+        .password-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .password-container h3 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        /* 上传区域 */
+        .upload-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .upload-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
             display: flex;
+            align-items: center;
             gap: 10px;
         }
         
         .upload-area {
-            border: 2px dashed var(--border-color);
+            border: 2px dashed #ccc;
             border-radius: 8px;
             padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            margin-bottom: 15px;
         }
         
         .upload-area:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(37, 99, 235, 0.05);
+            border-color: var(--secondary-color);
+            background-color: rgba(52, 152, 219, 0.05);
         }
         
-        .upload-area i {
-            font-size: 2.5rem;
-            color: var(--gray-color);
+        .upload-icon {
+            font-size: 40px;
+            color: var(--secondary-color);
             margin-bottom: 10px;
         }
         
         .file-list {
-            margin-top: 15px;
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
+            margin-top: 20px;
         }
         
         .file-item {
             width: 120px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         
         .file-item img {
             width: 100%;
-            height: 120px;
+            height: 100px;
             object-fit: cover;
-            display: block;
+            border-radius: 6px;
+            margin-bottom: 8px;
         }
         
         .file-actions {
-            position: absolute;
-            top: 5px;
-            right: 5px;
             display: flex;
             gap: 5px;
-        }
-        
-        /* 图片放大查看 */
-        .image-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1100;
             justify-content: center;
-            align-items: center;
         }
         
-        .image-modal.active {
-            display: flex;
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 18px;
         }
         
-        .image-modal img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-        
-        .image-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-        }
-        
-        /* 搜索栏 */
-        .search-container {
-            margin-bottom: 20px;
+        .action-buttons {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         
         .search-box {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
+            margin-bottom: 20px;
         }
         
-        /* 响应式设计 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
             .tabs {
-                overflow-x: auto;
-                padding: 6px;
+                flex-direction: column;
             }
             
             .tab {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-            
-            .tab-content {
-                padding: 20px 15px;
+                border-bottom: 1px solid #eee;
             }
             
             .form-row {
                 flex-direction: column;
-                gap: 10px;
             }
             
-            .form-group {
-                min-width: 100%;
+            .form-col {
+                width: 100%;
             }
-        }
-        
-        /* 戳戳我页特殊样式 */
-        .poke-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 60vh;
-        }
-        
-        .poke-image {
-            max-width: 100%;
-            max-height: 400px;
-            cursor: pointer;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-        }
-        
-        .poke-image:hover {
-            transform: scale(1.02);
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 头部 -->
         <header>
-            <div class="logo">
-                <img id="logo-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIxMCIgZmlsbD0iIzI1NjNlYiIvPjxwYXRoIGQ9Ik0zNSA0MEw1MCA1NUw2NSA0MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTAgNTVWMjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTMwIDc1SDcwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==" alt="里昂星储">
-                <h1>里昂星储<br><span>查询系统</span></h1>
+            <div class="logo-container">
+                <div id="logoDisplay"></div>
+                <h1>里昂星储—查询系统</h1>
             </div>
-            <div class="system-time">
-                <div id="current-time"></div>
-            </div>
+            <div id="currentTime" style="color: #666; font-weight: 500;"></div>
         </header>
         
         <!-- 标签页导航 -->
         <div class="tabs">
-            <div class="tab active" data-tab="tab1">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>网点清单</span>
-            </div>
-            <div class="tab" data-tab="tab2">
-                <i class="fas fa-file-invoice-dollar"></i>
-                <span>资费清单</span>
-            </div>
-            <div class="tab" data-tab="tab3">
-                <i class="fas fa-box-open"></i>
-                <span>在柜信息</span>
-            </div>
-            <div class="tab" data-tab="tab4">
-                <i class="fas fa-database"></i>
-                <span>在柜数据访问</span>
-            </div>
-            <div class="tab" data-tab="tab5">
-                <i class="fas fa-cog"></i>
-                <span>设置</span>
-            </div>
-            <div class="tab" data-tab="tab6">
-                <i class="fas fa-hand-point-up"></i>
-                <span>戳戳我</span>
-            </div>
+            <div class="tab active" data-tab="branch">网点清单</div>
+            <div class="tab" data-tab="fee">资费清单</div>
+            <div class="tab" data-tab="cabinet-info">在柜信息</div>
+            <div class="tab" data-tab="cabinet-data">在柜数据访问</div>
+            <div class="tab" data-tab="settings">设置</div>
+            <div class="tab" data-tab="poke">戳戳我</div>
         </div>
         
         <!-- 网点清单标签页 -->
-        <div id="tab1" class="tab-content active">
-            <h2 class="tab-title">网点清单</h2>
-            <div id="network-images" class="image-display">
-                <!-- 图片将通过JavaScript动态加载 -->
-                <div class="empty-state">
-                    <i class="fas fa-image"></i>
-                    <h3>暂无网点清单图片</h3>
-                    <p>请前往"设置"页面上传网点清单图片</p>
-                </div>
+        <div id="branch" class="tab-content active">
+            <h2><i class="fas fa-map-marked-alt"></i> 网点清单</h2>
+            <div class="image-display" id="branchImagesContainer">
+                <!-- 网点清单图片将在这里显示 -->
             </div>
         </div>
         
         <!-- 资费清单标签页 -->
-        <div id="tab2" class="tab-content">
-            <h2 class="tab-title">资费清单</h2>
-            <div id="price-images" class="image-display">
-                <!-- 图片将通过JavaScript动态加载 -->
-                <div class="empty-state">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <h3>暂无资费清单图片</h3>
-                    <p>请前往"设置"页面上传资费清单图片</p>
-                </div>
+        <div id="fee" class="tab-content">
+            <h2><i class="fas fa-file-invoice-dollar"></i> 资费清单</h2>
+            <div class="image-display" id="feeImagesContainer">
+                <!-- 资费清单图片将在这里显示 -->
             </div>
         </div>
         
         <!-- 在柜信息标签页 -->
-        <div id="tab3" class="tab-content">
-            <h2 class="tab-title">在柜信息</h2>
-            <div id="cabinet-data-container">
-                <!-- 在柜信息表格将通过JavaScript动态加载 -->
-                <div class="empty-state">
-                    <i class="fas fa-box"></i>
-                    <h3>等待数据上传</h3>
-                    <p>暂无在柜信息数据</p>
+        <div id="cabinet-info" class="tab-content">
+            <h2><i class="fas fa-inbox"></i> 在柜信息</h2>
+            <div class="data-section">
+                <div class="table-container">
+                    <table class="data-table" id="cabinetInfoTable">
+                        <thead>
+                            <tr>
+                                <th>区域</th>
+                                <th>大区</th>
+                                <th>编号</th>
+                                <th>类型</th>
+                                <th>存放位置</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cabinetInfoBody">
+                            <!-- 在柜信息数据将在这里显示 -->
+                        </tbody>
+                    </table>
                 </div>
+                <div id="cabinetInfoNoData" class="no-data">等待数据上传</div>
             </div>
             
-            <div class="form-container">
-                <h3 class="form-title"><i class="fas fa-user-check"></i> 取件人信息上传</h3>
-                <form id="pickup-form">
+            <h3 style="margin-top: 30px;"><i class="fas fa-user-check"></i> 取件人信息上传</h3>
+            <div class="upload-section">
+                <form id="pickupForm">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="pickup-code">待取件编号</label>
-                            <input type="text" id="pickup-code" class="form-control" placeholder="请输入待取件编号" required>
+                        <div class="form-col">
+                            <label for="pickupNumber">待取件编号</label>
+                            <input type="text" id="pickupNumber" required>
                         </div>
-                        <div class="form-group">
-                            <label for="pickup-name">取件人姓名</label>
-                            <input type="text" id="pickup-name" class="form-control" placeholder="请输入取件人姓名" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pickup-phone">联系电话</label>
-                            <input type="tel" id="pickup-phone" class="form-control" placeholder="请输入联系电话" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pickup-id">身份证明号码后四位</label>
-                            <input type="text" id="pickup-id" class="form-control" placeholder="请输入身份证后四位" maxlength="4" required>
+                        <div class="form-col">
+                            <label for="pickupName">取件人姓名</label>
+                            <input type="text" id="pickupName" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-check-circle"></i> 提交取件人信息
-                    </button>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="pickupPhone">联系电话</label>
+                            <input type="tel" id="pickupPhone" required>
+                        </div>
+                        <div class="form-col">
+                            <label for="pickupId">身份证明号码后四位</label>
+                            <input type="text" id="pickupId" maxlength="4" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-success">
+                            <i class="fas fa-check"></i> 提交取件人信息
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
         
         <!-- 在柜数据访问标签页 -->
-        <div id="tab4" class="tab-content">
-            <h2 class="tab-title">在柜数据访问</h2>
-            
-            <!-- 密码验证部分 -->
-            <div id="password-section" class="password-container">
-                <h3>在柜数据访问</h3>
-                <p>请输入管理密码以访问数据管理功能</p>
-                <input type="password" id="data-password" class="password-input" placeholder="请输入管理密码" maxlength="6">
-                <button id="data-password-btn" class="btn btn-primary" style="margin-top: 10px;">提交验证</button>
+        <div id="cabinet-data" class="tab-content">
+            <!-- 密码访问区域 -->
+            <div id="passwordSectionCabinet" class="password-container">
+                <h3><i class="fas fa-lock"></i> 密码访问</h3>
+                <p style="text-align: center; margin-bottom: 20px; color: #666;">请输入管理密码以访问在柜数据</p>
+                <div class="form-group">
+                    <input type="password" id="cabinetPassword" placeholder="请输入管理密码">
+                </div>
+                <button id="submitCabinetPassword" class="btn-success">提交密码</button>
             </div>
             
-            <!-- 数据管理部分（初始隐藏） -->
-            <div id="data-management-section" style="display: none;">
-                <div class="form-container">
-                    <h3 class="form-title"><i class="fas fa-plus-circle"></i> 添加在柜数据</h3>
-                    <form id="cabinet-form">
+            <!-- 数据访问内容（默认隐藏） -->
+            <div id="cabinetDataContent" style="display: none;">
+                <h2><i class="fas fa-database"></i> 在柜数据访问</h2>
+                
+                <h3><i class="fas fa-plus-circle"></i> 添加在柜数据</h3>
+                <div class="upload-section">
+                    <form id="cabinetDataForm">
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-col">
                                 <label for="area">区域</label>
-                                <input type="text" id="area" class="form-control" placeholder="请输入区域" required>
+                                <input type="text" id="area" required>
                             </div>
-                            <div class="form-group">
-                                <label for="region">大区</label>
-                                <input type="text" id="region" class="form-control" placeholder="请输入大区" required>
+                            <div class="form-col">
+                                <label for="district">大区</label>
+                                <input type="text" id="district" required>
                             </div>
-                            <div class="form-group">
-                                <label for="code">编号</label>
-                                <input type="text" id="code" class="form-control" placeholder="请输入编号" required>
+                            <div class="form-col">
+                                <label for="number">编号</label>
+                                <input type="text" id="number" required>
                             </div>
                         </div>
-                        
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-col">
                                 <label for="type">类型</label>
-                                <select id="type" class="form-control" required>
+                                <select id="type" required>
                                     <option value="">请选择类型</option>
                                     <option value="平信">平信</option>
                                     <option value="明信片">明信片</option>
                                     <option value="包裹">包裹</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-col">
                                 <label for="location">存放位置（柜号）</label>
-                                <input type="text" id="location" class="form-control" placeholder="请输入柜号" required>
+                                <input type="text" id="location" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-col">
                                 <label for="status">状态</label>
-                                <select id="status" class="form-control" required>
+                                <select id="status" required>
                                     <option value="">请选择状态</option>
                                     <option value="已入柜">已入柜</option>
                                     <option value="已出柜">已出柜</option>
                                 </select>
                             </div>
                         </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="pickup-code2">待取件编号</label>
-                                <input type="text" id="pickup-code2" class="form-control" placeholder="请输入待取件编号">
-                            </div>
-                            <div class="form-group">
-                                <label for="pickup-name2">取件人姓名</label>
-                                <input type="text" id="pickup-name2" class="form-control" placeholder="请输入取件人姓名">
-                            </div>
-                            <div class="form-group">
-                                <label for="pickup-phone2">联系电话</label>
-                                <input type="tel" id="pickup-phone2" class="form-control" placeholder="请输入联系电话">
-                            </div>
-                            <div class="form-group">
-                                <label for="pickup-id2">身份证明号码后四位</label>
-                                <input type="text" id="pickup-id2" class="form-control" placeholder="请输入身份证后四位" maxlength="4">
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-success">
+                                <i class="fas fa-plus"></i> 添加在柜数据
+                            </button>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> 提交在柜数据
-                        </button>
                     </form>
                 </div>
                 
-                <div style="margin-top: 30px;">
-                    <div class="search-container">
-                        <input type="text" id="search-data" class="search-box" placeholder="搜索区域、编号、取件人姓名或联系电话...">
-                        <button id="search-btn" class="btn btn-primary">
-                            <i class="fas fa-search"></i> 搜索
-                        </button>
-                        <button id="reset-search-btn" class="btn">
-                            <i class="fas fa-redo"></i> 重置
-                        </button>
-                    </div>
-                    
-                    <div id="data-table-container">
-                        <!-- 数据表格将通过JavaScript动态加载 -->
-                        <div class="empty-state">
-                            <i class="fas fa-database"></i>
-                            <h3>等待数据上传</h3>
-                            <p>暂无在柜数据</p>
-                        </div>
-                    </div>
+                <h3><i class="fas fa-table"></i> 在柜数据</h3>
+                <div class="search-box">
+                    <input type="text" id="searchCabinetData" placeholder="搜索在柜数据...">
                 </div>
+                <div class="table-container">
+                    <table class="data-table" id="cabinetDataTable">
+                        <thead>
+                            <tr>
+                                <th>区域</th>
+                                <th>大区</th>
+                                <th>编号</th>
+                                <th>类型</th>
+                                <th>存放位置</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cabinetDataBody">
+                            <!-- 在柜数据将在这里显示 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="cabinetDataNoData" class="no-data">等待数据上传</div>
+                
+                <h3 style="margin-top: 30px;"><i class="fas fa-users"></i> 取件人信息</h3>
+                <div class="search-box">
+                    <input type="text" id="searchPickupData" placeholder="搜索取件人信息...">
+                </div>
+                <div class="table-container">
+                    <table class="data-table" id="pickupDataTable">
+                        <thead>
+                            <tr>
+                                <th>待取件编号</th>
+                                <th>取件人姓名</th>
+                                <th>联系电话</th>
+                                <th>身份证明号码后四位</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pickupDataBody">
+                            <!-- 取件人信息将在这里显示 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="pickupDataNoData" class="no-data">等待数据上传</div>
             </div>
         </div>
         
         <!-- 设置标签页 -->
-        <div id="tab5" class="tab-content">
-            <h2 class="tab-title">系统设置</h2>
-            
-            <!-- 密码验证部分 -->
-            <div id="settings-password-section" class="password-container">
-                <h3>系统设置</h3>
-                <p>请输入管理密码以访问系统设置</p>
-                <input type="password" id="settings-password" class="password-input" placeholder="请输入管理密码" maxlength="6">
-                <button id="settings-password-btn" class="btn btn-primary" style="margin-top: 10px;">提交验证</button>
+        <div id="settings" class="tab-content">
+            <!-- 密码访问区域 -->
+            <div id="passwordSectionSettings" class="password-container">
+                <h3><i class="fas fa-lock"></i> 密码访问</h3>
+                <p style="text-align: center; margin-bottom: 20px; color: #666;">请输入管理密码以访问设置页面</p>
+                <div class="form-group">
+                    <input type="password" id="settingsPassword" placeholder="请输入管理密码">
+                </div>
+                <button id="submitSettingsPassword" class="btn-success">提交密码</button>
             </div>
             
-            <!-- 设置内容（初始隐藏） -->
-            <div id="settings-content" style="display: none;">
+            <!-- 设置内容（默认隐藏） -->
+            <div id="settingsContent" style="display: none;">
+                <h2><i class="fas fa-cog"></i> 设置</h2>
+                
                 <!-- LOGO上传 -->
                 <div class="upload-section">
-                    <div class="upload-header">
-                        <h3 class="upload-title"><i class="fas fa-image"></i> LOGO上传</h3>
-                        <div class="upload-controls">
-                            <button id="change-logo-btn" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> 修改
-                            </button>
-                            <button id="delete-logo-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
+                    <h3><i class="fas fa-image"></i> LOGO上传</h3>
+                    <p>支持格式: JPG, JPEG, PNG | 建议尺寸: 75cm x 75cm</p>
+                    <div class="upload-area" id="logoUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <p>点击或拖拽上传LOGO图片</p>
+                        <p style="font-size: 14px; color: #777;">文件大小不超过5MB</p>
                     </div>
-                    <p>支持格式：JPG、JPEG、PNG，尺寸建议：75cm*75cm</p>
-                    <div id="logo-upload-area" class="upload-area">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>点击上传LOGO图片，或拖放图片到此处</p>
-                        <p><small>上传的LOGO将显示在页面左上角</small></p>
-                    </div>
-                    <div id="logo-preview" class="file-list">
-                        <!-- LOGO预览 -->
-                    </div>
+                    <input type="file" id="logoUpload" accept=".jpg,.jpeg,.png" style="display: none;">
+                    <div id="logoPreview" class="file-list"></div>
                 </div>
                 
                 <!-- 背景上传 -->
                 <div class="upload-section">
-                    <div class="upload-header">
-                        <h3 class="upload-title"><i class="fas fa-wallpaper"></i> 背景上传</h3>
-                        <div class="upload-controls">
-                            <button id="change-bg-btn" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> 修改
-                            </button>
-                            <button id="delete-bg-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
+                    <h3><i class="fas fa-image"></i> 背景上传</h3>
+                    <p>支持格式: JPG, JPEG, PNG</p>
+                    <div class="upload-area" id="bgUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <p>点击或拖拽上传背景图片</p>
+                        <p style="font-size: 14px; color: #777;">文件大小不超过5MB</p>
                     </div>
-                    <p>支持格式：JPG、JPEG、PNG</p>
-                    <div id="bg-upload-area" class="upload-area">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>点击上传背景图片，或拖放图片到此处</p>
-                        <p><small>上传的背景将覆盖整个页面</small></p>
-                    </div>
-                    <div id="bg-preview" class="file-list">
-                        <!-- 背景预览 -->
-                    </div>
+                    <input type="file" id="bgUpload" accept=".jpg,.jpeg,.png" style="display: none;">
+                    <div id="bgPreview" class="file-list"></div>
                 </div>
                 
                 <!-- 网点清单上传 -->
                 <div class="upload-section">
-                    <div class="upload-header">
-                        <h3 class="upload-title"><i class="fas fa-map-marker-alt"></i> 网点清单图片上传</h3>
-                        <div class="upload-controls">
-                            <button id="change-network-btn" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> 修改
-                            </button>
-                            <button id="delete-network-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
+                    <h3><i class="fas fa-map-marked-alt"></i> 网点清单图片上传</h3>
+                    <p>支持格式: JPG, JPEG, PNG | 最多上传5张图片</p>
+                    <div class="upload-area" id="branchUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <p>点击或拖拽上传网点清单图片</p>
+                        <p style="font-size: 14px; color: #777;">最多5张，每张不超过5MB</p>
                     </div>
-                    <p>支持格式：JPG、JPEG、PNG，最多可上传5张图片</p>
-                    <div id="network-upload-area" class="upload-area">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>点击上传网点清单图片，或拖放图片到此处</p>
-                        <p><small>最多可上传5张图片，将显示在"网点清单"页面</small></p>
-                    </div>
-                    <div id="network-preview" class="file-list">
-                        <!-- 网点清单图片预览 -->
-                    </div>
+                    <input type="file" id="branchUpload" accept=".jpg,.jpeg,.png" multiple style="display: none;">
+                    <div id="branchPreview" class="file-list"></div>
                 </div>
                 
                 <!-- 资费清单上传 -->
                 <div class="upload-section">
-                    <div class="upload-header">
-                        <h3 class="upload-title"><i class="fas fa-file-invoice-dollar"></i> 资费清单图片上传</h3>
-                        <div class="upload-controls">
-                            <button id="change-price-btn" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> 修改
-                            </button>
-                            <button id="delete-price-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
+                    <h3><i class="fas fa-file-invoice-dollar"></i> 资费清单图片上传</h3>
+                    <p>支持格式: JPG, JPEG, PNG | 最多上传5张图片</p>
+                    <div class="upload-area" id="feeUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <p>点击或拖拽上传资费清单图片</p>
+                        <p style="font-size: 14px; color: #777;">最多5张，每张不超过5MB</p>
                     </div>
-                    <p>支持格式：JPG、JPEG、PNG，最多可上传5张图片</p>
-                    <div id="price-upload-area" class="upload-area">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>点击上传资费清单图片，或拖放图片到此处</p>
-                        <p><small>最多可上传5张图片，将显示在"资费清单"页面</small></p>
-                    </div>
-                    <div id="price-preview" class="file-list">
-                        <!-- 资费清单图片预览 -->
-                    </div>
+                    <input type="file" id="feeUpload" accept=".jpg,.jpeg,.png" multiple style="display: none;">
+                    <div id="feePreview" class="file-list"></div>
                 </div>
                 
                 <!-- 戳戳我图片上传 -->
                 <div class="upload-section">
-                    <div class="upload-header">
-                        <h3 class="upload-title"><i class="fas fa-hand-point-up"></i> 戳戳我图片上传</h3>
-                        <div class="upload-controls">
-                            <button id="change-poke-btn" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> 修改
-                            </button>
-                            <button id="delete-poke-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
+                    <h3><i class="fas fa-smile"></i> 戳戳我图片上传</h3>
+                    <p>支持格式: JPG, JPEG, PNG</p>
+                    <div class="upload-area" id="pokeUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <p>点击或拖拽上传戳戳我图片</p>
+                        <p style="font-size: 14px; color: #777;">文件大小不超过5MB</p>
                     </div>
-                    <p>支持格式：JPG、JPEG、PNG</p>
-                    <div id="poke-upload-area" class="upload-area">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>点击上传戳戳我图片，或拖放图片到此处</p>
-                        <p><small>上传的图片将显示在"戳戳我"页面</small></p>
-                    </div>
-                    <div id="poke-preview" class="file-list">
-                        <!-- 戳戳我图片预览 -->
-                    </div>
+                    <input type="file" id="pokeUpload" accept=".jpg,.jpeg,.png" style="display: none;">
+                    <div id="pokePreview" class="file-list"></div>
                 </div>
             </div>
         </div>
         
         <!-- 戳戳我标签页 -->
-        <div id="tab6" class="tab-content">
-            <h2 class="tab-title">戳戳我</h2>
-            <div class="poke-container">
-                <div id="poke-image-container">
-                    <!-- 戳戳我图片将通过JavaScript动态加载 -->
-                    <div class="empty-state">
-                        <i class="fas fa-hand-point-up"></i>
-                        <h3>暂无戳戳我图片</h3>
-                        <p>请前往"设置"页面上传戳戳我图片</p>
-                    </div>
-                </div>
+        <div id="poke" class="tab-content">
+            <h2><i class="fas fa-smile"></i> 戳戳我</h2>
+            <div class="image-display" id="pokeImagesContainer">
+                <!-- 戳戳我图片将在这里显示 -->
             </div>
         </div>
     </div>
     
-    <!-- 图片放大查看模态框 -->
-    <div id="image-modal" class="image-modal">
-        <span class="image-modal-close">&times;</span>
-        <img id="expanded-img" src="" alt="放大图片">
-    </div>
-    
-    <!-- 提交成功提示 -->
-    <div id="success-modal" class="modal">
+    <!-- 图片查看模态框 -->
+    <div id="imageModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">提交成功</h3>
-                <button class="close-btn">&times;</button>
-            </div>
-            <div style="padding: 20px 0; text-align: center;">
-                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success-color); margin-bottom: 15px;"></i>
-                <p>数据提交成功！</p>
-            </div>
-            <div style="text-align: right;">
-                <button id="confirm-success-btn" class="btn btn-primary">确定</button>
-            </div>
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="预览图片">
         </div>
+    </div>
+    
+    <!-- 成功提示 -->
+    <div id="successToast" style="display:none; position: fixed; top: 20px; right: 20px; background-color: var(--success-color); color: white; padding: 15px 25px; border-radius: 5px; z-index: 1001; box-shadow: var(--shadow);">
+        <i class="fas fa-check-circle"></i> 操作成功！
     </div>
     
     <script>
-        // 全局变量
-        const DEFAULT_PASSWORD = "740302";
-        let currentTab = "tab1";
-        let cabinetData = [];
-        let filteredCabinetData = [];
-        let networkImages = [];
-        let priceImages = [];
-        let pokeImage = null;
-        let logoImage = null;
-        let backgroundImage = null;
-        
-        // DOM加载完成后初始化
+        // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', function() {
-            // 从本地存储加载数据
-            loadFromLocalStorage();
-            
-            // 初始化标签页切换
-            initTabs();
-            
             // 初始化时间显示
             updateTime();
             setInterval(updateTime, 1000);
             
-            // 初始化表单提交
-            initForms();
+            // 初始化标签页切换
+            initTabs();
             
-            // 初始化上传功能
-            initUploads();
+            // 初始化数据
+            initData();
             
-            // 初始化图片查看功能
-            initImageModal();
+            // 初始化事件监听器
+            initEventListeners();
             
-            // 初始化数据管理
-            initDataManagement();
+            // 恢复之前的标签页
+            restoreActiveTab();
             
-            // 初始化设置页面
-            initSettings();
+            // 加载背景
+            loadBackground();
             
-            // 初始化搜索功能
-            initSearch();
+            // 加载LOGO
+            loadLogo();
             
-            // 应用保存的背景图片
-            applyBackground();
+            // 加载图片到各个标签页
+            loadImagesToTabs();
             
-            // 显示当前标签页内容
-            showTabContent(currentTab);
+            // 加载在柜数据
+            loadCabinetData();
+            
+            // 加载取件人信息
+            loadPickupData();
         });
         
-        // 初始化标签页切换
+        // 更新时间显示
+        function updateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('zh-CN', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            });
+            const timeStr = now.toLocaleTimeString('zh-CN');
+            document.getElementById('currentTime').textContent = `${dateStr} ${timeStr}`;
+        }
+        
+        // 标签页切换功能
         function initTabs() {
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
                     
-                    // 更新当前标签页
-                    currentTab = tabId;
-                    localStorage.setItem('currentTab', tabId);
-                    
-                    // 更新标签样式
+                    // 更新标签页状态
                     tabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // 显示对应内容
-                    showTabContent(tabId);
+                    // 更新内容显示
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // 保存当前标签页到localStorage
+                    localStorage.setItem('activeTab', tabId);
                 });
             });
-            
-            // 从本地存储恢复上次打开的标签页
-            const savedTab = localStorage.getItem('currentTab');
-            if (savedTab) {
-                currentTab = savedTab;
-                document.querySelectorAll('.tab').forEach(tab => {
-                    tab.classList.remove('active');
-                    if (tab.getAttribute('data-tab') === currentTab) {
-                        tab.classList.add('active');
-                    }
-                });
+        }
+        
+        // 恢复之前的标签页
+        function restoreActiveTab() {
+            const activeTab = localStorage.getItem('activeTab') || 'branch';
+            const tabElement = document.querySelector(`.tab[data-tab="${activeTab}"]`);
+            if (tabElement) {
+                tabElement.click();
             }
         }
         
-        // 显示标签页内容
-        function showTabContent(tabId) {
-            // 隐藏所有标签内容
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // 显示当前标签内容
-            const currentContent = document.getElementById(tabId);
-            if (currentContent) {
-                currentContent.classList.add('active');
+        // 初始化数据
+        function initData() {
+            // 初始化localStorage数据
+            if (!localStorage.getItem('branchImages')) {
+                localStorage.setItem('branchImages', JSON.stringify([]));
             }
             
-            // 如果是数据访问标签页，检查是否已通过密码验证
-            if (tabId === 'tab4') {
-                const isAuthenticated = localStorage.getItem('dataAuthenticated') === 'true';
-                if (isAuthenticated) {
-                    document.getElementById('password-section').style.display = 'none';
-                    document.getElementById('data-management-section').style.display = 'block';
-                    renderCabinetTable();
-                } else {
-                    document.getElementById('password-section').style.display = 'block';
-                    document.getElementById('data-management-section').style.display = 'none';
+            if (!localStorage.getItem('feeImages')) {
+                localStorage.setItem('feeImages', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('pokeImages')) {
+                localStorage.setItem('pokeImages', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('cabinetData')) {
+                localStorage.setItem('cabinetData', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('pickupData')) {
+                localStorage.setItem('pickupData', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('logo')) {
+                localStorage.setItem('logo', '');
+            }
+            
+            if (!localStorage.getItem('background')) {
+                localStorage.setItem('background', '');
+            }
+        }
+        
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 图片查看模态框
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // 点击图片放大
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('viewable-image')) {
+                    modalImg.src = e.target.src;
+                    modal.classList.add('active');
                 }
-            }
+            });
             
-            // 如果是设置标签页，检查是否已通过密码验证
-            if (tabId === 'tab5') {
-                const isAuthenticated = localStorage.getItem('settingsAuthenticated') === 'true';
-                if (isAuthenticated) {
-                    document.getElementById('settings-password-section').style.display = 'none';
-                    document.getElementById('settings-content').style.display = 'block';
-                } else {
-                    document.getElementById('settings-password-section').style.display = 'block';
-                    document.getElementById('settings-content').style.display = 'none';
+            // 关闭模态框
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
                 }
-            }
-            
-            // 显示对应图片
-            if (tabId === 'tab1') {
-                renderNetworkImages();
-            } else if (tabId === 'tab2') {
-                renderPriceImages();
-            } else if (tabId === 'tab3') {
-                renderCabinetInfoTable();
-            } else if (tabId === 'tab6') {
-                renderPokeImage();
-            }
-        }
-        
-        // 更新时间显示
-        function updateTime() {
-            const now = new Date();
-            const dateString = now.toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                weekday: 'long'
             });
-            const timeString = now.toLocaleTimeString('zh-CN', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+            
+            // 取件人信息表单提交
+            document.getElementById('pickupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const pickupData = {
+                    pickupNumber: document.getElementById('pickupNumber').value,
+                    pickupName: document.getElementById('pickupName').value,
+                    pickupPhone: document.getElementById('pickupPhone').value,
+                    pickupId: document.getElementById('pickupId').value
+                };
+                
+                // 保存到localStorage
+                const existingData = JSON.parse(localStorage.getItem('pickupData')) || [];
+                existingData.push({
+                    ...pickupData,
+                    id: Date.now() // 使用时间戳作为ID
+                });
+                localStorage.setItem('pickupData', JSON.stringify(existingData));
+                
+                // 清空表单
+                this.reset();
+                
+                // 显示成功提示
+                showSuccessToast();
+                
+                // 重新加载取件人数据
+                loadPickupData();
             });
-            document.getElementById('current-time').innerHTML = `
-                <div style="font-size: 1.2rem; font-weight: 600;">${dateString}</div>
-                <div style="font-size: 1.1rem; color: var(--primary-color);">${timeString}</div>
-            `;
+            
+            // 在柜数据表单提交
+            document.getElementById('cabinetDataForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const cabinetData = {
+                    area: document.getElementById('area').value,
+                    district: document.getElementById('district').value,
+                    number: document.getElementById('number').value,
+                    type: document.getElementById('type').value,
+                    location: document.getElementById('location').value,
+                    status: document.getElementById('status').value
+                };
+                
+                // 保存到localStorage
+                const existingData = JSON.parse(localStorage.getItem('cabinetData')) || [];
+                existingData.push({
+                    ...cabinetData,
+                    id: Date.now() // 使用时间戳作为ID
+                });
+                localStorage.setItem('cabinetData', JSON.stringify(existingData));
+                
+                // 清空表单
+                this.reset();
+                
+                // 显示成功提示
+                showSuccessToast();
+                
+                // 重新加载在柜数据
+                loadCabinetData();
+            });
+            
+            // 密码访问 - 在柜数据访问
+            document.getElementById('submitCabinetPassword').addEventListener('click', function() {
+                const password = document.getElementById('cabinetPassword').value;
+                if (password === '740302') {
+                    document.getElementById('passwordSectionCabinet').style.display = 'none';
+                    document.getElementById('cabinetDataContent').style.display = 'block';
+                } else {
+                    alert('密码错误！');
+                }
+            });
+            
+            // 密码访问 - 设置
+            document.getElementById('submitSettingsPassword').addEventListener('click', function() {
+                const password = document.getElementById('settingsPassword').value;
+                if (password === '740302') {
+                    document.getElementById('passwordSectionSettings').style.display = 'none';
+                    document.getElementById('settingsContent').style.display = 'block';
+                } else {
+                    alert('密码错误！');
+                }
+            });
+            
+            // 搜索功能
+            document.getElementById('searchCabinetData').addEventListener('input', function() {
+                searchCabinetData(this.value);
+            });
+            
+            document.getElementById('searchPickupData').addEventListener('input', function() {
+                searchPickupData(this.value);
+            });
+            
+            // 文件上传功能
+            initUploadFunctions();
         }
         
-        // 初始化表单提交
-        function initForms() {
-            // 取件人信息提交
-            const pickupForm = document.getElementById('pickup-form');
-            if (pickupForm) {
-                pickupForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const pickupData = {
-                        code: document.getElementById('pickup-code').value,
-                        name: document.getElementById('pickup-name').value,
-                        phone: document.getElementById('pickup-phone').value,
-                        id: document.getElementById('pickup-id').value,
-                        submitTime: new Date().toLocaleString()
-                    };
-                    
-                    // 保存到本地存储
-                    let pickupList = JSON.parse(localStorage.getItem('pickupList') || '[]');
-                    pickupList.push(pickupData);
-                    localStorage.setItem('pickupList', JSON.stringify(pickupList));
-                    
-                    // 更新对应的在柜数据
-                    updateCabinetDataWithPickup(pickupData);
-                    
-                    // 显示成功消息
-                    showSuccessModal();
-                    
-                    // 重置表单
-                    pickupForm.reset();
-                    
-                    // 重新渲染表格
-                    renderCabinetInfoTable();
-                });
-            }
-            
-            // 在柜数据提交
-            const cabinetForm = document.getElementById('cabinet-form');
-            if (cabinetForm) {
-                cabinetForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const cabinetItem = {
-                        id: Date.now(),
-                        area: document.getElementById('area').value,
-                        region: document.getElementById('region').value,
-                        code: document.getElementById('code').value,
-                        type: document.getElementById('type').value,
-                        location: document.getElementById('location').value,
-                        status: document.getElementById('status').value,
-                        pickupCode: document.getElementById('pickup-code2').value,
-                        pickupName: document.getElementById('pickup-name2').value,
-                        pickupPhone: document.getElementById('pickup-phone2').value,
-                        pickupId: document.getElementById('pickup-id2').value,
-                        submitTime: new Date().toLocaleString()
-                    };
-                    
-                    // 添加到数据数组
-                    cabinetData.push(cabinetItem);
-                    filteredCabinetData = [...cabinetData];
-                    
-                    // 保存到本地存储
-                    saveToLocalStorage();
-                    
-                    // 显示成功消息
-                    showSuccessModal();
-                    
-                    // 重置表单
-                    cabinetForm.reset();
-                    
-                    // 重新渲染表格
-                    renderCabinetTable();
-                });
-            }
-            
-            // 数据访问密码验证
-            const dataPasswordBtn = document.getElementById('data-password-btn');
-            if (dataPasswordBtn) {
-                dataPasswordBtn.addEventListener('click', function() {
-                    const password = document.getElementById('data-password').value;
-                    if (password === DEFAULT_PASSWORD) {
-                        localStorage.setItem('dataAuthenticated', 'true');
-                        document.getElementById('password-section').style.display = 'none';
-                        document.getElementById('data-management-section').style.display = 'block';
-                        renderCabinetTable();
-                    } else {
-                        alert('密码错误，请重新输入！');
-                        document.getElementById('data-password').value = '';
-                        document.getElementById('data-password').focus();
-                    }
-                });
-            }
-            
-            // 设置密码验证
-            const settingsPasswordBtn = document.getElementById('settings-password-btn');
-            if (settingsPasswordBtn) {
-                settingsPasswordBtn.addEventListener('click', function() {
-                    const password = document.getElementById('settings-password').value;
-                    if (password === DEFAULT_PASSWORD) {
-                        localStorage.setItem('settingsAuthenticated', 'true');
-                        document.getElementById('settings-password-section').style.display = 'none';
-                        document.getElementById('settings-content').style.display = 'block';
-                    } else {
-                        alert('密码错误，请重新输入！');
-                        document.getElementById('settings-password').value = '';
-                        document.getElementById('settings-password').focus();
-                    }
-                });
-            }
-        }
-        
-        // 初始化上传功能
-        function initUploads() {
+        // 初始化文件上传功能
+        function initUploadFunctions() {
             // LOGO上传
-            const logoUploadArea = document.getElementById('logo-upload-area');
-            if (logoUploadArea) {
-                logoUploadArea.addEventListener('click', function() {
-                    document.getElementById('logo-input').click();
-                });
-                
-                const logoInput = document.createElement('input');
-                logoInput.type = 'file';
-                logoInput.id = 'logo-input';
-                logoInput.accept = 'image/jpeg,image/jpg,image/png';
-                logoInput.style.display = 'none';
-                document.body.appendChild(logoInput);
-                
-                logoInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        if (file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = function(event) {
-                                logoImage = event.target.result;
-                                saveToLocalStorage();
-                                renderLogoPreview();
-                                applyLogo();
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            alert('请上传图片文件（JPG、JPEG、PNG格式）');
-                        }
-                    }
-                });
-            }
+            const logoUpload = document.getElementById('logoUpload');
+            const logoUploadArea = document.getElementById('logoUploadArea');
+            
+            logoUploadArea.addEventListener('click', () => logoUpload.click());
+            logoUpload.addEventListener('change', function() {
+                handleLogoUpload(this.files[0]);
+            });
             
             // 背景上传
-            const bgUploadArea = document.getElementById('bg-upload-area');
-            if (bgUploadArea) {
-                bgUploadArea.addEventListener('click', function() {
-                    document.getElementById('bg-input').click();
-                });
-                
-                const bgInput = document.createElement('input');
-                bgInput.type = 'file';
-                bgInput.id = 'bg-input';
-                bgInput.accept = 'image/jpeg,image/jpg,image/png';
-                bgInput.style.display = 'none';
-                document.body.appendChild(bgInput);
-                
-                bgInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        if (file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = function(event) {
-                                backgroundImage = event.target.result;
-                                saveToLocalStorage();
-                                renderBgPreview();
-                                applyBackground();
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            alert('请上传图片文件（JPG、JPEG、PNG格式）');
-                        }
-                    }
-                });
-            }
+            const bgUpload = document.getElementById('bgUpload');
+            const bgUploadArea = document.getElementById('bgUploadArea');
             
-            // 网点清单图片上传
-            const networkUploadArea = document.getElementById('network-upload-area');
-            if (networkUploadArea) {
-                networkUploadArea.addEventListener('click', function() {
-                    document.getElementById('network-input').click();
-                });
-                
-                const networkInput = document.createElement('input');
-                networkInput.type = 'file';
-                networkInput.id = 'network-input';
-                networkInput.accept = 'image/jpeg,image/jpg,image/png';
-                networkInput.multiple = true;
-                networkInput.style.display = 'none';
-                document.body.appendChild(networkInput);
-                
-                networkInput.addEventListener('change', function(e) {
-                    const files = Array.from(e.target.files);
-                    if (files.length > 5) {
-                        alert('最多只能上传5张图片');
-                        return;
-                    }
-                    
-                    files.forEach(file => {
-                        if (file.type.startsWith('image/')) {
-                            if (networkImages.length >= 5) {
-                                alert('最多只能上传5张图片');
-                                return;
-                            }
-                            
-                            const reader = new FileReader();
-                            reader.onload = function(event) {
-                                networkImages.push({
-                                    id: Date.now() + Math.random(),
-                                    data: event.target.result
-                                });
-                                saveToLocalStorage();
-                                renderNetworkPreview();
-                                renderNetworkImages();
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            alert('请上传图片文件（JPG、JPEG、PNG格式）');
-                        }
-                    });
-                });
-            }
-            
-            // 资费清单图片上传
-            const priceUploadArea = document.getElementById('price-upload-area');
-            if (priceUploadArea) {
-                priceUploadArea.addEventListener('click', function() {
-                    document.getElementById('price-input').click();
-                });
-                
-                const priceInput = document.createElement('input');
-                priceInput.type = 'file';
-                priceInput.id = 'price-input';
-                priceInput.accept = 'image/jpeg,image/jpg,image/png';
-                priceInput.multiple = true;
-                priceInput.style.display = 'none';
-                document.body.appendChild(priceInput);
-                
-                priceInput.addEventListener('change', function(e) {
-                    const files = Array.from(e.target.files);
-                    if (files.length > 5) {
-                        alert('最多只能上传5张图片');
-                        return;
-                    }
-                    
-                    files.forEach(file => {
-                        if (file.type.startsWith('image/')) {
-                            if (priceImages.length >= 5) {
-                                alert('最多只能上传5张图片');
-                                return;
-                            }
-                            
-                            const reader = new FileReader();
-                            reader.onload = function(event) {
-                                priceImages.push({
-                                    id: Date.now() + Math.random(),
-                                    data: event.target.result
-                                });
-                                saveToLocalStorage();
-                                renderPricePreview();
-                                renderPriceImages();
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            alert('请上传图片文件（JPG、JPEG、PNG格式）');
-                        }
-                    });
-                });
-            }
-            
-            // 戳戳我图片上传
-            const pokeUploadArea = document.getElementById('poke-upload-area');
-            if (pokeUploadArea) {
-                pokeUploadArea.addEventListener('click', function() {
-                    document.getElementById('poke-input').click();
-                });
-                
-                const pokeInput = document.createElement('input');
-                pokeInput.type = 'file';
-                pokeInput.id = 'poke-input';
-                pokeInput.accept = 'image/jpeg,image/jpg,image/png';
-                pokeInput.style.display = 'none';
-                document.body.appendChild(pokeInput);
-                
-                pokeInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        if (file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = function(event) {
-                                pokeImage = event.target.result;
-                                saveToLocalStorage();
-                                renderPokePreview();
-                                renderPokeImage();
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            alert('请上传图片文件（JPG、JPEG、PNG格式）');
-                        }
-                    }
-                });
-            }
-        }
-        
-        // 初始化图片查看功能
-        function initImageModal() {
-            const imageModal = document.getElementById('image-modal');
-            const expandedImg = document.getElementById('expanded-img');
-            const closeBtn = document.querySelector('.image-modal-close');
-            
-            closeBtn.addEventListener('click', function() {
-                imageModal.classList.remove('active');
+            bgUploadArea.addEventListener('click', () => bgUpload.click());
+            bgUpload.addEventListener('change', function() {
+                handleBgUpload(this.files[0]);
             });
             
-            imageModal.addEventListener('click', function(e) {
-                if (e.target === imageModal) {
-                    imageModal.classList.remove('active');
-                }
+            // 网点清单上传
+            const branchUpload = document.getElementById('branchUpload');
+            const branchUploadArea = document.getElementById('branchUploadArea');
+            
+            branchUploadArea.addEventListener('click', () => branchUpload.click());
+            branchUpload.addEventListener('change', function() {
+                handleMultipleImageUpload(this.files, 'branchImages');
+            });
+            
+            // 资费清单上传
+            const feeUpload = document.getElementById('feeUpload');
+            const feeUploadArea = document.getElementById('feeUploadArea');
+            
+            feeUploadArea.addEventListener('click', () => feeUpload.click());
+            feeUpload.addEventListener('change', function() {
+                handleMultipleImageUpload(this.files, 'feeImages');
+            });
+            
+            // 戳戳我上传
+            const pokeUpload = document.getElementById('pokeUpload');
+            const pokeUploadArea = document.getElementById('pokeUploadArea');
+            
+            pokeUploadArea.addEventListener('click', () => pokeUpload.click());
+            pokeUpload.addEventListener('change', function() {
+                handlePokeUpload(this.files[0]);
             });
         }
         
-        // 初始化数据管理
-        function initDataManagement() {
-            // 删除数据
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('delete-btn')) {
-                    const id = parseInt(e.target.getAttribute('data-id'));
-                    if (confirm('确定要删除这条数据吗？')) {
-                        cabinetData = cabinetData.filter(item => item.id !== id);
-                        filteredCabinetData = cabinetData.filter(item => item.id !== id);
-                        saveToLocalStorage();
-                        renderCabinetTable();
-                        renderCabinetInfoTable();
-                    }
-                }
-                
-                // 修改数据
-                if (e.target.classList.contains('edit-btn')) {
-                    const id = parseInt(e.target.getAttribute('data-id'));
-                    const item = cabinetData.find(item => item.id === id);
-                    
-                    if (item) {
-                        document.getElementById('area').value = item.area;
-                        document.getElementById('region').value = item.region;
-                        document.getElementById('code').value = item.code;
-                        document.getElementById('type').value = item.type;
-                        document.getElementById('location').value = item.location;
-                        document.getElementById('status').value = item.status;
-                        document.getElementById('pickup-code2').value = item.pickupCode || '';
-                        document.getElementById('pickup-name2').value = item.pickupName || '';
-                        document.getElementById('pickup-phone2').value = item.pickupPhone || '';
-                        document.getElementById('pickup-id2').value = item.pickupId || '';
-                        
-                        // 删除原数据
-                        cabinetData = cabinetData.filter(i => i.id !== id);
-                        filteredCabinetData = cabinetData.filter(i => i.id !== id);
-                        
-                        // 滚动到表单
-                        document.querySelector('#cabinet-form').scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            });
-        }
-        
-        // 初始化设置页面
-        function initSettings() {
-            // 修改LOGO按钮
-            document.getElementById('change-logo-btn').addEventListener('click', function() {
-                document.getElementById('logo-input').click();
-            });
+        // 处理LOGO上传
+        function handleLogoUpload(file) {
+            if (!file) return;
             
-            // 删除LOGO按钮
-            document.getElementById('delete-logo-btn').addEventListener('click', function() {
-                if (confirm('确定要删除LOGO吗？')) {
-                    logoImage = null;
-                    saveToLocalStorage();
-                    renderLogoPreview();
-                    applyLogo();
-                }
-            });
-            
-            // 修改背景按钮
-            document.getElementById('change-bg-btn').addEventListener('click', function() {
-                document.getElementById('bg-input').click();
-            });
-            
-            // 删除背景按钮
-            document.getElementById('delete-bg-btn').addEventListener('click', function() {
-                if (confirm('确定要删除背景图片吗？')) {
-                    backgroundImage = null;
-                    saveToLocalStorage();
-                    renderBgPreview();
-                    applyBackground();
-                }
-            });
-            
-            // 修改网点清单按钮
-            document.getElementById('change-network-btn').addEventListener('click', function() {
-                document.getElementById('network-input').click();
-            });
-            
-            // 删除网点清单按钮
-            document.getElementById('delete-network-btn').addEventListener('click', function() {
-                if (confirm('确定要删除所有网点清单图片吗？')) {
-                    networkImages = [];
-                    saveToLocalStorage();
-                    renderNetworkPreview();
-                    renderNetworkImages();
-                }
-            });
-            
-            // 修改资费清单按钮
-            document.getElementById('change-price-btn').addEventListener('click', function() {
-                document.getElementById('price-input').click();
-            });
-            
-            // 删除资费清单按钮
-            document.getElementById('delete-price-btn').addEventListener('click', function() {
-                if (confirm('确定要删除所有资费清单图片吗？')) {
-                    priceImages = [];
-                    saveToLocalStorage();
-                    renderPricePreview();
-                    renderPriceImages();
-                }
-            });
-            
-            // 修改戳戳我按钮
-            document.getElementById('change-poke-btn').addEventListener('click', function() {
-                document.getElementById('poke-input').click();
-            });
-            
-            // 删除戳戳我按钮
-            document.getElementById('delete-poke-btn').addEventListener('click', function() {
-                if (confirm('确定要删除戳戳我图片吗？')) {
-                    pokeImage = null;
-                    saveToLocalStorage();
-                    renderPokePreview();
-                    renderPokeImage();
-                }
-            });
-        }
-        
-        // 初始化搜索功能
-        function initSearch() {
-            const searchBtn = document.getElementById('search-btn');
-            const searchInput = document.getElementById('search-data');
-            const resetSearchBtn = document.getElementById('reset-search-btn');
-            
-            if (searchBtn) {
-                searchBtn.addEventListener('click', function() {
-                    const searchTerm = searchInput.value.trim().toLowerCase();
-                    if (searchTerm) {
-                        filteredCabinetData = cabinetData.filter(item => 
-                            item.area.toLowerCase().includes(searchTerm) ||
-                            item.code.toLowerCase().includes(searchTerm) ||
-                            item.pickupName?.toLowerCase().includes(searchTerm) ||
-                            item.pickupPhone?.toLowerCase().includes(searchTerm)
-                        );
-                    } else {
-                        filteredCabinetData = [...cabinetData];
-                    }
-                    renderCabinetTable();
-                });
-            }
-            
-            if (resetSearchBtn) {
-                resetSearchBtn.addEventListener('click', function() {
-                    searchInput.value = '';
-                    filteredCabinetData = [...cabinetData];
-                    renderCabinetTable();
-                });
-            }
-        }
-        
-        // 渲染网点清单图片
-        function renderNetworkImages() {
-            const container = document.getElementById('network-images');
-            if (!container) return;
-            
-            if (networkImages.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-image"></i>
-                        <h3>暂无网点清单图片</h3>
-                        <p>请前往"设置"页面上传网点清单图片</p>
-                    </div>
-                `;
+            if (!file.type.match('image/jpeg') && !file.type.match('image/jpg') && !file.type.match('image/png')) {
+                alert('只支持JPG、JPEG、PNG格式的图片！');
                 return;
             }
             
-            container.innerHTML = networkImages.map(image => `
-                <div class="image-item" onclick="openImageModal('${image.data}')">
-                    <img src="${image.data}" alt="网点清单图片">
-                </div>
-            `).join('');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                localStorage.setItem('logo', imageData);
+                loadLogo();
+                showSuccessToast();
+            };
+            reader.readAsDataURL(file);
         }
         
-        // 渲染资费清单图片
-        function renderPriceImages() {
-            const container = document.getElementById('price-images');
-            if (!container) return;
+        // 处理背景上传
+        function handleBgUpload(file) {
+            if (!file) return;
             
-            if (priceImages.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                        <h3>暂无资费清单图片</h3>
-                        <p>请前往"设置"页面上传资费清单图片</p>
-                    </div>
-                `;
+            if (!file.type.match('image/jpeg') && !file.type.match('image/jpg') && !file.type.match('image/png')) {
+                alert('只支持JPG、JPEG、PNG格式的图片！');
                 return;
             }
             
-            container.innerHTML = priceImages.map(image => `
-                <div class="image-item" onclick="openImageModal('${image.data}')">
-                    <img src="${image.data}" alt="资费清单图片">
-                </div>
-            `).join('');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                localStorage.setItem('background', imageData);
+                loadBackground();
+                showSuccessToast();
+            };
+            reader.readAsDataURL(file);
         }
         
-        // 渲染戳戳我图片
-        function renderPokeImage() {
-            const container = document.getElementById('poke-image-container');
-            if (!container) return;
+        // 处理多图片上传
+        function handleMultipleImageUpload(files, storageKey) {
+            if (!files || files.length === 0) return;
             
-            if (!pokeImage) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-hand-point-up"></i>
-                        <h3>暂无戳戳我图片</h3>
-                        <p>请前往"设置"页面上传戳戳我图片</p>
-                    </div>
-                `;
+            const maxImages = 5;
+            const existingImages = JSON.parse(localStorage.getItem(storageKey)) || [];
+            const remainingSlots = maxImages - existingImages.length;
+            
+            if (remainingSlots <= 0) {
+                alert(`最多只能上传${maxImages}张图片！`);
                 return;
             }
             
-            container.innerHTML = `
-                <img src="${pokeImage}" alt="戳戳我" class="poke-image" onclick="openImageModal('${pokeImage}')">
-            `;
-        }
-        
-        // 渲染在柜信息表格
-        function renderCabinetInfoTable() {
-            const container = document.getElementById('cabinet-data-container');
-            if (!container) return;
+            const filesToUpload = Array.from(files).slice(0, remainingSlots);
             
-            // 获取取件人信息
-            const pickupList = JSON.parse(localStorage.getItem('pickupList') || '[]');
-            
-            // 合并在柜数据和取件人信息
-            const mergedData = cabinetData.map(item => {
-                const pickupInfo = pickupList.find(pickup => pickup.code === item.pickupCode);
-                return {
-                    ...item,
-                    pickupName: pickupInfo ? pickupInfo.name : item.pickupName,
-                    pickupPhone: pickupInfo ? pickupInfo.phone : item.pickupPhone,
-                    pickupId: pickupInfo ? pickupInfo.id : item.pickupId
+            filesToUpload.forEach(file => {
+                if (!file.type.match('image/jpeg') && !file.type.match('image/jpg') && !file.type.match('image/png')) {
+                    alert('只支持JPG、JPEG、PNG格式的图片！');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    existingImages.push(e.target.result);
+                    localStorage.setItem(storageKey, JSON.stringify(existingImages));
+                    
+                    // 重新加载图片
+                    loadImagesToTabs();
+                    showSuccessToast();
                 };
-            }).filter(item => item.status === '已入柜');
-            
-            if (mergedData.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box"></i>
-                        <h3>等待数据上传</h3>
-                        <p>暂无在柜信息数据</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let tableHTML = `
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>区域</th>
-                                <th>大区</th>
-                                <th>编号</th>
-                                <th>类型</th>
-                                <th>存放位置</th>
-                                <th>状态</th>
-                                <th>取件人</th>
-                                <th>联系电话</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            mergedData.forEach(item => {
-                tableHTML += `
-                    <tr>
-                        <td>${item.area}</td>
-                        <td>${item.region}</td>
-                        <td>${item.code}</td>
-                        <td>${item.type}</td>
-                        <td>${item.location}</td>
-                        <td><span class="status-in">${item.status}</span></td>
-                        <td>${item.pickupName || '-'}</td>
-                        <td>${item.pickupPhone || '-'}</td>
-                    </tr>
-                `;
+                reader.readAsDataURL(file);
             });
-            
-            tableHTML += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
-            
-            container.innerHTML = tableHTML;
         }
         
-        // 渲染在柜数据表格
-        function renderCabinetTable() {
-            const container = document.getElementById('data-table-container');
-            if (!container) return;
+        // 处理戳戳我图片上传
+        function handlePokeUpload(file) {
+            if (!file) return;
             
-            if (filteredCabinetData.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-database"></i>
-                        <h3>等待数据上传</h3>
-                        <p>暂无在柜数据</p>
-                    </div>
-                `;
+            if (!file.type.match('image/jpeg') && !file.type.match('image/jpg') && !file.type.match('image/png')) {
+                alert('只支持JPG、JPEG、PNG格式的图片！');
                 return;
             }
             
-            let tableHTML = `
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>区域</th>
-                                <th>大区</th>
-                                <th>编号</th>
-                                <th>类型</th>
-                                <th>存放位置</th>
-                                <th>状态</th>
-                                <th>待取件编号</th>
-                                <th>取件人</th>
-                                <th>联系电话</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            filteredCabinetData.forEach(item => {
-                const statusClass = item.status === '已入柜' ? 'status-in' : 'status-out';
-                
-                tableHTML += `
-                    <tr>
-                        <td>${item.area}</td>
-                        <td>${item.region}</td>
-                        <td>${item.code}</td>
-                        <td>${item.type}</td>
-                        <td>${item.location}</td>
-                        <td><span class="${statusClass}">${item.status}</span></td>
-                        <td>${item.pickupCode || '-'}</td>
-                        <td>${item.pickupName || '-'}</td>
-                        <td>${item.pickupPhone || '-'}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-warning edit-btn" data-id="${item.id}" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-edit"></i> 修改
-                                </button>
-                                <button class="btn btn-danger delete-btn" data-id="${item.id}" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-trash"></i> 删除
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            tableHTML += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
-            
-            container.innerHTML = tableHTML;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                localStorage.setItem('pokeImages', JSON.stringify([imageData]));
+                loadImagesToTabs();
+                showSuccessToast();
+            };
+            reader.readAsDataURL(file);
         }
         
-        // 渲染LOGO预览
-        function renderLogoPreview() {
-            const container = document.getElementById('logo-preview');
-            if (!container) return;
-            
-            if (!logoImage) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; width: 100%;">暂无LOGO</p>';
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="file-item">
-                    <img src="${logoImage}" alt="LOGO">
-                </div>
-            `;
-        }
-        
-        // 渲染背景预览
-        function renderBgPreview() {
-            const container = document.getElementById('bg-preview');
-            if (!container) return;
-            
-            if (!backgroundImage) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; width: 100%;">暂无背景图片</p>';
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="file-item">
-                    <img src="${backgroundImage}" alt="背景图片">
-                </div>
-            `;
-        }
-        
-        // 渲染网点清单图片预览
-        function renderNetworkPreview() {
-            const container = document.getElementById('network-preview');
-            if (!container) return;
-            
-            if (networkImages.length === 0) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; width: 100%;">暂无图片</p>';
-                return;
-            }
-            
-            container.innerHTML = networkImages.map(image => `
-                <div class="file-item">
-                    <img src="${image.data}" alt="网点清单图片">
-                </div>
-            `).join('');
-        }
-        
-        // 渲染资费清单图片预览
-        function renderPricePreview() {
-            const container = document.getElementById('price-preview');
-            if (!container) return;
-            
-            if (priceImages.length === 0) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; width: 100%;">暂无图片</p>';
-                return;
-            }
-            
-            container.innerHTML = priceImages.map(image => `
-                <div class="file-item">
-                    <img src="${image.data}" alt="资费清单图片">
-                </div>
-            `).join('');
-        }
-        
-        // 渲染戳戳我图片预览
-        function renderPokePreview() {
-            const container = document.getElementById('poke-preview');
-            if (!container) return;
-            
-            if (!pokeImage) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; width: 100%;">暂无图片</p>';
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="file-item">
-                    <img src="${pokeImage}" alt="戳戳我图片">
-                </div>
-            `;
-        }
-        
-        // 应用LOGO
-        function applyLogo() {
-            const logoImg = document.getElementById('logo-img');
-            if (logoImg && logoImage) {
-                logoImg.src = logoImage;
-            } else if (logoImg) {
-                // 恢复默认LOGO
-                logoImg.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIxMCIgZmlsbD0iIzI1NjNlYiIvPjxwYXRoIGQ9Ik0zNSA0MEw1MCA1NUw2NSA0MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTAgNTVWMjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTMwIDc1SDcwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==";
-            }
-        }
-        
-        // 应用背景
-        function applyBackground() {
-            if (backgroundImage) {
-                document.body.style.backgroundImage = `url('${backgroundImage}')`;
+        // 加载背景
+        function loadBackground() {
+            const background = localStorage.getItem('background');
+            if (background) {
+                document.body.style.backgroundImage = `url(${background})`;
             } else {
                 document.body.style.backgroundImage = '';
             }
         }
         
-        // 打开图片放大查看
-        function openImageModal(src) {
-            const modal = document.getElementById('image-modal');
-            const img = document.getElementById('expanded-img');
-            img.src = src;
-            modal.classList.add('active');
-        }
-        
-        // 显示成功提示
-        function showSuccessModal() {
-            const modal = document.getElementById('success-modal');
-            modal.classList.add('active');
+        // 加载LOGO
+        function loadLogo() {
+            const logoContainer = document.getElementById('logoDisplay');
+            const logo = localStorage.getItem('logo');
             
-            // 关闭按钮事件
-            const closeBtn = modal.querySelector('.close-btn');
-            const confirmBtn = document.getElementById('confirm-success-btn');
-            
-            const closeModal = function() {
-                modal.classList.remove('active');
-            };
-            
-            closeBtn.onclick = closeModal;
-            confirmBtn.onclick = closeModal;
-            
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-        }
-        
-        // 更新在柜数据中的取件人信息
-        function updateCabinetDataWithPickup(pickupData) {
-            const index = cabinetData.findIndex(item => item.pickupCode === pickupData.code);
-            if (index !== -1) {
-                cabinetData[index].pickupName = pickupData.name;
-                cabinetData[index].pickupPhone = pickupData.phone;
-                cabinetData[index].pickupId = pickupData.id;
-                saveToLocalStorage();
+            if (logo) {
+                logoContainer.innerHTML = `<img src="${logo}" alt="LOGO" class="logo viewable-image">`;
+            } else {
+                logoContainer.innerHTML = '<div class="logo-placeholder">LOGO</div>';
             }
         }
         
-        // 从本地存储加载数据
-        function loadFromLocalStorage() {
-            // 加载当前标签页
-            const savedTab = localStorage.getItem('currentTab');
-            if (savedTab) currentTab = savedTab;
+        // 加载图片到各个标签页
+        function loadImagesToTabs() {
+            // 加载网点清单图片
+            const branchImages = JSON.parse(localStorage.getItem('branchImages')) || [];
+            const branchContainer = document.getElementById('branchImagesContainer');
             
-            // 加载在柜数据
-            const savedCabinetData = localStorage.getItem('cabinetData');
-            if (savedCabinetData) {
-                cabinetData = JSON.parse(savedCabinetData);
-                filteredCabinetData = [...cabinetData];
+            if (branchImages.length > 0) {
+                branchContainer.innerHTML = '';
+                branchImages.forEach((img, index) => {
+                    const imgElement = document.createElement('div');
+                    imgElement.className = 'image-item';
+                    imgElement.innerHTML = `
+                        <img src="${img}" alt="网点清单图片 ${index + 1}" class="viewable-image">
+                        <div class="file-actions" style="padding: 10px;">
+                            <button class="btn-small btn-danger" onclick="deleteImage('branchImages', ${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    `;
+                    branchContainer.appendChild(imgElement);
+                });
+            } else {
+                branchContainer.innerHTML = '<div class="no-data">暂无网点清单图片，请在设置页面上传</div>';
             }
             
-            // 加载图片数据
-            const savedNetworkImages = localStorage.getItem('networkImages');
-            if (savedNetworkImages) networkImages = JSON.parse(savedNetworkImages);
+            // 加载资费清单图片
+            const feeImages = JSON.parse(localStorage.getItem('feeImages')) || [];
+            const feeContainer = document.getElementById('feeImagesContainer');
             
-            const savedPriceImages = localStorage.getItem('priceImages');
-            if (savedPriceImages) priceImages = JSON.parse(savedPriceImages);
-            
-            const savedPokeImage = localStorage.getItem('pokeImage');
-            if (savedPokeImage) pokeImage = savedPokeImage;
-            
-            const savedLogoImage = localStorage.getItem('logoImage');
-            if (savedLogoImage) logoImage = savedLogoImage;
-            
-            const savedBackgroundImage = localStorage.getItem('backgroundImage');
-            if (savedBackgroundImage) backgroundImage = savedBackgroundImage;
-            
-            // 渲染预览
-            renderLogoPreview();
-            renderBgPreview();
-            renderNetworkPreview();
-            renderPricePreview();
-            renderPokePreview();
-            
-            // 应用保存的图片
-            applyLogo();
-            applyBackground();
-        }
-        
-        // 保存到本地存储
-        function saveToLocalStorage() {
-            localStorage.setItem('currentTab', currentTab);
-            localStorage.setItem('cabinetData', JSON.stringify(cabinetData));
-            localStorage.setItem('networkImages', JSON.stringify(networkImages));
-            localStorage.setItem('priceImages', JSON.stringify(priceImages));
-            localStorage.setItem('pokeImage', pokeImage);
-            localStorage.setItem('logoImage', logoImage);
-            localStorage.setItem('backgroundImage', backgroundImage);
-        }
-        
-        // 页面刷新时恢复之前状态
-        window.addEventListener('load', function() {
-            // 从本地存储恢复数据
-            loadFromLocalStorage();
-            
-            // 显示当前标签页
-            showTabContent(currentTab);
-            
-            // 初始化所有预览
-            renderNetworkImages();
-            renderPriceImages();
-            renderPokeImage();
-            renderCabinetInfoTable();
-            renderCabinetTable();
-        });
-        
-        // 处理键盘事件
-        document.addEventListener('keydown', function(e) {
-            // 在密码输入框按回车提交
-            if (e.key === 'Enter') {
-                if (document.activeElement.id === 'data-password') {
-                    document.getElementById('data-password-btn').click();
-                } else if (document.activeElement.id === 'settings-password') {
-                    document.getElementById('settings-password-btn').click();
-                }
+            if (feeImages.length > 0) {
+                feeContainer.innerHTML = '';
+                feeImages.forEach((img, index) => {
+                    const imgElement = document.createElement('div');
+                    imgElement.className = 'image-item';
+                    imgElement.innerHTML = `
+                        <img src="${img}" alt="资费清单图片 ${index + 1}" class="viewable-image">
+                        <div class="file-actions" style="padding: 10px;">
+                            <button class="btn-small btn-danger" onclick="deleteImage('feeImages', ${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    `;
+                    feeContainer.appendChild(imgElement);
+                });
+            } else {
+                feeContainer.innerHTML = '<div class="no-data">暂无资费清单图片，请在设置页面上传</div>';
             }
             
-            // ESC键关闭弹窗
-            if (e.key === 'Escape') {
-                const modals = document.querySelectorAll('.modal.active, .image-modal.active');
-                modals.forEach(modal => {
-                    modal.classList.remove('active');
-                });
-            }
-        });
-        
-        // 拖放上传功能
-        function initDragAndDrop() {
-            const uploadAreas = document.querySelectorAll('.upload-area');
+            // 加载戳戳我图片
+            const pokeImages = JSON.parse(localStorage.getItem('pokeImages')) || [];
+            const pokeContainer = document.getElementById('pokeImagesContainer');
             
-            uploadAreas.forEach(area => {
-                area.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = 'var(--primary-color)';
-                    this.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
+            if (pokeImages.length > 0) {
+                pokeContainer.innerHTML = '';
+                pokeImages.forEach((img, index) => {
+                    const imgElement = document.createElement('div');
+                    imgElement.className = 'image-item';
+                    imgElement.innerHTML = `
+                        <img src="${img}" alt="戳戳我图片" class="viewable-image">
+                        <div class="file-actions" style="padding: 10px;">
+                            <button class="btn-small btn-danger" onclick="deleteImage('pokeImages', ${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    `;
+                    pokeContainer.appendChild(imgElement);
                 });
-                
-                area.addEventListener('dragleave', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = 'var(--border-color)';
-                    this.style.backgroundColor = '';
-                });
-                
-                area.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = 'var(--border-color)';
-                    this.style.backgroundColor = '';
-                    
-                    const files = e.dataTransfer.files;
-                    if (files.length > 0) {
-                        const areaId = this.id;
-                        handleDroppedFiles(files, areaId);
-                    }
-                });
-            });
+            } else {
+                pokeContainer.innerHTML = '<div class="no-data">暂无戳戳我图片，请在设置页面上传</div>';
+            }
         }
         
-        // 处理拖放的文件
-        function handleDroppedFiles(files, areaId) {
-            const file = files[0];
-            if (!file.type.startsWith('image/')) {
-                alert('请上传图片文件（JPG、JPEG、PNG格式）');
+        // 加载在柜数据
+        function loadCabinetData() {
+            const cabinetData = JSON.parse(localStorage.getItem('cabinetData')) || [];
+            const cabinetDataBody = document.getElementById('cabinetDataBody');
+            const cabinetDataNoData = document.getElementById('cabinetDataNoData');
+            const cabinetInfoBody = document.getElementById('cabinetInfoBody');
+            const cabinetInfoNoData = document.getElementById('cabinetInfoNoData');
+            
+            // 更新在柜数据访问表格
+            if (cabinetData.length > 0) {
+                cabinetDataBody.innerHTML = '';
+                cabinetData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.area}</td>
+                        <td>${item.district}</td>
+                        <td>${item.number}</td>
+                        <td>${item.type}</td>
+                        <td>${item.location}</td>
+                        <td><span class="${item.status === '已入柜' ? 'status-in' : 'status-out'}">${item.status}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-small" onclick="editCabinetData('${item.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-small btn-danger" onclick="deleteCabinetData('${item.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    cabinetDataBody.appendChild(row);
+                });
+                cabinetDataNoData.style.display = 'none';
+            } else {
+                cabinetDataBody.innerHTML = '';
+                cabinetDataNoData.style.display = 'block';
+            }
+            
+            // 更新在柜信息表格
+            if (cabinetData.length > 0) {
+                cabinetInfoBody.innerHTML = '';
+                cabinetData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.area}</td>
+                        <td>${item.district}</td>
+                        <td>${item.number}</td>
+                        <td>${item.type}</td>
+                        <td>${item.location}</td>
+                        <td><span class="${item.status === '已入柜' ? 'status-in' : 'status-out'}">${item.status}</span></td>
+                    `;
+                    cabinetInfoBody.appendChild(row);
+                });
+                cabinetInfoNoData.style.display = 'none';
+            } else {
+                cabinetInfoBody.innerHTML = '';
+                cabinetInfoNoData.style.display = 'block';
+            }
+        }
+        
+        // 加载取件人信息
+        function loadPickupData() {
+            const pickupData = JSON.parse(localStorage.getItem('pickupData')) || [];
+            const pickupDataBody = document.getElementById('pickupDataBody');
+            const pickupDataNoData = document.getElementById('pickupDataNoData');
+            
+            if (pickupData.length > 0) {
+                pickupDataBody.innerHTML = '';
+                pickupData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.pickupNumber}</td>
+                        <td>${item.pickupName}</td>
+                        <td>${item.pickupPhone}</td>
+                        <td>${item.pickupId}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-small btn-danger" onclick="deletePickupData('${item.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    pickupDataBody.appendChild(row);
+                });
+                pickupDataNoData.style.display = 'none';
+            } else {
+                pickupDataBody.innerHTML = '';
+                pickupDataNoData.style.display = 'block';
+            }
+        }
+        
+        // 搜索在柜数据
+        function searchCabinetData(searchTerm) {
+            const cabinetData = JSON.parse(localStorage.getItem('cabinetData')) || [];
+            const cabinetDataBody = document.getElementById('cabinetDataBody');
+            const cabinetDataNoData = document.getElementById('cabinetDataNoData');
+            
+            if (!searchTerm) {
+                loadCabinetData();
                 return;
             }
             
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const imageData = event.target.result;
-                
-                switch(areaId) {
-                    case 'logo-upload-area':
-                        logoImage = imageData;
-                        saveToLocalStorage();
-                        renderLogoPreview();
-                        applyLogo();
-                        break;
-                    case 'bg-upload-area':
-                        backgroundImage = imageData;
-                        saveToLocalStorage();
-                        renderBgPreview();
-                        applyBackground();
-                        break;
-                    case 'network-upload-area':
-                        if (networkImages.length >= 5) {
-                            alert('最多只能上传5张图片');
-                            return;
-                        }
-                        networkImages.push({
-                            id: Date.now() + Math.random(),
-                            data: imageData
-                        });
-                        saveToLocalStorage();
-                        renderNetworkPreview();
-                        renderNetworkImages();
-                        break;
-                    case 'price-upload-area':
-                        if (priceImages.length >= 5) {
-                            alert('最多只能上传5张图片');
-                            return;
-                        }
-                        priceImages.push({
-                            id: Date.now() + Math.random(),
-                            data: imageData
-                        });
-                        saveToLocalStorage();
-                        renderPricePreview();
-                        renderPriceImages();
-                        break;
-                    case 'poke-upload-area':
-                        pokeImage = imageData;
-                        saveToLocalStorage();
-                        renderPokePreview();
-                        renderPokeImage();
-                        break;
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        // 初始化拖放功能
-        initDragAndDrop();
-        
-        // 导出数据功能
-        function exportData() {
-            const data = {
-                cabinetData: cabinetData,
-                networkImages: networkImages.length,
-                priceImages: priceImages.length,
-                exportTime: new Date().toLocaleString()
-            };
+            const filteredData = cabinetData.filter(item => 
+                item.area.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.district.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.status.toLowerCase().includes(searchTerm.toLowerCase())
+            );
             
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = `里昂星储数据备份_${new Date().toISOString().split('T')[0]}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-        }
-        
-        // 导入数据功能
-        function importData(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (data.cabinetData) {
-                        cabinetData = data.cabinetData;
-                        filteredCabinetData = [...cabinetData];
-                        saveToLocalStorage();
-                        renderCabinetTable();
-                        renderCabinetInfoTable();
-                        alert('数据导入成功！');
-                    } else {
-                        alert('导入的文件格式不正确');
-                    }
-                } catch (error) {
-                    alert('导入失败：' + error.message);
-                }
-            };
-            reader.readAsText(file);
-        }
-        
-        // 添加快捷键提示
-        document.addEventListener('keydown', function(e) {
-            // Ctrl+S 保存当前表单
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                const activeForm = document.querySelector('form:focus-within');
-                if (activeForm) {
-                    activeForm.dispatchEvent(new Event('submit'));
-                }
-            }
-            
-            // Ctrl+E 导出数据
-            if (e.ctrlKey && e.key === 'e') {
-                e.preventDefault();
-                exportData();
-            }
-        });
-        
-        // 添加键盘快捷键提示
-        function showKeyboardShortcuts() {
-            const shortcuts = [
-                { key: 'Ctrl+S', action: '保存当前表单' },
-                { key: 'Ctrl+E', action: '导出数据' },
-                { key: 'ESC', action: '关闭弹窗' },
-                { key: 'Tab', action: '切换标签页' }
-            ];
-            
-            let message = '键盘快捷键：\n';
-            shortcuts.forEach(shortcut => {
-                message += `${shortcut.key}: ${shortcut.action}\n`;
-            });
-            
-            alert(message);
-        }
-        
-        // 在页面右下角添加快捷键提示按钮
-        const shortcutBtn = document.createElement('button');
-        shortcutBtn.innerHTML = '<i class="fas fa-keyboard"></i>';
-        shortcutBtn.style.position = 'fixed';
-        shortcutBtn.style.bottom = '20px';
-        shortcutBtn.style.right = '20px';
-        shortcutBtn.style.width = '50px';
-        shortcutBtn.style.height = '50px';
-        shortcutBtn.style.borderRadius = '50%';
-        shortcutBtn.style.backgroundColor = 'var(--primary-color)';
-        shortcutBtn.style.color = 'white';
-        shortcutBtn.style.border = 'none';
-        shortcutBtn.style.cursor = 'pointer';
-        shortcutBtn.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-        shortcutBtn.style.zIndex = '1000';
-        shortcutBtn.style.fontSize = '1.2rem';
-        shortcutBtn.title = '查看键盘快捷键';
-        shortcutBtn.addEventListener('click', showKeyboardShortcuts);
-        document.body.appendChild(shortcutBtn);
-        
-        // 添加数据统计功能
-        function showStats() {
-            const inCabinetCount = cabinetData.filter(item => item.status === '已入柜').length;
-            const outCabinetCount = cabinetData.filter(item => item.status === '已出柜').length;
-            const pendingPickupCount = cabinetData.filter(item => item.status === '已入柜' && !item.pickupName).length;
-            
-            const stats = `
-                数据统计：
-                - 在柜物品：${inCabinetCount} 件
-                - 已出柜物品：${outCabinetCount} 件
-                - 待取件物品：${pendingPickupCount} 件
-                - 网点图片：${networkImages.length} 张
-                - 资费图片：${priceImages.length} 张
-                - 总记录数：${cabinetData.length} 条
-            `;
-            
-            alert(stats);
-        }
-        
-        // 添加统计按钮
-        const statsBtn = document.createElement('button');
-        statsBtn.innerHTML = '<i class="fas fa-chart-bar"></i>';
-        statsBtn.style.position = 'fixed';
-        statsBtn.style.bottom = '80px';
-        statsBtn.style.right = '20px';
-        statsBtn.style.width = '50px';
-        statsBtn.style.height = '50px';
-        statsBtn.style.borderRadius = '50%';
-        statsBtn.style.backgroundColor = 'var(--success-color)';
-        statsBtn.style.color = 'white';
-        statsBtn.style.border = 'none';
-        statsBtn.style.cursor = 'pointer';
-        statsBtn.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-        statsBtn.style.zIndex = '1000';
-        statsBtn.style.fontSize = '1.2rem';
-        statsBtn.title = '查看数据统计';
-        statsBtn.addEventListener('click', showStats);
-        document.body.appendChild(statsBtn);
-        
-        // 添加数据备份提醒
-        function checkBackupReminder() {
-            const lastBackup = localStorage.getItem('lastBackup');
-            const now = new Date().getTime();
-            
-            if (!lastBackup || (now - parseInt(lastBackup)) > 7 * 24 * 60 * 60 * 1000) {
-                if (confirm('距离上次数据备份已超过7天，是否立即备份数据？')) {
-                    exportData();
-                    localStorage.setItem('lastBackup', now.toString());
-                }
+            if (filteredData.length > 0) {
+                cabinetDataBody.innerHTML = '';
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.area}</td>
+                        <td>${item.district}</td>
+                        <td>${item.number}</td>
+                        <td>${item.type}</td>
+                        <td>${item.location}</td>
+                        <td><span class="${item.status === '已入柜' ? 'status-in' : 'status-out'}">${item.status}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-small" onclick="editCabinetData('${item.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-small btn-danger" onclick="deleteCabinetData('${item.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    cabinetDataBody.appendChild(row);
+                });
+                cabinetDataNoData.style.display = 'none';
+            } else {
+                cabinetDataBody.innerHTML = '';
+                cabinetDataNoData.style.display = 'block';
             }
         }
         
-        // 每周检查一次备份提醒
-        setInterval(checkBackupReminder, 24 * 60 * 60 * 1000);
-        
-        // 页面关闭时提示保存
-        window.addEventListener('beforeunload', function(e) {
-            const hasUnsavedChanges = cabinetData.length > 0 || networkImages.length > 0 || priceImages.length > 0;
+        // 搜索取件人信息
+        function searchPickupData(searchTerm) {
+            const pickupData = JSON.parse(localStorage.getItem('pickupData')) || [];
+            const pickupDataBody = document.getElementById('pickupDataBody');
+            const pickupDataNoData = document.getElementById('pickupDataNoData');
             
-            if (hasUnsavedChanges) {
-                // 现代浏览器中，需要设置returnValue才能显示提示
-                e.preventDefault();
-                e.returnValue = '您有未保存的数据，确定要离开吗？';
-                return e.returnValue;
+            if (!searchTerm) {
+                loadPickupData();
+                return;
             }
-        });
+            
+            const filteredData = pickupData.filter(item => 
+                item.pickupNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.pickupName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.pickupPhone.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.pickupId.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            if (filteredData.length > 0) {
+                pickupDataBody.innerHTML = '';
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.pickupNumber}</td>
+                        <td>${item.pickupName}</td>
+                        <td>${item.pickupPhone}</td>
+                        <td>${item.pickupId}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-small btn-danger" onclick="deletePickupData('${item.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    pickupDataBody.appendChild(row);
+                });
+                pickupDataNoData.style.display = 'none';
+            } else {
+                pickupDataBody.innerHTML = '';
+                pickupDataNoData.style.display = 'block';
+            }
+        }
+        
+        // 编辑在柜数据
+        function editCabinetData(id) {
+            const cabinetData = JSON.parse(localStorage.getItem('cabinetData')) || [];
+            const item = cabinetData.find(item => item.id == id);
+            
+            if (!item) return;
+            
+            const newStatus = prompt('请输入新的状态（已入柜/已出柜）:', item.status);
+            if (newStatus && (newStatus === '已入柜' || newStatus === '已出柜')) {
+                item.status = newStatus;
+                localStorage.setItem('cabinetData', JSON.stringify(cabinetData));
+                loadCabinetData();
+                showSuccessToast();
+            } else if (newStatus) {
+                alert('状态只能为"已入柜"或"已出柜"！');
+            }
+        }
+        
+        // 删除在柜数据
+        function deleteCabinetData(id) {
+            if (confirm('确定要删除这条数据吗？')) {
+                let cabinetData = JSON.parse(localStorage.getItem('cabinetData')) || [];
+                cabinetData = cabinetData.filter(item => item.id != id);
+                localStorage.setItem('cabinetData', JSON.stringify(cabinetData));
+                loadCabinetData();
+                showSuccessToast();
+            }
+        }
+        
+        // 删除取件人信息
+        function deletePickupData(id) {
+            if (confirm('确定要删除这条取件人信息吗？')) {
+                let pickupData = JSON.parse(localStorage.getItem('pickupData')) || [];
+                pickupData = pickupData.filter(item => item.id != id);
+                localStorage.setItem('pickupData', JSON.stringify(pickupData));
+                loadPickupData();
+                showSuccessToast();
+            }
+        }
+        
+        // 删除图片
+        function deleteImage(storageKey, index) {
+            if (confirm('确定要删除这张图片吗？')) {
+                let images = JSON.parse(localStorage.getItem(storageKey)) || [];
+                images.splice(index, 1);
+                localStorage.setItem(storageKey, JSON.stringify(images));
+                loadImagesToTabs();
+                showSuccessToast();
+            }
+        }
+        
+        // 显示成功提示
+        function showSuccessToast() {
+            const toast = document.getElementById('successToast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
