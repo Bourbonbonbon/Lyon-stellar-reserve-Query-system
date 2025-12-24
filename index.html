@@ -413,5 +413,20 @@
             input.click();
         }
         
+        // 添加一些示例按钮到页面（可选）
+        function addUtilityButtons() {
+            const card = document.querySelector('.card');
+            const buttons = document.createElement('div');
+            buttons.style.marginTop = '20px';
+            buttons.style.display = 'flex';
+            buttons.style.gap = '10px';
+            buttons.innerHTML = `
+                <button onclick="exportData()" class="btn btn-secondary">备份数据</button>
+                <button onclick="importData()" class="btn btn-secondary">恢复数据</button>
+                <button onclick="localStorage.clear(); loadPokeData(); alert('已清空所有数据！')" class="btn btn-danger">清空所有</button>
+            `;
+            card.appendChild(buttons);
+        }
+    </script>
 </body>
 </html>
