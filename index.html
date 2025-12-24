@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>里昂星储—查询系统</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 完全自包含的CSS，无需外部依赖 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
         }
         
         :root {
@@ -27,11 +27,8 @@
         body {
             background-color: #f5f7fa;
             color: var(--dark-color);
-            transition: background-image 0.5s;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             min-height: 100vh;
+            line-height: 1.6;
         }
         
         .container {
@@ -45,12 +42,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 20px;
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
-            padding: 20px;
             box-shadow: var(--shadow);
         }
         
@@ -117,6 +113,10 @@
             transition: all 0.3s;
             font-weight: 600;
             color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .tab:last-child {
@@ -132,8 +132,8 @@
             color: white;
         }
         
-        .tab i {
-            margin-right: 8px;
+        .tab-icon {
+            font-size: 16px;
         }
         
         /* 标签页内容 */
@@ -163,6 +163,9 @@
             color: var(--primary-color);
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         /* 数据展示区域 */
@@ -206,6 +209,7 @@
             height: 200px;
             object-fit: cover;
             cursor: pointer;
+            display: block;
         }
         
         .item-info {
@@ -256,11 +260,13 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             font-size: 14px;
+            transition: border-color 0.3s;
         }
         
         .form-control:focus {
             outline: none;
             border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
         
         .form-row {
@@ -279,6 +285,11 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
         .btn-primary {
@@ -288,6 +299,7 @@
         
         .btn-primary:hover {
             background-color: #1a252f;
+            transform: translateY(-2px);
         }
         
         .btn-secondary {
@@ -297,6 +309,7 @@
         
         .btn-secondary:hover {
             background-color: #5a6268;
+            transform: translateY(-2px);
         }
         
         .btn-danger {
@@ -306,6 +319,7 @@
         
         .btn-danger:hover {
             background-color: #c0392b;
+            transform: translateY(-2px);
         }
         
         .btn-success {
@@ -315,6 +329,7 @@
         
         .btn-success:hover {
             background-color: #219653;
+            transform: translateY(-2px);
         }
         
         .btn-small {
@@ -368,6 +383,7 @@
             max-height: 90%;
             overflow: auto;
             padding: 20px;
+            position: relative;
         }
         
         .modal-img {
@@ -375,17 +391,29 @@
             max-height: 70vh;
             display: block;
             margin: 0 auto;
+            border-radius: 5px;
         }
         
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
-            color: white;
-            font-size: 30px;
+            color: #666;
+            font-size: 28px;
             cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-close:hover {
+            background-color: rgba(0, 0, 0, 0.1);
         }
         
         /* 在柜信息表格样式 */
@@ -393,6 +421,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-size: 14px;
         }
         
         .data-table th, .data-table td {
@@ -404,6 +433,7 @@
         .data-table th {
             background-color: #f2f2f2;
             font-weight: 600;
+            color: var(--primary-color);
         }
         
         .data-table tr:nth-child(even) {
@@ -416,10 +446,12 @@
         
         .status-badge {
             display: inline-block;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
+            text-align: center;
+            min-width: 70px;
         }
         
         .status-in {
@@ -434,7 +466,7 @@
         
         .type-badge {
             display: inline-block;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
@@ -449,10 +481,11 @@
         }
         
         .poke-image img {
-            max-width: 300px;
-            max-height: 300px;
+            max-width: 100%;
+            max-height: 400px;
             border-radius: 10px;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         /* 设置页面样式 */
@@ -466,11 +499,13 @@
             background-color: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
+            border: 1px solid #eee;
         }
         
         .setting-item h3 {
             margin-bottom: 15px;
             color: var(--primary-color);
+            font-size: 18px;
         }
         
         .preview-area {
@@ -483,6 +518,7 @@
             justify-content: center;
             margin: 15px auto;
             overflow: hidden;
+            background-color: white;
         }
         
         .preview-area img {
@@ -500,6 +536,8 @@
             .tab {
                 border-right: none;
                 border-bottom: 1px solid var(--border-color);
+                justify-content: flex-start;
+                padding-left: 20px;
             }
             
             .form-row {
@@ -512,12 +550,16 @@
             }
             
             .image-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: 1fr;
             }
             
             .data-table {
                 display: block;
                 overflow-x: auto;
+            }
+            
+            .tab-title {
+                font-size: 20px;
             }
         }
         
@@ -526,6 +568,7 @@
             display: flex;
             gap: 5px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
         
         .data-item {
@@ -548,16 +591,18 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         
         .popup-content {
             background-color: white;
             border-radius: 10px;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             padding: 25px;
+            position: relative;
         }
         
         .popup-header {
@@ -565,6 +610,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popup-header h3 {
+            color: var(--primary-color);
+            margin: 0;
         }
         
         .popup-close {
@@ -573,6 +625,17 @@
             font-size: 24px;
             cursor: pointer;
             color: #666;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .popup-close:hover {
+            background-color: rgba(0, 0, 0, 0.1);
         }
         
         /* 文件上传限制提示 */
@@ -580,6 +643,7 @@
             font-size: 12px;
             color: #666;
             margin-top: 5px;
+            font-style: italic;
         }
         
         /* 选项卡内部分区 */
@@ -589,10 +653,94 @@
             border-bottom: 1px solid #eee;
         }
         
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
         .section-title {
             font-size: 18px;
             margin-bottom: 15px;
             color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 自定义滚动条 */
+        .data-display::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .data-display::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .data-display::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .data-display::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* 图标样式 - 使用文本图标 */
+        .icon-bullhorn::before { content: "📢"; }
+        .icon-map::before { content: "📍"; }
+        .icon-money::before { content: "💰"; }
+        .icon-archive::before { content: "📦"; }
+        .icon-settings::before { content: "⚙️"; }
+        .icon-hand::before { content: "👉"; }
+        .icon-edit::before { content: "✏️"; }
+        .icon-delete::before { content: "🗑️"; }
+        .icon-save::before { content: "💾"; }
+        .icon-cancel::before { content: "❌"; }
+        .icon-upload::before { content: "📤"; }
+        .icon-download::before { content: "📥"; }
+        .icon-trash::before { content: "🗑️"; }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 提示信息 */
+        .alert {
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
         }
     </style>
 </head>
@@ -610,28 +758,37 @@
         
         <div class="tabs" id="tabs">
             <div class="tab active" data-tab="notice">
-                <i class="fas fa-bullhorn"></i>公告
+                <span class="tab-icon icon-bullhorn"></span>
+                <span>公告</span>
             </div>
             <div class="tab" data-tab="network">
-                <i class="fas fa-map-marker-alt"></i>网点清单
+                <span class="tab-icon icon-map"></span>
+                <span>网点清单</span>
             </div>
             <div class="tab" data-tab="fee">
-                <i class="fas fa-money-bill-wave"></i>资费清单
+                <span class="tab-icon icon-money"></span>
+                <span>资费清单</span>
             </div>
             <div class="tab" data-tab="cabinet">
-                <i class="fas fa-archive"></i>在柜信息
+                <span class="tab-icon icon-archive"></span>
+                <span>在柜信息</span>
             </div>
             <div class="tab" data-tab="settings">
-                <i class="fas fa-cog"></i>设置
+                <span class="tab-icon icon-settings"></span>
+                <span>设置</span>
             </div>
             <div class="tab" data-tab="poke">
-                <i class="fas fa-hand-point-up"></i>戳戳我
+                <span class="tab-icon icon-hand"></span>
+                <span>戳戳我</span>
             </div>
         </div>
         
         <!-- 公告标签页 -->
         <div id="notice" class="tab-content active">
-            <h2 class="tab-title"><i class="fas fa-bullhorn"></i> 系统公告</h2>
+            <h2 class="tab-title">
+                <span class="icon-bullhorn"></span>
+                系统公告
+            </h2>
             
             <div class="data-display" id="notice-display">
                 <div class="empty-message">暂无公告，请上传公告图片</div>
@@ -642,7 +799,10 @@
                 <p>请输入管理密码以添加或修改公告</p>
                 <div class="password-form">
                     <input type="password" class="form-control" id="notice-password" placeholder="请输入管理密码">
-                    <button class="btn btn-primary" id="notice-auth-btn">验证</button>
+                    <button class="btn btn-primary" id="notice-auth-btn">
+                        <span class="icon-save"></span>
+                        验证
+                    </button>
                 </div>
             </div>
             
@@ -663,8 +823,14 @@
                     <input type="hidden" id="notice-id">
                     
                     <div class="button-group">
-                        <button type="submit" class="btn btn-primary">上传公告</button>
-                        <button type="button" class="btn btn-secondary" id="notice-cancel-btn">取消</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon-upload"></span>
+                            上传公告
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="notice-cancel-btn">
+                            <span class="icon-cancel"></span>
+                            取消
+                        </button>
                     </div>
                 </form>
             </div>
@@ -672,7 +838,10 @@
         
         <!-- 网点清单标签页 -->
         <div id="network" class="tab-content">
-            <h2 class="tab-title"><i class="fas fa-map-marker-alt"></i> 网点清单</h2>
+            <h2 class="tab-title">
+                <span class="icon-map"></span>
+                网点清单
+            </h2>
             
             <div class="data-display" id="network-display">
                 <div class="empty-message">暂无网点清单，请上传网点清单图片</div>
@@ -683,7 +852,10 @@
                 <p>请输入管理密码以添加或修改网点清单</p>
                 <div class="password-form">
                     <input type="password" class="form-control" id="network-password" placeholder="请输入管理密码">
-                    <button class="btn btn-primary" id="network-auth-btn">验证</button>
+                    <button class="btn btn-primary" id="network-auth-btn">
+                        <span class="icon-save"></span>
+                        验证
+                    </button>
                 </div>
             </div>
             
@@ -699,8 +871,14 @@
                     <input type="hidden" id="network-id">
                     
                     <div class="button-group">
-                        <button type="submit" class="btn btn-primary">上传网点清单</button>
-                        <button type="button" class="btn btn-secondary" id="network-cancel-btn">取消</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon-upload"></span>
+                            上传网点清单
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="network-cancel-btn">
+                            <span class="icon-cancel"></span>
+                            取消
+                        </button>
                     </div>
                 </form>
             </div>
@@ -708,7 +886,10 @@
         
         <!-- 资费清单标签页 -->
         <div id="fee" class="tab-content">
-            <h2 class="tab-title"><i class="fas fa-money-bill-wave"></i> 资费清单</h2>
+            <h2 class="tab-title">
+                <span class="icon-money"></span>
+                资费清单
+            </h2>
             
             <div class="data-display" id="fee-display">
                 <div class="empty-message">暂无资费清单，请上传资费清单图片</div>
@@ -719,7 +900,10 @@
                 <p>请输入管理密码以添加或修改资费清单</p>
                 <div class="password-form">
                     <input type="password" class="form-control" id="fee-password" placeholder="请输入管理密码">
-                    <button class="btn btn-primary" id="fee-auth-btn">验证</button>
+                    <button class="btn btn-primary" id="fee-auth-btn">
+                        <span class="icon-save"></span>
+                        验证
+                    </button>
                 </div>
             </div>
             
@@ -735,8 +919,14 @@
                     <input type="hidden" id="fee-id">
                     
                     <div class="button-group">
-                        <button type="submit" class="btn btn-primary">上传资费清单</button>
-                        <button type="button" class="btn btn-secondary" id="fee-cancel-btn">取消</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon-upload"></span>
+                            上传资费清单
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="fee-cancel-btn">
+                            <span class="icon-cancel"></span>
+                            取消
+                        </button>
                     </div>
                 </form>
             </div>
@@ -744,31 +934,46 @@
         
         <!-- 在柜信息标签页 -->
         <div id="cabinet" class="tab-content">
-            <h2 class="tab-title"><i class="fas fa-archive"></i> 在柜信息管理</h2>
+            <h2 class="tab-title">
+                <span class="icon-archive"></span>
+                在柜信息管理
+            </h2>
             
             <!-- 在柜信息部分 -->
             <div class="section">
-                <h3 class="section-title">在柜物品信息</h3>
+                <h3 class="section-title">
+                    <span class="icon-archive"></span>
+                    在柜物品信息
+                </h3>
                 
                 <div class="data-display" id="cabinet-display">
-                    <div class="empty-message">等待数据上传</div>
+                    <div class="empty-message">暂无数据，点击下方按钮添加在柜信息</div>
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn btn-primary" id="add-cabinet-btn">添 加 在 柜 信 息</button>
+                    <button class="btn btn-primary" id="add-cabinet-btn">
+                        <span class="icon-upload"></span>
+                        添加在柜信息
+                    </button>
                 </div>
             </div>
             
             <!-- 取件人信息部分 -->
             <div class="section">
-                <h3 class="section-title">取件人信息</h3>
+                <h3 class="section-title">
+                    <span class="icon-hand"></span>
+                    取件人信息
+                </h3>
                 
                 <div class="data-display" id="receiver-display">
-                    <div class="empty-message">等待数据上传</div>
+                    <div class="empty-message">暂无数据，点击下方按钮添加取件人信息</div>
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn btn-primary" id="add-receiver-btn">添 加 取 件 人 信 息</button>
+                    <button class="btn btn-primary" id="add-receiver-btn">
+                        <span class="icon-upload"></span>
+                        添加取件人信息
+                    </button>
                 </div>
             </div>
             
@@ -829,8 +1034,14 @@
                         <input type="hidden" id="cabinet-data-id">
                         
                         <div class="button-group">
-                            <button type="submit" class="btn btn-primary">保存信息</button>
-                            <button type="button" class="btn btn-secondary" id="cabinet-form-cancel-btn">取消</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="icon-save"></span>
+                                保存信息
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="cabinet-form-cancel-btn">
+                                <span class="icon-cancel"></span>
+                                取消
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -870,8 +1081,14 @@
                         <input type="hidden" id="receiver-data-id">
                         
                         <div class="button-group">
-                            <button type="submit" class="btn btn-primary">保存信息</button>
-                            <button type="button" class="btn btn-secondary" id="receiver-form-cancel-btn">取消</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="icon-save"></span>
+                                保存信息
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="receiver-form-cancel-btn">
+                                <span class="icon-cancel"></span>
+                                取消
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -880,14 +1097,20 @@
         
         <!-- 设置标签页 -->
         <div id="settings" class="tab-content">
-            <h2 class="tab-title"><i class="fas fa-cog"></i> 系统设置</h2>
+            <h2 class="tab-title">
+                <span class="icon-settings"></span>
+                系统设置
+            </h2>
             
             <div class="password-protection" id="settings-password-section">
                 <h3>设置管理</h3>
                 <p>请输入管理密码以修改系统设置</p>
                 <div class="password-form">
                     <input type="password" class="form-control" id="settings-password" placeholder="请输入管理密码">
-                    <button class="btn btn-primary" id="settings-auth-btn">验证</button>
+                    <button class="btn btn-primary" id="settings-auth-btn">
+                        <span class="icon-save"></span>
+                        验证
+                    </button>
                 </div>
             </div>
             
@@ -895,7 +1118,7 @@
                 <div class="settings-grid">
                     <div class="setting-item">
                         <h3>LOGO设置</h3>
-                        <p>支持上传的格式为JPG、JPEG、PNG，尺寸为75cm*75cm</p>
+                        <p>支持上传的格式为JPG、JPEG、PNG</p>
                         
                         <div class="preview-area" id="logo-preview-area">
                             <span>LOGO预览</span>
@@ -907,14 +1130,20 @@
                         </div>
                         
                         <div class="button-group">
-                            <button class="btn btn-primary" id="logo-upload-btn">上传LOGO</button>
-                            <button class="btn btn-danger" id="logo-delete-btn">删除LOGO</button>
+                            <button class="btn btn-primary" id="logo-upload-btn">
+                                <span class="icon-upload"></span>
+                                上传LOGO
+                            </button>
+                            <button class="btn btn-danger" id="logo-delete-btn">
+                                <span class="icon-trash"></span>
+                                删除LOGO
+                            </button>
                         </div>
                     </div>
                     
                     <div class="setting-item">
                         <h3>背景设置</h3>
-                        <p>支持上传的格式为JPG、JPEG、PNG，将覆盖整个网页背景</p>
+                        <p>支持上传的格式为JPG、JPEG、PNG</p>
                         
                         <div class="preview-area" id="bg-preview-area">
                             <span>背景预览</span>
@@ -926,19 +1155,35 @@
                         </div>
                         
                         <div class="button-group">
-                            <button class="btn btn-primary" id="bg-upload-btn">上传背景</button>
-                            <button class="btn btn-danger" id="bg-delete-btn">删除背景</button>
+                            <button class="btn btn-primary" id="bg-upload-btn">
+                                <span class="icon-upload"></span>
+                                上传背景
+                            </button>
+                            <button class="btn btn-danger" id="bg-delete-btn">
+                                <span class="icon-trash"></span>
+                                删除背景
+                            </button>
                         </div>
                     </div>
                 </div>
+                
                 <!-- 管理工具区域 -->
-                <div id="admin-tools" class="setting-item" style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
+                <div class="setting-item" style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
                     <h3>系统管理工具</h3>
                     <p>高级管理功能，请谨慎操作</p>
                     <div class="button-group">
-                        <button class="btn btn-primary" onclick="exportAllData()">备份所有数据</button>
-                        <button class="btn btn-secondary" onclick="importAllData()">恢复数据</button>
-                        <button class="btn btn-danger" onclick="clearAllData()">清空所有数据</button>
+                        <button class="btn btn-primary" onclick="exportAllData()">
+                            <span class="icon-download"></span>
+                            备份所有数据
+                        </button>
+                        <button class="btn btn-secondary" onclick="importAllData()">
+                            <span class="icon-upload"></span>
+                            恢复数据
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAllData()">
+                            <span class="icon-trash"></span>
+                            清空所有数据
+                        </button>
                     </div>
                 </div>
             </div>
@@ -946,7 +1191,10 @@
         
         <!-- 戳戳我标签页 -->
         <div id="poke" class="tab-content">
-            <h2 class="tab-title"><i class="fas fa-hand-point-up"></i> 戳戳我</h2>
+            <h2 class="tab-title">
+                <span class="icon-hand"></span>
+                戳戳我
+            </h2>
             
             <div class="poke-image" id="poke-display">
                 <div class="empty-message">暂无图片，请上传图片</div>
@@ -957,7 +1205,10 @@
                 <p>请输入管理密码以添加或修改图片</p>
                 <div class="password-form">
                     <input type="password" class="form-control" id="poke-password" placeholder="请输入管理密码">
-                    <button class="btn btn-primary" id="poke-auth-btn">验证</button>
+                    <button class="btn btn-primary" id="poke-auth-btn">
+                        <span class="icon-save"></span>
+                        验证
+                    </button>
                 </div>
             </div>
             
@@ -972,8 +1223,14 @@
                     <input type="hidden" id="poke-id">
                     
                     <div class="button-group">
-                        <button type="submit" class="btn btn-primary">上传图片</button>
-                        <button type="button" class="btn btn-secondary" id="poke-cancel-btn">取消</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon-upload"></span>
+                            上传图片
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="poke-cancel-btn">
+                            <span class="icon-cancel"></span>
+                            取消
+                        </button>
                     </div>
                 </form>
             </div>
@@ -982,1269 +1239,1396 @@
     
     <!-- 图片预览模态框 -->
     <div class="modal" id="image-modal">
-        <button class="modal-close" id="modal-close">&times;</button>
         <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
             <img id="modal-image" src="" alt="预览图片" class="modal-img">
         </div>
     </div>
 
     <script>
-        // 全局变量
-        const DEFAULT_PASSWORD = "740302";
+        // ============ 全局配置 ============
+        const CONFIG = {
+            DEFAULT_PASSWORD: "740302",
+            MAX_IMAGES: 5,
+            STORAGE_KEYS: {
+                NOTICE: 'noticeData',
+                NETWORK: 'networkData',
+                FEE: 'feeData',
+                CABINET: 'cabinetData',
+                RECEIVER: 'receiverData',
+                POKE: 'pokeData',
+                LOGO: 'siteLogo',
+                BACKGROUND: 'siteBackground',
+                CURRENT_TAB: 'currentTab'
+            }
+        };
+        
         let currentTab = "notice";
         
-        // 初始化函数
-        document.addEventListener('DOMContentLoaded', function() {
-            // 从本地存储加载当前标签页
-            const savedTab = localStorage.getItem('currentTab');
-            if (savedTab) {
-                switchTab(savedTab);
-            }
+        // ============ 工具函数 ============
+        const Utils = {
+            // 生成唯一ID
+            generateId: () => Date.now().toString(36) + Math.random().toString(36).substr(2),
             
-            // 加载所有数据
-            loadAllData();
+            // 获取当前时间
+            getCurrentDateTime: () => {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+            },
             
-            // 设置标签页切换
-            setupTabs();
+            // 显示消息
+            showMessage: (message, type = 'info') => {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                alert.style.position = 'fixed';
+                alert.style.top = '20px';
+                alert.style.right = '20px';
+                alert.style.zIndex = '9999';
+                alert.style.minWidth = '300px';
+                alert.style.maxWidth = '500px';
+                alert.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        if (alert.parentNode) {
+                            document.body.removeChild(alert);
+                        }
+                    }, 500);
+                }, 3000);
+            },
             
-            // 设置密码验证
-            setupPasswordAuth();
+            // 验证密码
+            validatePassword: (inputPassword) => {
+                return inputPassword === CONFIG.DEFAULT_PASSWORD;
+            },
             
-            // 设置表单提交
-            setupForms();
+            // 验证文件数量
+            validateFileCount: (files, maxCount) => {
+                if (files.length > maxCount) {
+                    Utils.showMessage(`最多只能上传${maxCount}张图片！`, 'error');
+                    return false;
+                }
+                return true;
+            },
             
-            // 设置图片预览
-            setupImagePreview();
-            
-            // 设置取消按钮
-            setupCancelButtons();
-            
-            // 设置弹窗功能
-            setupPopups();
-            
-            // 初始化弹窗关闭按钮
-            document.getElementById('modal-close').addEventListener('click', function() {
-                document.getElementById('image-modal').classList.remove('active');
-            });
-        });
-        
-        // 标签页切换功能
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    switchTab(tabId);
+            // 读取文件为DataURL
+            readFileAsDataURL: (file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsDataURL(file);
                 });
-            });
-        }
-        
-        function switchTab(tabId) {
-            // 更新当前标签页
-            currentTab = tabId;
-            localStorage.setItem('currentTab', tabId);
+            },
             
-            // 更新标签页样式
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
-            
-            // 更新内容显示
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        }
-        
-        // 密码验证功能
-        function setupPasswordAuth() {
-            // 公告密码验证
-            document.getElementById('notice-auth-btn').addEventListener('click', function() {
-                const password = document.getElementById('notice-password').value;
-                if (password === DEFAULT_PASSWORD) {
-                    document.getElementById('notice-password-section').style.display = 'none';
-                    document.getElementById('notice-upload-form').style.display = 'block';
-                } else {
-                    alert('密码错误！');
-                    document.getElementById('notice-password').value = '';
+            // 批量读取文件
+            readMultipleFiles: async (files) => {
+                const results = [];
+                for (let i = 0; i < files.length; i++) {
+                    const dataUrl = await Utils.readFileAsDataURL(files[i]);
+                    results.push(dataUrl);
                 }
-            });
-            
-            // 网点清单密码验证
-            document.getElementById('network-auth-btn').addEventListener('click', function() {
-                const password = document.getElementById('network-password').value;
-                if (password === DEFAULT_PASSWORD) {
-                    document.getElementById('network-password-section').style.display = 'none';
-                    document.getElementById('network-upload-form').style.display = 'block';
-                } else {
-                    alert('密码错误！');
-                    document.getElementById('network-password').value = '';
-                }
-            });
-            
-            // 资费清单密码验证
-            document.getElementById('fee-auth-btn').addEventListener('click', function() {
-                const password = document.getElementById('fee-password').value;
-                if (password === DEFAULT_PASSWORD) {
-                    document.getElementById('fee-password-section').style.display = 'none';
-                    document.getElementById('fee-upload-form').style.display = 'block';
-                } else {
-                    alert('密码错误！');
-                    document.getElementById('fee-password').value = '';
-                }
-            });
-            
-            // 设置密码验证
-            document.getElementById('settings-auth-btn').addEventListener('click', function() {
-                const password = document.getElementById('settings-password').value;
-                if (password === DEFAULT_PASSWORD) {
-                    document.getElementById('settings-password-section').style.display = 'none';
-                    document.getElementById('settings-content').style.display = 'block';
-                } else {
-                    alert('密码错误！');
-                    document.getElementById('settings-password').value = '';
-                }
-            });
-            
-            // 戳戳我密码验证
-            document.getElementById('poke-auth-btn').addEventListener('click', function() {
-                const password = document.getElementById('poke-password').value;
-                if (password === DEFAULT_PASSWORD) {
-                    document.getElementById('poke-password-section').style.display = 'none';
-                    document.getElementById('poke-upload-form').style.display = 'block';
-                } else {
-                    alert('密码错误！');
-                    document.getElementById('poke-password').value = '';
-                }
-            });
-        }
-        
-        // 表单提交功能
-        function setupForms() {
-            // 公告表单
-            document.getElementById('notice-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveNoticeData();
-            });
-            
-            // 网点清单表单
-            document.getElementById('network-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveNetworkData();
-            });
-            
-            // 资费清单表单
-            document.getElementById('fee-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveFeeData();
-            });
-            
-            // 在柜信息表单
-            document.getElementById('cabinet-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveCabinetData();
-            });
-            
-            // 取件人信息表单
-            document.getElementById('receiver-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveReceiverData();
-            });
-            
-            // 戳戳我表单
-            document.getElementById('poke-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                savePokeData();
-            });
-            
-            // LOGO上传
-            document.getElementById('logo-upload-btn').addEventListener('click', function() {
-                uploadLogo();
-            });
-            
-            // LOGO删除
-            document.getElementById('logo-delete-btn').addEventListener('click', function() {
-                deleteLogo();
-            });
-            
-            // 背景上传
-            document.getElementById('bg-upload-btn').addEventListener('click', function() {
-                uploadBackground();
-            });
-            
-            // 背景删除
-            document.getElementById('bg-delete-btn').addEventListener('click', function() {
-                deleteBackground();
-            });
-        }
-        
-        // 取消按钮功能
-        function setupCancelButtons() {
-            document.getElementById('notice-cancel-btn').addEventListener('click', function() {
-                resetNoticeForm();
-            });
-            
-            document.getElementById('network-cancel-btn').addEventListener('click', function() {
-                resetNetworkForm();
-            });
-            
-            document.getElementById('fee-cancel-btn').addEventListener('click', function() {
-                resetFeeForm();
-            });
-            
-            document.getElementById('poke-cancel-btn').addEventListener('click', function() {
-                resetPokeForm();
-            });
-        }
-        
-        // 弹窗功能设置
-        function setupPopups() {
-            // 在柜信息弹窗
-            const cabinetPopup = document.getElementById('cabinet-popup-form');
-            const cabinetPopupClose = document.getElementById('cabinet-popup-close');
-            const addCabinetBtn = document.getElementById('add-cabinet-btn');
-            const cabinetFormCancelBtn = document.getElementById('cabinet-form-cancel-btn');
-            
-            addCabinetBtn.addEventListener('click', function() {
-                cabinetPopup.style.display = 'flex';
-                document.getElementById('cabinet-form').reset();
-                document.getElementById('cabinet-data-id').value = '';
-            });
-            
-            cabinetPopupClose.addEventListener('click', function() {
-                cabinetPopup.style.display = 'none';
-            });
-            
-            cabinetFormCancelBtn.addEventListener('click', function() {
-                cabinetPopup.style.display = 'none';
-            });
-            
-            // 取件人信息弹窗
-            const receiverPopup = document.getElementById('receiver-popup-form');
-            const receiverPopupClose = document.getElementById('receiver-popup-close');
-            const addReceiverBtn = document.getElementById('add-receiver-btn');
-            const receiverFormCancelBtn = document.getElementById('receiver-form-cancel-btn');
-            
-            addReceiverBtn.addEventListener('click', function() {
-                receiverPopup.style.display = 'flex';
-                document.getElementById('receiver-form').reset();
-                document.getElementById('receiver-data-id').value = '';
-            });
-            
-            receiverPopupClose.addEventListener('click', function() {
-                receiverPopup.style.display = 'none';
-            });
-            
-            receiverFormCancelBtn.addEventListener('click', function() {
-                receiverPopup.style.display = 'none';
-            });
-            
-            // 点击弹窗背景关闭
-            cabinetPopup.addEventListener('click', function(e) {
-                if (e.target === cabinetPopup) {
-                    cabinetPopup.style.display = 'none';
-                }
-            });
-            
-            receiverPopup.addEventListener('click', function(e) {
-                if (e.target === receiverPopup) {
-                    receiverPopup.style.display = 'none';
-                }
-            });
-        }
-        
-        // 图片预览功能
-        function setupImagePreview() {
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            
-            // 点击模态框背景关闭
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
-        }
-        
-        // 显示图片预览
-        function showImagePreview(imageSrc) {
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            
-            modalImage.src = imageSrc;
-            modal.classList.add('active');
-        }
-        
-        // 生成唯一ID
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        }
-        
-        // 获取当前时间
-        function getCurrentDateTime() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            
-            return `${year}年${month}月${day}日 ${hours}:${minutes}`;
-        }
-        
-        // 加载所有数据
-        function loadAllData() {
-            loadNoticeData();
-            loadNetworkData();
-            loadFeeData();
-            loadCabinetData();
-            loadReceiverData();
-            loadPokeData();
-            loadSettings();
-        }
-        
-        // 加载公告数据
-        function loadNoticeData() {
-            const noticeData = JSON.parse(localStorage.getItem('noticeData') || '[]');
-            const noticeDisplay = document.getElementById('notice-display');
-            
-            if (noticeData.length === 0) {
-                noticeDisplay.innerHTML = '<div class="empty-message">暂无公告，请上传公告图片</div>';
-                return;
+                return results;
             }
+        };
+        
+        // ============ 存储管理器 ============
+        const StorageManager = {
+            // 获取存储数据
+            get: (key) => {
+                try {
+                    const data = localStorage.getItem(key);
+                    return data ? JSON.parse(data) : [];
+                } catch (error) {
+                    console.error('读取存储数据失败:', error);
+                    return [];
+                }
+            },
             
-            let html = '<div class="image-grid">';
+            // 保存存储数据
+            set: (key, data) => {
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return true;
+                } catch (error) {
+                    console.error('保存存储数据失败:', error);
+                    Utils.showMessage('保存数据失败，存储空间可能已满', 'error');
+                    return false;
+                }
+            },
             
-            noticeData.forEach(item => {
-                html += `
-                <div class="image-item" data-id="${item.id}">
-                    <img src="${item.image}" alt="${item.title}" class="item-img" onclick="showImagePreview('${item.image}')">
-                    <div class="item-info">
-                        <div class="item-title">${item.title}</div>
-                        <div class="item-detail">上传日期: ${item.uploadDate}</div>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary btn-small" onclick="editNotice('${item.id}')">编辑</button>
-                            <button class="btn btn-danger btn-small" onclick="deleteNotice('${item.id}')">删除</button>
+            // 删除存储数据
+            remove: (key) => {
+                localStorage.removeItem(key);
+            },
+            
+            // 清空所有数据
+            clearAll: () => {
+                Object.values(CONFIG.STORAGE_KEYS).forEach(key => {
+                    localStorage.removeItem(key);
+                });
+            },
+            
+            // 导出所有数据
+            exportAll: () => {
+                const exportData = {};
+                Object.values(CONFIG.STORAGE_KEYS).forEach(key => {
+                    exportData[key] = StorageManager.get(key);
+                });
+                exportData.exportDate = new Date().toLocaleString('zh-CN');
+                return exportData;
+            },
+            
+            // 导入所有数据
+            importAll: (data) => {
+                Object.entries(data).forEach(([key, value]) => {
+                    if (Object.values(CONFIG.STORAGE_KEYS).includes(key)) {
+                        StorageManager.set(key, value);
+                    }
+                });
+            }
+        };
+        
+        // ============ 页面管理器 ============
+        const PageManager = {
+            // 切换标签页
+            switchTab: (tabId) => {
+                currentTab = tabId;
+                StorageManager.set(CONFIG.STORAGE_KEYS.CURRENT_TAB, tabId);
+                
+                // 更新标签页样式
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                const activeTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+                
+                // 更新内容显示
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                const activeContent = document.getElementById(tabId);
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                }
+            },
+            
+            // 显示图片预览
+            showImagePreview: (imageSrc) => {
+                const modal = document.getElementById('image-modal');
+                const modalImage = document.getElementById('modal-image');
+                
+                modalImage.src = imageSrc;
+                modal.classList.add('active');
+            },
+            
+            // 显示弹窗
+            showPopup: (popupId) => {
+                const popup = document.getElementById(popupId);
+                if (popup) {
+                    popup.style.display = 'flex';
+                }
+            },
+            
+            // 隐藏弹窗
+            hidePopup: (popupId) => {
+                const popup = document.getElementById(popupId);
+                if (popup) {
+                    popup.style.display = 'none';
+                }
+            },
+            
+            // 显示表单
+            showForm: (formId) => {
+                const form = document.getElementById(formId);
+                if (form) {
+                    form.style.display = 'block';
+                }
+            },
+            
+            // 隐藏表单
+            hideForm: (formId) => {
+                const form = document.getElementById(formId);
+                if (form) {
+                    form.style.display = 'none';
+                }
+            },
+            
+            // 重置表单
+            resetForm: (formId) => {
+                const form = document.getElementById(formId);
+                if (form) {
+                    form.reset();
+                    const hiddenInputs = form.querySelectorAll('input[type="hidden"]');
+                    hiddenInputs.forEach(input => {
+                        input.value = '';
+                    });
+                }
+            }
+        };
+        
+        // ============ 数据管理器 ============
+        const DataManager = {
+            // 加载公告数据
+            loadNoticeData: () => {
+                const noticeData = StorageManager.get(CONFIG.STORAGE_KEYS.NOTICE);
+                const noticeDisplay = document.getElementById('notice-display');
+                
+                if (!noticeData || noticeData.length === 0) {
+                    noticeDisplay.innerHTML = '<div class="empty-message">暂无公告，请上传公告图片</div>';
+                    return;
+                }
+                
+                let html = '<div class="image-grid">';
+                noticeData.forEach(item => {
+                    html += `
+                    <div class="image-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="${item.title}" class="item-img" onclick="PageManager.showImagePreview('${item.image}')">
+                        <div class="item-info">
+                            <div class="item-title">${item.title}</div>
+                            <div class="item-detail">上传日期: ${item.uploadDate}</div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-small" onclick="DataManager.editNotice('${item.id}')">
+                                    <span class="icon-edit"></span>
+                                    编辑
+                                </button>
+                                <button class="btn btn-danger btn-small" onclick="DataManager.deleteNotice('${item.id}')">
+                                    <span class="icon-delete"></span>
+                                    删除
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                `;
-            });
+                    `;
+                });
+                html += '</div>';
+                noticeDisplay.innerHTML = html;
+            },
             
-            html += '</div>';
-            noticeDisplay.innerHTML = html;
-        }
-        
-        // 保存公告数据
-        function saveNoticeData() {
-            const fileInput = document.getElementById('notice-file');
-            const title = document.getElementById('notice-title').value;
-            const id = document.getElementById('notice-id').value;
-            
-            if (!title) {
-                alert('请填写公告标题！');
-                return;
-            }
-            
-            if (!fileInput.files[0] && !id) {
-                alert('请选择图片文件！');
-                return;
-            }
-            
-            // 检查文件数量
-            const files = fileInput.files;
-            if (files.length > 5) {
-                alert('最多只能上传5张图片！');
-                return;
-            }
-            
-            const noticeData = JSON.parse(localStorage.getItem('noticeData') || '[]');
-            const uploadDate = getCurrentDateTime();
-            
-            // 处理多个文件
-            const processFiles = (fileList) => {
-                const results = [];
+            // 保存公告数据
+            saveNoticeData: async () => {
+                const fileInput = document.getElementById('notice-file');
+                const title = document.getElementById('notice-title').value;
+                const id = document.getElementById('notice-id').value;
                 
-                for (let i = 0; i < fileList.length; i++) {
-                    const file = fileList[i];
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        results.push({
-                            id: generateId(),
-                            title: title + (fileList.length > 1 ? ` (${i+1})` : ''),
-                            image: e.target.result,
-                            uploadDate
-                        });
+                if (!title.trim()) {
+                    Utils.showMessage('请填写公告标题！', 'error');
+                    return;
+                }
+                
+                if (!fileInput.files[0] && !id) {
+                    Utils.showMessage('请选择图片文件！', 'error');
+                    return;
+                }
+                
+                const files = fileInput.files;
+                if (files.length > 0 && !Utils.validateFileCount(files, CONFIG.MAX_IMAGES)) {
+                    return;
+                }
+                
+                const noticeData = StorageManager.get(CONFIG.STORAGE_KEYS.NOTICE);
+                const uploadDate = Utils.getCurrentDateTime();
+                
+                try {
+                    if (files.length > 0) {
+                        // 上传新文件
+                        const dataUrls = await Utils.readMultipleFiles(files);
                         
-                        if (results.length === fileList.length) {
-                            // 所有文件读取完成
-                            if (id) {
-                                // 编辑模式 - 替换现有项
-                                const index = noticeData.findIndex(item => item.id === id);
-                                if (index !== -1) {
-                                    noticeData[index] = results[0];
-                                }
-                            } else {
-                                // 新增模式 - 添加所有图片
-                                noticeData.push(...results);
+                        if (id) {
+                            // 编辑模式 - 替换现有项
+                            const index = noticeData.findIndex(item => item.id === id);
+                            if (index !== -1) {
+                                noticeData[index] = {
+                                    ...noticeData[index],
+                                    title,
+                                    image: dataUrls[0],
+                                    uploadDate
+                                };
                             }
-                            
-                            // 限制最多保存5条
-                            const limitedData = noticeData.slice(-5);
-                            
-                            localStorage.setItem('noticeData', JSON.stringify(limitedData));
-                            resetNoticeForm();
-                            loadNoticeData();
-                            alert(id ? '公告已更新！' : '公告已上传！');
+                        } else {
+                            // 新增模式 - 添加所有图片
+                            dataUrls.forEach((dataUrl, i) => {
+                                noticeData.push({
+                                    id: Utils.generateId(),
+                                    title: title + (files.length > 1 ? ` (${i+1})` : ''),
+                                    image: dataUrl,
+                                    uploadDate
+                                });
+                            });
                         }
-                    };
+                    } else if (id) {
+                        // 没有新图片，只更新其他信息
+                        const index = noticeData.findIndex(item => item.id === id);
+                        if (index !== -1) {
+                            noticeData[index] = {
+                                ...noticeData[index],
+                                title,
+                                uploadDate
+                            };
+                        }
+                    }
                     
-                    reader.readAsDataURL(file);
-                }
-            };
-            
-            if (files.length > 0) {
-                processFiles(files);
-            } else if (id) {
-                // 没有新图片，只更新其他信息
-                const index = noticeData.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    noticeData[index] = {
-                        ...noticeData[index],
-                        title,
-                        uploadDate: getCurrentDateTime()
-                    };
+                    // 限制最多保存5条
+                    const limitedData = noticeData.slice(-CONFIG.MAX_IMAGES);
                     
-                    localStorage.setItem('noticeData', JSON.stringify(noticeData));
-                    resetNoticeForm();
-                    loadNoticeData();
-                    alert('公告信息已更新！');
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.NOTICE, limitedData)) {
+                        PageManager.resetForm('notice-form');
+                        PageManager.hideForm('notice-upload-form');
+                        PageManager.showForm('notice-password-section');
+                        DataManager.loadNoticeData();
+                        Utils.showMessage(id ? '公告已更新！' : '公告已上传！', 'success');
+                    }
+                } catch (error) {
+                    console.error('保存公告数据失败:', error);
+                    Utils.showMessage('上传失败，请重试', 'error');
                 }
-            }
-        }
-        
-        // 编辑公告
-        function editNotice(id) {
-            const noticeData = JSON.parse(localStorage.getItem('noticeData') || '[]');
-            const item = noticeData.find(item => item.id === id);
+            },
             
-            if (item) {
-                document.getElementById('notice-title').value = item.title;
-                document.getElementById('notice-id').value = item.id;
+            // 编辑公告
+            editNotice: (id) => {
+                const noticeData = StorageManager.get(CONFIG.STORAGE_KEYS.NOTICE);
+                const item = noticeData.find(item => item.id === id);
                 
-                // 显示表单
-                document.getElementById('notice-password-section').style.display = 'none';
-                document.getElementById('notice-upload-form').style.display = 'block';
-            }
-        }
-        
-        // 删除公告
-        function deleteNotice(id) {
-            if (confirm('确定要删除这条公告吗？')) {
-                const noticeData = JSON.parse(localStorage.getItem('noticeData') || '[]');
-                const newData = noticeData.filter(item => item.id !== id);
-                localStorage.setItem('noticeData', JSON.stringify(newData));
-                loadNoticeData();
-            }
-        }
-        
-        // 重置公告表单
-        function resetNoticeForm() {
-            document.getElementById('notice-form').reset();
-            document.getElementById('notice-id').value = '';
-            document.getElementById('notice-upload-form').style.display = 'none';
-            document.getElementById('notice-password-section').style.display = 'block';
-            document.getElementById('notice-password').value = '';
-        }
-        
-        // 加载网点清单数据
-        function loadNetworkData() {
-            const networkData = JSON.parse(localStorage.getItem('networkData') || '[]');
-            const networkDisplay = document.getElementById('network-display');
+                if (item) {
+                    document.getElementById('notice-title').value = item.title;
+                    document.getElementById('notice-id').value = item.id;
+                    
+                    PageManager.hideForm('notice-password-section');
+                    PageManager.showForm('notice-upload-form');
+                }
+            },
             
-            if (networkData.length === 0) {
-                networkDisplay.innerHTML = '<div class="empty-message">暂无网点清单，请上传网点清单图片</div>';
-                return;
-            }
+            // 删除公告
+            deleteNotice: (id) => {
+                if (confirm('确定要删除这条公告吗？')) {
+                    const noticeData = StorageManager.get(CONFIG.STORAGE_KEYS.NOTICE);
+                    const newData = noticeData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.NOTICE, newData)) {
+                        DataManager.loadNoticeData();
+                        Utils.showMessage('公告已删除！', 'success');
+                    }
+                }
+            },
             
-            let html = '<div class="image-grid">';
-            
-            networkData.forEach((item, index) => {
-                html += `
-                <div class="image-item" data-id="${item.id}">
-                    <img src="${item.image}" alt="网点清单图片 ${index+1}" class="item-img" onclick="showImagePreview('${item.image}')">
-                    <div class="item-info">
-                        <div class="item-title">网点清单图片 ${index+1}</div>
-                        <div class="item-detail">上传日期: ${item.uploadDate}</div>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary btn-small" onclick="editNetwork('${item.id}')">编辑</button>
-                            <button class="btn btn-danger btn-small" onclick="deleteNetwork('${item.id}')">删除</button>
+            // 加载网点清单数据
+            loadNetworkData: () => {
+                const networkData = StorageManager.get(CONFIG.STORAGE_KEYS.NETWORK);
+                const networkDisplay = document.getElementById('network-display');
+                
+                if (!networkData || networkData.length === 0) {
+                    networkDisplay.innerHTML = '<div class="empty-message">暂无网点清单，请上传网点清单图片</div>';
+                    return;
+                }
+                
+                let html = '<div class="image-grid">';
+                networkData.forEach((item, index) => {
+                    html += `
+                    <div class="image-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="网点清单图片 ${index+1}" class="item-img" onclick="PageManager.showImagePreview('${item.image}')">
+                        <div class="item-info">
+                            <div class="item-title">网点清单图片 ${index+1}</div>
+                            <div class="item-detail">上传日期: ${item.uploadDate}</div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-small" onclick="DataManager.editNetwork('${item.id}')">
+                                    <span class="icon-edit"></span>
+                                    编辑
+                                </button>
+                                <button class="btn btn-danger btn-small" onclick="DataManager.deleteNetwork('${item.id}')">
+                                    <span class="icon-delete"></span>
+                                    删除
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                `;
-            });
+                    `;
+                });
+                html += '</div>';
+                networkDisplay.innerHTML = html;
+            },
             
-            html += '</div>';
-            networkDisplay.innerHTML = html;
-        }
-        
-        // 保存网点清单数据
-        function saveNetworkData() {
-            const fileInput = document.getElementById('network-file');
-            const id = document.getElementById('network-id').value;
-            
-            if (!fileInput.files[0] && !id) {
-                alert('请选择图片文件！');
-                return;
-            }
-            
-            // 检查文件数量
-            const files = fileInput.files;
-            if (files.length > 5) {
-                alert('最多只能上传5张图片！');
-                return;
-            }
-            
-            const networkData = JSON.parse(localStorage.getItem('networkData') || '[]');
-            const uploadDate = getCurrentDateTime();
-            
-            // 处理多个文件
-            const processFiles = (fileList) => {
-                const results = [];
+            // 保存网点清单数据
+            saveNetworkData: async () => {
+                const fileInput = document.getElementById('network-file');
+                const id = document.getElementById('network-id').value;
                 
-                for (let i = 0; i < fileList.length; i++) {
-                    const file = fileList[i];
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        results.push({
-                            id: generateId(),
-                            image: e.target.result,
-                            uploadDate
-                        });
+                if (!fileInput.files[0] && !id) {
+                    Utils.showMessage('请选择图片文件！', 'error');
+                    return;
+                }
+                
+                const files = fileInput.files;
+                if (files.length > 0 && !Utils.validateFileCount(files, CONFIG.MAX_IMAGES)) {
+                    return;
+                }
+                
+                const networkData = StorageManager.get(CONFIG.STORAGE_KEYS.NETWORK);
+                const uploadDate = Utils.getCurrentDateTime();
+                
+                try {
+                    if (files.length > 0) {
+                        const dataUrls = await Utils.readMultipleFiles(files);
                         
-                        if (results.length === fileList.length) {
-                            // 所有文件读取完成
-                            if (id) {
-                                // 编辑模式 - 替换现有项
-                                const index = networkData.findIndex(item => item.id === id);
-                                if (index !== -1) {
-                                    networkData[index] = results[0];
-                                }
-                            } else {
-                                // 新增模式 - 添加所有图片
-                                networkData.push(...results);
+                        if (id) {
+                            const index = networkData.findIndex(item => item.id === id);
+                            if (index !== -1) {
+                                networkData[index] = {
+                                    ...networkData[index],
+                                    image: dataUrls[0],
+                                    uploadDate
+                                };
                             }
-                            
-                            // 限制最多保存5条
-                            const limitedData = networkData.slice(-5);
-                            
-                            localStorage.setItem('networkData', JSON.stringify(limitedData));
-                            resetNetworkForm();
-                            loadNetworkData();
-                            alert(id ? '网点清单已更新！' : '网点清单已上传！');
+                        } else {
+                            dataUrls.forEach((dataUrl) => {
+                                networkData.push({
+                                    id: Utils.generateId(),
+                                    image: dataUrl,
+                                    uploadDate
+                                });
+                            });
                         }
-                    };
+                    } else if (id) {
+                        const index = networkData.findIndex(item => item.id === id);
+                        if (index !== -1) {
+                            networkData[index] = {
+                                ...networkData[index],
+                                uploadDate
+                            };
+                        }
+                    }
                     
-                    reader.readAsDataURL(file);
-                }
-            };
-            
-            if (files.length > 0) {
-                processFiles(files);
-            } else if (id) {
-                // 没有新图片，只更新上传日期
-                const index = networkData.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    networkData[index] = {
-                        ...networkData[index],
-                        uploadDate: getCurrentDateTime()
-                    };
+                    const limitedData = networkData.slice(-CONFIG.MAX_IMAGES);
                     
-                    localStorage.setItem('networkData', JSON.stringify(networkData));
-                    resetNetworkForm();
-                    loadNetworkData();
-                    alert('网点清单信息已更新！');
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.NETWORK, limitedData)) {
+                        PageManager.resetForm('network-form');
+                        PageManager.hideForm('network-upload-form');
+                        PageManager.showForm('network-password-section');
+                        DataManager.loadNetworkData();
+                        Utils.showMessage(id ? '网点清单已更新！' : '网点清单已上传！', 'success');
+                    }
+                } catch (error) {
+                    console.error('保存网点清单数据失败:', error);
+                    Utils.showMessage('上传失败，请重试', 'error');
                 }
-            }
-        }
-        
-        // 编辑网点清单
-        function editNetwork(id) {
-            const networkData = JSON.parse(localStorage.getItem('networkData') || '[]');
-            const item = networkData.find(item => item.id === id);
+            },
             
-            if (item) {
-                document.getElementById('network-id').value = item.id;
+            // 编辑网点清单
+            editNetwork: (id) => {
+                const networkData = StorageManager.get(CONFIG.STORAGE_KEYS.NETWORK);
+                const item = networkData.find(item => item.id === id);
                 
-                // 显示表单
-                document.getElementById('network-password-section').style.display = 'none';
-                document.getElementById('network-upload-form').style.display = 'block';
-            }
-        }
-        
-        // 删除网点清单
-        function deleteNetwork(id) {
-            if (confirm('确定要删除这条网点清单吗？')) {
-                const networkData = JSON.parse(localStorage.getItem('networkData') || '[]');
-                const newData = networkData.filter(item => item.id !== id);
-                localStorage.setItem('networkData', JSON.stringify(newData));
-                loadNetworkData();
-            }
-        }
-        
-        // 重置网点清单表单
-        function resetNetworkForm() {
-            document.getElementById('network-form').reset();
-            document.getElementById('network-id').value = '';
-            document.getElementById('network-upload-form').style.display = 'none';
-            document.getElementById('network-password-section').style.display = 'block';
-            document.getElementById('network-password').value = '';
-        }
-        
-        // 加载资费清单数据
-        function loadFeeData() {
-            const feeData = JSON.parse(localStorage.getItem('feeData') || '[]');
-            const feeDisplay = document.getElementById('fee-display');
+                if (item) {
+                    document.getElementById('network-id').value = item.id;
+                    
+                    PageManager.hideForm('network-password-section');
+                    PageManager.showForm('network-upload-form');
+                }
+            },
             
-            if (feeData.length === 0) {
-                feeDisplay.innerHTML = '<div class="empty-message">暂无资费清单，请上传资费清单图片</div>';
-                return;
-            }
+            // 删除网点清单
+            deleteNetwork: (id) => {
+                if (confirm('确定要删除这条网点清单吗？')) {
+                    const networkData = StorageManager.get(CONFIG.STORAGE_KEYS.NETWORK);
+                    const newData = networkData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.NETWORK, newData)) {
+                        DataManager.loadNetworkData();
+                        Utils.showMessage('网点清单已删除！', 'success');
+                    }
+                }
+            },
             
-            let html = '<div class="image-grid">';
-            
-            feeData.forEach((item, index) => {
-                html += `
-                <div class="image-item" data-id="${item.id}">
-                    <img src="${item.image}" alt="资费清单图片 ${index+1}" class="item-img" onclick="showImagePreview('${item.image}')">
-                    <div class="item-info">
-                        <div class="item-title">资费清单图片 ${index+1}</div>
-                        <div class="item-detail">上传日期: ${item.uploadDate}</div>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary btn-small" onclick="editFee('${item.id}')">编辑</button>
-                            <button class="btn btn-danger btn-small" onclick="deleteFee('${item.id}')">删除</button>
+            // 加载资费清单数据
+            loadFeeData: () => {
+                const feeData = StorageManager.get(CONFIG.STORAGE_KEYS.FEE);
+                const feeDisplay = document.getElementById('fee-display');
+                
+                if (!feeData || feeData.length === 0) {
+                    feeDisplay.innerHTML = '<div class="empty-message">暂无资费清单，请上传资费清单图片</div>';
+                    return;
+                }
+                
+                let html = '<div class="image-grid">';
+                feeData.forEach((item, index) => {
+                    html += `
+                    <div class="image-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="资费清单图片 ${index+1}" class="item-img" onclick="PageManager.showImagePreview('${item.image}')">
+                        <div class="item-info">
+                            <div class="item-title">资费清单图片 ${index+1}</div>
+                            <div class="item-detail">上传日期: ${item.uploadDate}</div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-small" onclick="DataManager.editFee('${item.id}')">
+                                    <span class="icon-edit"></span>
+                                    编辑
+                                </button>
+                                <button class="btn btn-danger btn-small" onclick="DataManager.deleteFee('${item.id}')">
+                                    <span class="icon-delete"></span>
+                                    删除
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                `;
-            });
+                    `;
+                });
+                html += '</div>';
+                feeDisplay.innerHTML = html;
+            },
             
-            html += '</div>';
-            feeDisplay.innerHTML = html;
-        }
-        
-        // 保存资费清单数据
-        function saveFeeData() {
-            const fileInput = document.getElementById('fee-file');
-            const id = document.getElementById('fee-id').value;
-            
-            if (!fileInput.files[0] && !id) {
-                alert('请选择图片文件！');
-                return;
-            }
-            
-            // 检查文件数量
-            const files = fileInput.files;
-            if (files.length > 5) {
-                alert('最多只能上传5张图片！');
-                return;
-            }
-            
-            const feeData = JSON.parse(localStorage.getItem('feeData') || '[]');
-            const uploadDate = getCurrentDateTime();
-            
-            // 处理多个文件
-            const processFiles = (fileList) => {
-                const results = [];
+            // 保存资费清单数据
+            saveFeeData: async () => {
+                const fileInput = document.getElementById('fee-file');
+                const id = document.getElementById('fee-id').value;
                 
-                for (let i = 0; i < fileList.length; i++) {
-                    const file = fileList[i];
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        results.push({
-                            id: generateId(),
-                            image: e.target.result,
-                            uploadDate
-                        });
+                if (!fileInput.files[0] && !id) {
+                    Utils.showMessage('请选择图片文件！', 'error');
+                    return;
+                }
+                
+                const files = fileInput.files;
+                if (files.length > 0 && !Utils.validateFileCount(files, CONFIG.MAX_IMAGES)) {
+                    return;
+                }
+                
+                const feeData = StorageManager.get(CONFIG.STORAGE_KEYS.FEE);
+                const uploadDate = Utils.getCurrentDateTime();
+                
+                try {
+                    if (files.length > 0) {
+                        const dataUrls = await Utils.readMultipleFiles(files);
                         
-                        if (results.length === fileList.length) {
-                            // 所有文件读取完成
-                            if (id) {
-                                // 编辑模式 - 替换现有项
-                                const index = feeData.findIndex(item => item.id === id);
-                                if (index !== -1) {
-                                    feeData[index] = results[0];
-                                }
-                            } else {
-                                // 新增模式 - 添加所有图片
-                                feeData.push(...results);
+                        if (id) {
+                            const index = feeData.findIndex(item => item.id === id);
+                            if (index !== -1) {
+                                feeData[index] = {
+                                    ...feeData[index],
+                                    image: dataUrls[0],
+                                    uploadDate
+                                };
                             }
-                            
-                            // 限制最多保存5条
-                            const limitedData = feeData.slice(-5);
-                            
-                            localStorage.setItem('feeData', JSON.stringify(limitedData));
-                            resetFeeForm();
-                            loadFeeData();
-                            alert(id ? '资费清单已更新！' : '资费清单已上传！');
+                        } else {
+                            dataUrls.forEach((dataUrl) => {
+                                feeData.push({
+                                    id: Utils.generateId(),
+                                    image: dataUrl,
+                                    uploadDate
+                                });
+                            });
                         }
-                    };
+                    } else if (id) {
+                        const index = feeData.findIndex(item => item.id === id);
+                        if (index !== -1) {
+                            feeData[index] = {
+                                ...feeData[index],
+                                uploadDate
+                            };
+                        }
+                    }
                     
-                    reader.readAsDataURL(file);
-                }
-            };
-            
-            if (files.length > 0) {
-                processFiles(files);
-            } else if (id) {
-                // 没有新图片，只更新上传日期
-                const index = feeData.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    feeData[index] = {
-                        ...feeData[index],
-                        uploadDate: getCurrentDateTime()
-                    };
+                    const limitedData = feeData.slice(-CONFIG.MAX_IMAGES);
                     
-                    localStorage.setItem('feeData', JSON.stringify(feeData));
-                    resetFeeForm();
-                    loadFeeData();
-                    alert('资费清单信息已更新！');
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.FEE, limitedData)) {
+                        PageManager.resetForm('fee-form');
+                        PageManager.hideForm('fee-upload-form');
+                        PageManager.showForm('fee-password-section');
+                        DataManager.loadFeeData();
+                        Utils.showMessage(id ? '资费清单已更新！' : '资费清单已上传！', 'success');
+                    }
+                } catch (error) {
+                    console.error('保存资费清单数据失败:', error);
+                    Utils.showMessage('上传失败，请重试', 'error');
                 }
-            }
-        }
-        
-        // 编辑资费清单
-        function editFee(id) {
-            const feeData = JSON.parse(localStorage.getItem('feeData') || '[]');
-            const item = feeData.find(item => item.id === id);
+            },
             
-            if (item) {
-                document.getElementById('fee-id').value = item.id;
+            // 编辑资费清单
+            editFee: (id) => {
+                const feeData = StorageManager.get(CONFIG.STORAGE_KEYS.FEE);
+                const item = feeData.find(item => item.id === id);
                 
-                // 显示表单
-                document.getElementById('fee-password-section').style.display = 'none';
-                document.getElementById('fee-upload-form').style.display = 'block';
-            }
-        }
-        
-        // 删除资费清单
-        function deleteFee(id) {
-            if (confirm('确定要删除这条资费清单吗？')) {
-                const feeData = JSON.parse(localStorage.getItem('feeData') || '[]');
-                const newData = feeData.filter(item => item.id !== id);
-                localStorage.setItem('feeData', JSON.stringify(newData));
-                loadFeeData();
-            }
-        }
-        
-        // 重置资费清单表单
-        function resetFeeForm() {
-            document.getElementById('fee-form').reset();
-            document.getElementById('fee-id').value = '';
-            document.getElementById('fee-upload-form').style.display = 'none';
-            document.getElementById('fee-password-section').style.display = 'block';
-            document.getElementById('fee-password').value = '';
-        }
-        
-        // 加载在柜信息数据
-        function loadCabinetData() {
-            const cabinetData = JSON.parse(localStorage.getItem('cabinetData') || '[]');
-            const cabinetDisplay = document.getElementById('cabinet-display');
+                if (item) {
+                    document.getElementById('fee-id').value = item.id;
+                    
+                    PageManager.hideForm('fee-password-section');
+                    PageManager.showForm('fee-upload-form');
+                }
+            },
             
-            if (cabinetData.length === 0) {
-                cabinetDisplay.innerHTML = '<div class="empty-message">等待数据上传</div>';
-                return;
-            }
+            // 删除资费清单
+            deleteFee: (id) => {
+                if (confirm('确定要删除这条资费清单吗？')) {
+                    const feeData = StorageManager.get(CONFIG.STORAGE_KEYS.FEE);
+                    const newData = feeData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.FEE, newData)) {
+                        DataManager.loadFeeData();
+                        Utils.showMessage('资费清单已删除！', 'success');
+                    }
+                }
+            },
             
-            let html = `
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>区域</th>
-                        <th>大区</th>
-                        <th>编号</th>
-                        <th>类型</th>
-                        <th>存放位置</th>
-                        <th>状态</th>
-                        <th>操作</th>
+            // 加载在柜信息数据
+            loadCabinetData: () => {
+                const cabinetData = StorageManager.get(CONFIG.STORAGE_KEYS.CABINET);
+                const cabinetDisplay = document.getElementById('cabinet-display');
+                
+                if (!cabinetData || cabinetData.length === 0) {
+                    cabinetDisplay.innerHTML = '<div class="empty-message">暂无数据，点击下方按钮添加在柜信息</div>';
+                    return;
+                }
+                
+                let html = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>区域</th>
+                            <th>大区</th>
+                            <th>编号</th>
+                            <th>类型</th>
+                            <th>存放位置</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                
+                cabinetData.forEach(item => {
+                    const statusClass = item.status === '已入柜' ? 'status-in' : 'status-out';
+                    
+                    html += `
+                    <tr data-id="${item.id}">
+                        <td>${item.area}</td>
+                        <td>${item.region}</td>
+                        <td>${item.number}</td>
+                        <td><span class="type-badge">${item.type}</span></td>
+                        <td>${item.location}</td>
+                        <td><span class="status-badge ${statusClass}">${item.status}</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-small" onclick="DataManager.editCabinet('${item.id}')">
+                                <span class="icon-edit"></span>
+                                编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="DataManager.deleteCabinet('${item.id}')">
+                                <span class="icon-delete"></span>
+                                删除
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-            `;
-            
-            cabinetData.forEach(item => {
-                const statusClass = item.status === '已入柜' ? 'status-in' : 'status-out';
+                    `;
+                });
                 
-                html += `
-                <tr data-id="${item.id}">
-                    <td>${item.area}</td>
-                    <td>${item.region}</td>
-                    <td>${item.number}</td>
-                    <td><span class="type-badge">${item.type}</span></td>
-                    <td>${item.location}</td>
-                    <td><span class="status-badge ${statusClass}">${item.status}</span></td>
-                    <td>
-                        <button class="btn btn-primary btn-small" onclick="editCabinet('${item.id}')">编辑</button>
-                        <button class="btn btn-danger btn-small" onclick="deleteCabinet('${item.id}')">删除</button>
-                    </td>
-                </tr>
-                `;
-            });
+                html += '</tbody></table>';
+                cabinetDisplay.innerHTML = html;
+            },
             
-            html += '</tbody></table>';
-            cabinetDisplay.innerHTML = html;
-        }
-        
-        // 保存在柜信息数据
-        function saveCabinetData() {
-            const area = document.getElementById('cabinet-area').value;
-            const region = document.getElementById('cabinet-region').value;
-            const number = document.getElementById('cabinet-number').value;
-            const type = document.getElementById('cabinet-type').value;
-            const location = document.getElementById('cabinet-location').value;
-            const status = document.getElementById('cabinet-status').value;
-            const id = document.getElementById('cabinet-data-id').value;
-            
-            if (!area || !region || !number || !type || !location || !status) {
-                alert('请填写所有字段！');
-                return;
-            }
-            
-            const cabinetData = JSON.parse(localStorage.getItem('cabinetData') || '[]');
-            
-            if (id) {
-                // 编辑模式
-                const index = cabinetData.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    cabinetData[index] = {
-                        ...cabinetData[index],
+            // 保存在柜信息数据
+            saveCabinetData: () => {
+                const area = document.getElementById('cabinet-area').value;
+                const region = document.getElementById('cabinet-region').value;
+                const number = document.getElementById('cabinet-number').value;
+                const type = document.getElementById('cabinet-type').value;
+                const location = document.getElementById('cabinet-location').value;
+                const status = document.getElementById('cabinet-status').value;
+                const id = document.getElementById('cabinet-data-id').value;
+                
+                if (!area || !region || !number || !type || !location || !status) {
+                    Utils.showMessage('请填写所有字段！', 'error');
+                    return;
+                }
+                
+                const cabinetData = StorageManager.get(CONFIG.STORAGE_KEYS.CABINET);
+                
+                if (id) {
+                    // 编辑模式
+                    const index = cabinetData.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        cabinetData[index] = {
+                            ...cabinetData[index],
+                            area,
+                            region,
+                            number,
+                            type,
+                            location,
+                            status
+                        };
+                    }
+                } else {
+                    // 新增模式
+                    cabinetData.push({
+                        id: Utils.generateId(),
                         area,
                         region,
                         number,
                         type,
                         location,
                         status
-                    };
+                    });
                 }
-            } else {
-                // 新增模式
-                cabinetData.push({
-                    id: generateId(),
-                    area,
-                    region,
-                    number,
-                    type,
-                    location,
-                    status
-                });
-            }
-            
-            localStorage.setItem('cabinetData', JSON.stringify(cabinetData));
-            
-            // 关闭弹窗
-            document.getElementById('cabinet-popup-form').style.display = 'none';
-            
-            loadCabinetData();
-            alert(id ? '在柜信息已更新！' : '在柜信息已保存！');
-        }
-        
-        // 编辑在柜信息
-        function editCabinet(id) {
-            const cabinetData = JSON.parse(localStorage.getItem('cabinetData') || '[]');
-            const item = cabinetData.find(item => item.id === id);
-            
-            if (item) {
-                document.getElementById('cabinet-area').value = item.area;
-                document.getElementById('cabinet-region').value = item.region;
-                document.getElementById('cabinet-number').value = item.number;
-                document.getElementById('cabinet-type').value = item.type;
-                document.getElementById('cabinet-location').value = item.location;
-                document.getElementById('cabinet-status').value = item.status;
-                document.getElementById('cabinet-data-id').value = item.id;
                 
-                // 显示弹窗
-                document.getElementById('cabinet-popup-form').style.display = 'flex';
-            }
-        }
-        
-        // 删除在柜信息
-        function deleteCabinet(id) {
-            if (confirm('确定要删除这条在柜信息吗？')) {
-                const cabinetData = JSON.parse(localStorage.getItem('cabinetData') || '[]');
-                const newData = cabinetData.filter(item => item.id !== id);
-                localStorage.setItem('cabinetData', JSON.stringify(newData));
-                loadCabinetData();
-            }
-        }
-        
-        // 加载取件人信息数据
-        function loadReceiverData() {
-            const receiverData = JSON.parse(localStorage.getItem('receiverData') || '[]');
-            const receiverDisplay = document.getElementById('receiver-display');
+                if (StorageManager.set(CONFIG.STORAGE_KEYS.CABINET, cabinetData)) {
+                    PageManager.hidePopup('cabinet-popup-form');
+                    PageManager.resetForm('cabinet-form');
+                    DataManager.loadCabinetData();
+                    Utils.showMessage(id ? '在柜信息已更新！' : '在柜信息已保存！', 'success');
+                }
+            },
             
-            if (receiverData.length === 0) {
-                receiverDisplay.innerHTML = '<div class="empty-message">等待数据上传</div>';
-                return;
-            }
+            // 编辑在柜信息
+            editCabinet: (id) => {
+                const cabinetData = StorageManager.get(CONFIG.STORAGE_KEYS.CABINET);
+                const item = cabinetData.find(item => item.id === id);
+                
+                if (item) {
+                    document.getElementById('cabinet-area').value = item.area;
+                    document.getElementById('cabinet-region').value = item.region;
+                    document.getElementById('cabinet-number').value = item.number;
+                    document.getElementById('cabinet-type').value = item.type;
+                    document.getElementById('cabinet-location').value = item.location;
+                    document.getElementById('cabinet-status').value = item.status;
+                    document.getElementById('cabinet-data-id').value = item.id;
+                    
+                    PageManager.showPopup('cabinet-popup-form');
+                }
+            },
             
-            let html = `
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>待取件编号</th>
-                        <th>取件人姓名</th>
-                        <th>联系电话</th>
-                        <th>身份证明后四位</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-            `;
+            // 删除在柜信息
+            deleteCabinet: (id) => {
+                if (confirm('确定要删除这条在柜信息吗？')) {
+                    const cabinetData = StorageManager.get(CONFIG.STORAGE_KEYS.CABINET);
+                    const newData = cabinetData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.CABINET, newData)) {
+                        DataManager.loadCabinetData();
+                        Utils.showMessage('在柜信息已删除！', 'success');
+                    }
+                }
+            },
             
-            receiverData.forEach(item => {
-                html += `
-                <tr data-id="${item.id}">
-                    <td>${item.cabinetNumber}</td>
-                    <td>${item.name}</td>
-                    <td>${item.phone}</td>
-                    <td>${item.idNumber}</td>
-                    <td>
-                        <button class="btn btn-primary btn-small" onclick="editReceiver('${item.id}')">编辑</button>
-                        <button class="btn btn-danger btn-small" onclick="deleteReceiver('${item.id}')">删除</button>
-                    </td>
-                </tr>
+            // 加载取件人信息数据
+            loadReceiverData: () => {
+                const receiverData = StorageManager.get(CONFIG.STORAGE_KEYS.RECEIVER);
+                const receiverDisplay = document.getElementById('receiver-display');
+                
+                if (!receiverData || receiverData.length === 0) {
+                    receiverDisplay.innerHTML = '<div class="empty-message">暂无数据，点击下方按钮添加取件人信息</div>';
+                    return;
+                }
+                
+                let html = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>待取件编号</th>
+                            <th>取件人姓名</th>
+                            <th>联系电话</th>
+                            <th>身份证明后四位</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                 `;
-            });
+                
+                receiverData.forEach(item => {
+                    html += `
+                    <tr data-id="${item.id}">
+                        <td>${item.cabinetNumber}</td>
+                        <td>${item.name}</td>
+                        <td>${item.phone}</td>
+                        <td>${item.idNumber}</td>
+                        <td>
+                            <button class="btn btn-primary btn-small" onclick="DataManager.editReceiver('${item.id}')">
+                                <span class="icon-edit"></span>
+                                编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="DataManager.deleteReceiver('${item.id}')">
+                                <span class="icon-delete"></span>
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                receiverDisplay.innerHTML = html;
+            },
             
-            html += '</tbody></table>';
-            receiverDisplay.innerHTML = html;
-        }
-        
-        // 保存取件人信息数据
-        function saveReceiverData() {
-            const cabinetNumber = document.getElementById('receiver-cabinet-number').value;
-            const name = document.getElementById('receiver-name').value;
-            const phone = document.getElementById('receiver-phone').value;
-            const idNumber = document.getElementById('receiver-id').value;
-            const receiverId = document.getElementById('receiver-data-id').value;
-            
-            if (!cabinetNumber || !name || !phone || !idNumber) {
-                alert('请填写所有字段！');
-                return;
-            }
-            
-            if (idNumber.length !== 4) {
-                alert('身份证明号码后四位必须是4位数字！');
-                return;
-            }
-            
-            const receiverData = JSON.parse(localStorage.getItem('receiverData') || '[]');
-            
-            if (receiverId) {
-                // 编辑模式
-                const index = receiverData.findIndex(item => item.id === receiverId);
-                if (index !== -1) {
-                    receiverData[index] = {
-                        ...receiverData[index],
+            // 保存取件人信息数据
+            saveReceiverData: () => {
+                const cabinetNumber = document.getElementById('receiver-cabinet-number').value;
+                const name = document.getElementById('receiver-name').value;
+                const phone = document.getElementById('receiver-phone').value;
+                const idNumber = document.getElementById('receiver-id').value;
+                const receiverId = document.getElementById('receiver-data-id').value;
+                
+                if (!cabinetNumber || !name || !phone || !idNumber) {
+                    Utils.showMessage('请填写所有字段！', 'error');
+                    return;
+                }
+                
+                if (idNumber.length !== 4 || !/^\d{4}$/.test(idNumber)) {
+                    Utils.showMessage('身份证明号码后四位必须是4位数字！', 'error');
+                    return;
+                }
+                
+                const receiverData = StorageManager.get(CONFIG.STORAGE_KEYS.RECEIVER);
+                
+                if (receiverId) {
+                    // 编辑模式
+                    const index = receiverData.findIndex(item => item.id === receiverId);
+                    if (index !== -1) {
+                        receiverData[index] = {
+                            ...receiverData[index],
+                            cabinetNumber,
+                            name,
+                            phone,
+                            idNumber
+                        };
+                    }
+                } else {
+                    // 新增模式
+                    receiverData.push({
+                        id: Utils.generateId(),
                         cabinetNumber,
                         name,
                         phone,
                         idNumber
-                    };
+                    });
                 }
-            } else {
-                // 新增模式
-                receiverData.push({
-                    id: generateId(),
-                    cabinetNumber,
-                    name,
-                    phone,
-                    idNumber
-                });
-            }
-            
-            localStorage.setItem('receiverData', JSON.stringify(receiverData));
-            
-            // 关闭弹窗
-            document.getElementById('receiver-popup-form').style.display = 'none';
-            
-            loadReceiverData();
-            alert(receiverId ? '取件人信息已更新！' : '取件人信息已保存！');
-        }
-        
-        // 编辑取件人信息
-        function editReceiver(id) {
-            const receiverData = JSON.parse(localStorage.getItem('receiverData') || '[]');
-            const item = receiverData.find(item => item.id === id);
-            
-            if (item) {
-                document.getElementById('receiver-cabinet-number').value = item.cabinetNumber;
-                document.getElementById('receiver-name').value = item.name;
-                document.getElementById('receiver-phone').value = item.phone;
-                document.getElementById('receiver-id').value = item.idNumber;
-                document.getElementById('receiver-data-id').value = item.id;
                 
-                // 显示弹窗
-                document.getElementById('receiver-popup-form').style.display = 'flex';
-            }
-        }
-        
-        // 删除取件人信息
-        function deleteReceiver(id) {
-            if (confirm('确定要删除这条取件人信息吗？')) {
-                const receiverData = JSON.parse(localStorage.getItem('receiverData') || '[]');
-                const newData = receiverData.filter(item => item.id !== id);
-                localStorage.setItem('receiverData', JSON.stringify(newData));
-                loadReceiverData();
-            }
-        }
-        
-        // 加载戳戳我数据
-        function loadPokeData() {
-            const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-            const pokeDisplay = document.getElementById('poke-display');
+                if (StorageManager.set(CONFIG.STORAGE_KEYS.RECEIVER, receiverData)) {
+                    PageManager.hidePopup('receiver-popup-form');
+                    PageManager.resetForm('receiver-form');
+                    DataManager.loadReceiverData();
+                    Utils.showMessage(receiverId ? '取件人信息已更新！' : '取件人信息已保存！', 'success');
+                }
+            },
             
-            if (pokeData.length === 0) {
-                pokeDisplay.innerHTML = '<div class="empty-message">暂无图片，请上传图片</div>';
-                return;
-            }
-            
-            // 只显示最新的一张图片
-            const latestPoke = pokeData[pokeData.length - 1];
-            
-            let html = `
-            <div class="poke-image-item" data-id="${latestPoke.id}">
-                <img src="${latestPoke.image}" alt="戳戳我图片" style="max-width: 300px; max-height: 300px; border-radius: 10px; cursor: pointer;" onclick="showImagePreview('${latestPoke.image}')">
-                <div class="item-detail" style="text-align: center; margin-top: 10px;">上传日期: ${latestPoke.uploadDate}</div>
-                <div class="action-buttons" style="justify-content: center; margin-top: 10px;">
-                    <button class="btn btn-primary btn-small" onclick="editPoke('${latestPoke.id}')">编辑</button>
-                    <button class="btn btn-danger btn-small" onclick="deletePoke('${latestPoke.id}')">删除</button>
-                </div>
-            </div>
-            `;
-            
-            pokeDisplay.innerHTML = html;
-        }
-        
-        // 保存戳戳我数据
-        function savePokeData() {
-            const fileInput = document.getElementById('poke-file');
-            const id = document.getElementById('poke-id').value;
-            
-            if (!fileInput.files[0] && !id) {
-                alert('请选择图片文件！');
-                return;
-            }
-            
-            if (fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-                    const uploadDate = getCurrentDateTime();
+            // 编辑取件人信息
+            editReceiver: (id) => {
+                const receiverData = StorageManager.get(CONFIG.STORAGE_KEYS.RECEIVER);
+                const item = receiverData.find(item => item.id === id);
+                
+                if (item) {
+                    document.getElementById('receiver-cabinet-number').value = item.cabinetNumber;
+                    document.getElementById('receiver-name').value = item.name;
+                    document.getElementById('receiver-phone').value = item.phone;
+                    document.getElementById('receiver-id').value = item.idNumber;
+                    document.getElementById('receiver-data-id').value = item.id;
                     
-                    if (id) {
-                        // 编辑模式
-                        const index = pokeData.findIndex(item => item.id === id);
-                        if (index !== -1) {
-                            pokeData[index] = {
-                                ...pokeData[index],
-                                image: e.target.result,
+                    PageManager.showPopup('receiver-popup-form');
+                }
+            },
+            
+            // 删除取件人信息
+            deleteReceiver: (id) => {
+                if (confirm('确定要删除这条取件人信息吗？')) {
+                    const receiverData = StorageManager.get(CONFIG.STORAGE_KEYS.RECEIVER);
+                    const newData = receiverData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.RECEIVER, newData)) {
+                        DataManager.loadReceiverData();
+                        Utils.showMessage('取件人信息已删除！', 'success');
+                    }
+                }
+            },
+            
+            // 加载戳戳我数据
+            loadPokeData: () => {
+                const pokeData = StorageManager.get(CONFIG.STORAGE_KEYS.POKE);
+                const pokeDisplay = document.getElementById('poke-display');
+                
+                if (!pokeData || pokeData.length === 0) {
+                    pokeDisplay.innerHTML = '<div class="empty-message">暂无图片，请上传图片</div>';
+                    return;
+                }
+                
+                // 只显示最新的一张图片
+                const latestPoke = pokeData[pokeData.length - 1];
+                
+                let html = `
+                <div class="poke-image-item" data-id="${latestPoke.id}">
+                    <img src="${latestPoke.image}" alt="戳戳我图片" style="max-width: 100%; max-height: 400px; border-radius: 10px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1);" onclick="PageManager.showImagePreview('${latestPoke.image}')">
+                    <div class="item-detail" style="text-align: center; margin-top: 10px;">上传日期: ${latestPoke.uploadDate}</div>
+                    <div class="action-buttons" style="justify-content: center; margin-top: 10px;">
+                        <button class="btn btn-primary btn-small" onclick="DataManager.editPoke('${latestPoke.id}')">
+                            <span class="icon-edit"></span>
+                            编辑
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="DataManager.deletePoke('${latestPoke.id}')">
+                            <span class="icon-delete"></span>
+                            删除
+                        </button>
+                    </div>
+                </div>
+                `;
+                
+                pokeDisplay.innerHTML = html;
+            },
+            
+            // 保存戳戳我数据
+            savePokeData: async () => {
+                const fileInput = document.getElementById('poke-file');
+                const id = document.getElementById('poke-id').value;
+                
+                if (!fileInput.files[0] && !id) {
+                    Utils.showMessage('请选择图片文件！', 'error');
+                    return;
+                }
+                
+                if (fileInput.files[0]) {
+                    try {
+                        const dataUrl = await Utils.readFileAsDataURL(fileInput.files[0]);
+                        const pokeData = StorageManager.get(CONFIG.STORAGE_KEYS.POKE);
+                        const uploadDate = Utils.getCurrentDateTime();
+                        
+                        if (id) {
+                            // 编辑模式
+                            const index = pokeData.findIndex(item => item.id === id);
+                            if (index !== -1) {
+                                pokeData[index] = {
+                                    ...pokeData[index],
+                                    image: dataUrl,
+                                    uploadDate
+                                };
+                            }
+                        } else {
+                            // 新增模式
+                            pokeData.push({
+                                id: Utils.generateId(),
+                                image: dataUrl,
                                 uploadDate
-                            };
+                            });
                         }
-                    } else {
-                        // 新增模式
-                        pokeData.push({
-                            id: generateId(),
-                            image: e.target.result,
-                            uploadDate
+                        
+                        if (StorageManager.set(CONFIG.STORAGE_KEYS.POKE, pokeData)) {
+                            PageManager.resetForm('poke-form');
+                            PageManager.hideForm('poke-upload-form');
+                            PageManager.showForm('poke-password-section');
+                            DataManager.loadPokeData();
+                            Utils.showMessage(id ? '图片已更新！' : '图片已上传！', 'success');
+                        }
+                    } catch (error) {
+                        console.error('保存戳戳我数据失败:', error);
+                        Utils.showMessage('上传失败，请重试', 'error');
+                    }
+                }
+            },
+            
+            // 编辑戳戳我
+            editPoke: (id) => {
+                const pokeData = StorageManager.get(CONFIG.STORAGE_KEYS.POKE);
+                const item = pokeData.find(item => item.id === id);
+                
+                if (item) {
+                    document.getElementById('poke-id').value = item.id;
+                    
+                    PageManager.hideForm('poke-password-section');
+                    PageManager.showForm('poke-upload-form');
+                }
+            },
+            
+            // 删除戳戳我
+            deletePoke: (id) => {
+                if (confirm('确定要删除这张图片吗？')) {
+                    const pokeData = StorageManager.get(CONFIG.STORAGE_KEYS.POKE);
+                    const newData = pokeData.filter(item => item.id !== id);
+                    
+                    if (StorageManager.set(CONFIG.STORAGE_KEYS.POKE, newData)) {
+                        DataManager.loadPokeData();
+                        Utils.showMessage('图片已删除！', 'success');
+                    }
+                }
+            },
+            
+            // 加载设置
+            loadSettings: () => {
+                // 加载LOGO
+                const logoData = localStorage.getItem(CONFIG.STORAGE_KEYS.LOGO);
+                if (logoData) {
+                    const logoPreview = document.getElementById('logo-preview-area');
+                    const headerLogo = document.getElementById('logo-preview');
+                    
+                    logoPreview.innerHTML = `<img src="${logoData}" alt="LOGO" style="max-width:100%; max-height:100%;">`;
+                    
+                    if (headerLogo.classList.contains('logo-placeholder')) {
+                        headerLogo.classList.remove('logo-placeholder');
+                        headerLogo.classList.add('logo');
+                        headerLogo.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = logoData;
+                        img.alt = 'LOGO';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'cover';
+                        img.style.borderRadius = '10px';
+                        headerLogo.appendChild(img);
+                        
+                        headerLogo.onclick = () => PageManager.showImagePreview(logoData);
+                    }
+                }
+                
+                // 加载背景
+                const bgData = localStorage.getItem(CONFIG.STORAGE_KEYS.BACKGROUND);
+                if (bgData) {
+                    document.body.style.backgroundImage = `url(${bgData})`;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundAttachment = 'fixed';
+                    
+                    const bgPreview = document.getElementById('bg-preview-area');
+                    bgPreview.innerHTML = `<img src="${bgData}" alt="背景预览" style="max-width:100%; max-height:100%;">`;
+                }
+            },
+            
+            // 上传LOGO
+            uploadLogo: async () => {
+                const fileInput = document.getElementById('logo-file');
+                if (!fileInput.files[0]) {
+                    Utils.showMessage('请选择LOGO文件！', 'error');
+                    return;
+                }
+                
+                try {
+                    const dataUrl = await Utils.readFileAsDataURL(fileInput.files[0]);
+                    localStorage.setItem(CONFIG.STORAGE_KEYS.LOGO, dataUrl);
+                    DataManager.loadSettings();
+                    fileInput.value = '';
+                    Utils.showMessage('LOGO上传成功！', 'success');
+                } catch (error) {
+                    console.error('上传LOGO失败:', error);
+                    Utils.showMessage('上传失败，请重试', 'error');
+                }
+            },
+            
+            // 删除LOGO
+            deleteLogo: () => {
+                if (confirm('确定要删除LOGO吗？')) {
+                    localStorage.removeItem(CONFIG.STORAGE_KEYS.LOGO);
+                    DataManager.loadSettings();
+                    Utils.showMessage('LOGO已删除！', 'success');
+                }
+            },
+            
+            // 上传背景
+            uploadBackground: async () => {
+                const fileInput = document.getElementById('bg-file');
+                if (!fileInput.files[0]) {
+                    Utils.showMessage('请选择背景文件！', 'error');
+                    return;
+                }
+                
+                try {
+                    const dataUrl = await Utils.readFileAsDataURL(fileInput.files[0]);
+                    localStorage.setItem(CONFIG.STORAGE_KEYS.BACKGROUND, dataUrl);
+                    DataManager.loadSettings();
+                    fileInput.value = '';
+                    Utils.showMessage('背景上传成功！', 'success');
+                } catch (error) {
+                    console.error('上传背景失败:', error);
+                    Utils.showMessage('上传失败，请重试', 'error');
+                }
+            },
+            
+            // 删除背景
+            deleteBackground: () => {
+                if (confirm('确定要删除背景吗？')) {
+                    localStorage.removeItem(CONFIG.STORAGE_KEYS.BACKGROUND);
+                    document.body.style.backgroundImage = '';
+                    document.body.style.backgroundColor = '#f5f7fa';
+                    
+                    const bgPreview = document.getElementById('bg-preview-area');
+                    bgPreview.innerHTML = '<span>背景预览</span>';
+                    
+                    Utils.showMessage('背景已删除！', 'success');
+                }
+            },
+            
+            // 加载所有数据
+            loadAllData: () => {
+                DataManager.loadNoticeData();
+                DataManager.loadNetworkData();
+                DataManager.loadFeeData();
+                DataManager.loadCabinetData();
+                DataManager.loadReceiverData();
+                DataManager.loadPokeData();
+                DataManager.loadSettings();
+            }
+        };
+        
+        // ============ 事件处理器 ============
+        const EventHandlers = {
+            // 初始化所有事件监听
+            init: () => {
+                // 标签页切换
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-tab');
+                        PageManager.switchTab(tabId);
+                    });
+                });
+                
+                // 密码验证
+                EventHandlers.initPasswordAuth();
+                
+                // 表单提交
+                EventHandlers.initFormSubmits();
+                
+                // 弹窗和模态框
+                EventHandlers.initPopupsAndModals();
+                
+                // 按钮事件
+                EventHandlers.initButtons();
+                
+                // 键盘快捷键
+                EventHandlers.initKeyboardShortcuts();
+            },
+            
+            // 密码验证事件
+            initPasswordAuth: () => {
+                const authHandlers = {
+                    'notice-auth-btn': {
+                        passwordId: 'notice-password',
+                        passwordSection: 'notice-password-section',
+                        uploadForm: 'notice-upload-form'
+                    },
+                    'network-auth-btn': {
+                        passwordId: 'network-password',
+                        passwordSection: 'network-password-section',
+                        uploadForm: 'network-upload-form'
+                    },
+                    'fee-auth-btn': {
+                        passwordId: 'fee-password',
+                        passwordSection: 'fee-password-section',
+                        uploadForm: 'fee-upload-form'
+                    },
+                    'settings-auth-btn': {
+                        passwordId: 'settings-password',
+                        passwordSection: 'settings-password-section',
+                        uploadForm: 'settings-content'
+                    },
+                    'poke-auth-btn': {
+                        passwordId: 'poke-password',
+                        passwordSection: 'poke-password-section',
+                        uploadForm: 'poke-upload-form'
+                    }
+                };
+                
+                Object.entries(authHandlers).forEach(([btnId, config]) => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.addEventListener('click', () => {
+                            const password = document.getElementById(config.passwordId).value;
+                            if (Utils.validatePassword(password)) {
+                                PageManager.hideForm(config.passwordSection);
+                                PageManager.showForm(config.uploadForm);
+                            } else {
+                                Utils.showMessage('密码错误！', 'error');
+                                document.getElementById(config.passwordId).value = '';
+                            }
                         });
                     }
-                    
-                    localStorage.setItem('pokeData', JSON.stringify(pokeData));
-                    resetPokeForm();
-                    loadPokeData();
-                    alert(id ? '图片已更新！' : '图片已上传！');
+                });
+            },
+            
+            // 表单提交事件
+            initFormSubmits: () => {
+                const forms = {
+                    'notice-form': DataManager.saveNoticeData,
+                    'network-form': DataManager.saveNetworkData,
+                    'fee-form': DataManager.saveFeeData,
+                    'cabinet-form': DataManager.saveCabinetData,
+                    'receiver-form': DataManager.saveReceiverData,
+                    'poke-form': DataManager.savePokeData
                 };
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
-        
-        // 编辑戳戳我
-        function editPoke(id) {
-            const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-            const item = pokeData.find(item => item.id === id);
+                
+                Object.entries(forms).forEach(([formId, handler]) => {
+                    const form = document.getElementById(formId);
+                    if (form) {
+                        form.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            handler();
+                        });
+                    }
+                });
+            },
             
-            if (item) {
-                document.getElementById('poke-id').value = item.id;
+            // 弹窗和模态框事件
+            initPopupsAndModals: () => {
+                // 模态框关闭
+                document.getElementById('modal-close').addEventListener('click', () => {
+                    document.getElementById('image-modal').classList.remove('active');
+                });
                 
-                // 显示表单
-                document.getElementById('poke-password-section').style.display = 'none';
-                document.getElementById('poke-upload-form').style.display = 'block';
-            }
-        }
-        
-        // 删除戳戳我
-        function deletePoke(id) {
-            if (confirm('确定要删除这张图片吗？')) {
-                const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-                const newData = pokeData.filter(item => item.id !== id);
-                localStorage.setItem('pokeData', JSON.stringify(newData));
-                loadPokeData();
-                alert('图片已删除！');
-            }
-        }
-        
-        // 重置戳戳我表单
-        function resetPokeForm() {
-            document.getElementById('poke-form').reset();
-            document.getElementById('poke-id').value = '';
-            document.getElementById('poke-upload-form').style.display = 'none';
-            document.getElementById('poke-password-section').style.display = 'block';
-            document.getElementById('poke-password').value = '';
-        }
-        
-        // 加载设置
-        function loadSettings() {
-            // 加载LOGO
-            const logoData = localStorage.getItem('siteLogo');
-            if (logoData) {
-                const logoPreview = document.getElementById('logo-preview-area');
-                const headerLogo = document.getElementById('logo-preview');
+                // 点击模态框背景关闭
+                document.getElementById('image-modal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('image-modal')) {
+                        document.getElementById('image-modal').classList.remove('active');
+                    }
+                });
                 
-                logoPreview.innerHTML = `<img src="${logoData}" alt="LOGO" style="max-width:100%; max-height:100%;">`;
+                // 在柜信息弹窗
+                const cabinetPopup = document.getElementById('cabinet-popup-form');
+                const cabinetControls = {
+                    'add-cabinet-btn': () => PageManager.showPopup('cabinet-popup-form'),
+                    'cabinet-popup-close': () => PageManager.hidePopup('cabinet-popup-form'),
+                    'cabinet-form-cancel-btn': () => PageManager.hidePopup('cabinet-popup-form')
+                };
                 
-                if (headerLogo.classList.contains('logo-placeholder')) {
-                    headerLogo.classList.remove('logo-placeholder');
-                    headerLogo.classList.add('logo');
-                    headerLogo.innerHTML = '';
-                    const img = document.createElement('img');
-                    img.src = logoData;
-                    img.alt = 'LOGO';
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '10px';
-                    headerLogo.appendChild(img);
+                Object.entries(cabinetControls).forEach(([btnId, handler]) => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.addEventListener('click', handler);
+                    }
+                });
+                
+                // 取件人信息弹窗
+                const receiverControls = {
+                    'add-receiver-btn': () => PageManager.showPopup('receiver-popup-form'),
+                    'receiver-popup-close': () => PageManager.hidePopup('receiver-popup-form'),
+                    'receiver-form-cancel-btn': () => PageManager.hidePopup('receiver-popup-form')
+                };
+                
+                Object.entries(receiverControls).forEach(([btnId, handler]) => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.addEventListener('click', handler);
+                    }
+                });
+                
+                // 点击弹窗背景关闭
+                [cabinetPopup, document.getElementById('receiver-popup-form')].forEach(popup => {
+                    if (popup) {
+                        popup.addEventListener('click', (e) => {
+                            if (e.target === popup) {
+                                PageManager.hidePopup(popup.id);
+                            }
+                        });
+                    }
+                });
+            },
+            
+            // 按钮事件
+            initButtons: () => {
+                // 取消按钮
+                const cancelButtons = {
+                    'notice-cancel-btn': () => {
+                        PageManager.resetForm('notice-form');
+                        PageManager.hideForm('notice-upload-form');
+                        PageManager.showForm('notice-password-section');
+                        document.getElementById('notice-password').value = '';
+                    },
+                    'network-cancel-btn': () => {
+                        PageManager.resetForm('network-form');
+                        PageManager.hideForm('network-upload-form');
+                        PageManager.showForm('network-password-section');
+                        document.getElementById('network-password').value = '';
+                    },
+                    'fee-cancel-btn': () => {
+                        PageManager.resetForm('fee-form');
+                        PageManager.hideForm('fee-upload-form');
+                        PageManager.showForm('fee-password-section');
+                        document.getElementById('fee-password').value = '';
+                    },
+                    'poke-cancel-btn': () => {
+                        PageManager.resetForm('poke-form');
+                        PageManager.hideForm('poke-upload-form');
+                        PageManager.showForm('poke-password-section');
+                        document.getElementById('poke-password').value = '';
+                    }
+                };
+                
+                Object.entries(cancelButtons).forEach(([btnId, handler]) => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.addEventListener('click', handler);
+                    }
+                });
+                
+                // 设置页面按钮
+                document.getElementById('logo-upload-btn').addEventListener('click', DataManager.uploadLogo);
+                document.getElementById('logo-delete-btn').addEventListener('click', DataManager.deleteLogo);
+                document.getElementById('bg-upload-btn').addEventListener('click', DataManager.uploadBackground);
+                document.getElementById('bg-delete-btn').addEventListener('click', DataManager.deleteBackground);
+            },
+            
+            // 键盘快捷键
+            initKeyboardShortcuts: () => {
+                document.addEventListener('keydown', (e) => {
+                    // Ctrl + S 保存当前表单
+                    if (e.ctrlKey && e.key === 's') {
+                        e.preventDefault();
+                        
+                        switch(currentTab) {
+                            case 'notice':
+                                if (document.getElementById('notice-upload-form').style.display !== 'none') {
+                                    document.getElementById('notice-form').dispatchEvent(new Event('submit'));
+                                }
+                                break;
+                            case 'network':
+                                if (document.getElementById('network-upload-form').style.display !== 'none') {
+                                    document.getElementById('network-form').dispatchEvent(new Event('submit'));
+                                }
+                                break;
+                            case 'fee':
+                                if (document.getElementById('fee-upload-form').style.display !== 'none') {
+                                    document.getElementById('fee-form').dispatchEvent(new Event('submit'));
+                                }
+                                break;
+                            case 'cabinet':
+                                if (document.getElementById('cabinet-popup-form').style.display === 'flex') {
+                                    document.getElementById('cabinet-form').dispatchEvent(new Event('submit'));
+                                }
+                                break;
+                            case 'poke':
+                                if (document.getElementById('poke-upload-form').style.display !== 'none') {
+                                    document.getElementById('poke-form').dispatchEvent(new Event('submit'));
+                                }
+                                break;
+                        }
+                    }
                     
-                    // 点击LOGO可以查看大图
-                    headerLogo.onclick = function() {
-                        showImagePreview(logoData);
-                    };
-                }
+                    // Esc 键关闭弹窗和模态框
+                    if (e.key === 'Escape') {
+                        PageManager.hidePopup('cabinet-popup-form');
+                        PageManager.hidePopup('receiver-popup-form');
+                        document.getElementById('image-modal').classList.remove('active');
+                    }
+                });
             }
-            
-            // 加载背景
-            const bgData = localStorage.getItem('siteBackground');
-            if (bgData) {
-                document.body.style.backgroundImage = `url(${bgData})`;
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundAttachment = 'fixed';
-                
-                const bgPreview = document.getElementById('bg-preview-area');
-                bgPreview.innerHTML = `<img src="${bgData}" alt="背景预览" style="max-width:100%; max-height:100%;">`;
-            }
-        }
+        };
         
-        // 上传LOGO
-        function uploadLogo() {
-            const fileInput = document.getElementById('logo-file');
-            if (!fileInput.files[0]) {
-                alert('请选择LOGO文件！');
-                return;
-            }
-            
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                localStorage.setItem('siteLogo', e.target.result);
-                loadSettings();
-                alert('LOGO上传成功！');
-                fileInput.value = '';
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        // 删除LOGO
-        function deleteLogo() {
-            if (confirm('确定要删除LOGO吗？')) {
-                localStorage.removeItem('siteLogo');
-                loadSettings();
-                alert('LOGO已删除！');
-            }
-        }
-        
-        // 上传背景
-        function uploadBackground() {
-            const fileInput = document.getElementById('bg-file');
-            if (!fileInput.files[0]) {
-                alert('请选择背景文件！');
-                return;
-            }
-            
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                localStorage.setItem('siteBackground', e.target.result);
-                loadSettings();
-                alert('背景上传成功！');
-                fileInput.value = '';
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        // 删除背景
-        function deleteBackground() {
-            if (confirm('确定要删除背景吗？')) {
-                localStorage.removeItem('siteBackground');
-                document.body.style.backgroundImage = '';
-                document.body.style.backgroundColor = '#f5f7fa';
-                
-                const bgPreview = document.getElementById('bg-preview-area');
-                bgPreview.innerHTML = '<span>背景预览</span>';
-                
-                alert('背景已删除！');
-            }
-        }
-        
-        // 数据导出功能
+        // ============ 导出功能 ============
         function exportAllData() {
-            const allData = {
-                noticeData: JSON.parse(localStorage.getItem('noticeData') || '[]'),
-                networkData: JSON.parse(localStorage.getItem('networkData') || '[]'),
-                feeData: JSON.parse(localStorage.getItem('feeData') || '[]'),
-                cabinetData: JSON.parse(localStorage.getItem('cabinetData') || '[]'),
-                receiverData: JSON.parse(localStorage.getItem('receiverData') || '[]'),
-                pokeData: JSON.parse(localStorage.getItem('pokeData') || '[]'),
-                siteLogo: localStorage.getItem('siteLogo') || '',
-                siteBackground: localStorage.getItem('siteBackground') || '',
-                exportDate: new Date().toLocaleString('zh-CN')
-            };
-            
-            const dataStr = JSON.stringify(allData, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = `里昂星储备份_${new Date().toISOString().split('T')[0]}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-            
-            alert('数据备份成功！文件已下载。');
+            try {
+                const exportData = StorageManager.exportAll();
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+                const exportFileName = `里昂星储备份_${new Date().toISOString().split('T')[0]}.json`;
+                
+                const link = document.createElement('a');
+                link.setAttribute('href', dataUri);
+                link.setAttribute('download', exportFileName);
+                link.click();
+                
+                Utils.showMessage('数据备份成功！文件已下载。', 'success');
+            } catch (error) {
+                console.error('导出数据失败:', error);
+                Utils.showMessage('导出数据失败，请重试', 'error');
+            }
         }
         
-        // 数据导入功能
         function importAllData() {
             if (!confirm('导入数据将覆盖当前所有数据，确定要继续吗？')) {
                 return;
@@ -2254,116 +2638,68 @@
             input.type = 'file';
             input.accept = '.json';
             
-            input.onchange = function(e) {
+            input.onchange = async (e) => {
                 const file = e.target.files[0];
-                const reader = new FileReader();
+                if (!file) return;
                 
-                reader.onload = function(event) {
-                    try {
-                        const data = JSON.parse(event.target.result);
-                        
-                        // 验证数据格式
-                        if (data.noticeData) localStorage.setItem('noticeData', JSON.stringify(data.noticeData));
-                        if (data.networkData) localStorage.setItem('networkData', JSON.stringify(data.networkData));
-                        if (data.feeData) localStorage.setItem('feeData', JSON.stringify(data.feeData));
-                        if (data.cabinetData) localStorage.setItem('cabinetData', JSON.stringify(data.cabinetData));
-                        if (data.receiverData) localStorage.setItem('receiverData', JSON.stringify(data.receiverData));
-                        if (data.pokeData) localStorage.setItem('pokeData', JSON.stringify(data.pokeData));
-                        if (data.siteLogo) localStorage.setItem('siteLogo', data.siteLogo);
-                        if (data.siteBackground) localStorage.setItem('siteBackground', data.siteBackground);
-                        
-                        // 重新加载所有数据
-                        loadAllData();
-                        alert('数据导入成功！');
-                    } catch (err) {
-                        alert('文件格式错误或已损坏！');
-                        console.error('数据导入错误:', err);
-                    }
-                };
-                
-                reader.readAsText(file);
+                try {
+                    const text = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.onerror = (e) => reject(e);
+                        reader.readAsText(file);
+                    });
+                    
+                    const data = JSON.parse(text);
+                    StorageManager.importAll(data);
+                    DataManager.loadAllData();
+                    Utils.showMessage('数据导入成功！', 'success');
+                } catch (error) {
+                    console.error('导入数据失败:', error);
+                    Utils.showMessage('文件格式错误或已损坏！', 'error');
+                }
             };
             
             input.click();
         }
         
-        // 清空所有数据
         function clearAllData() {
             if (!confirm('确定要清空所有数据吗？此操作不可恢复！')) {
                 return;
             }
             
-            localStorage.clear();
-            
-            // 重新加载页面
+            StorageManager.clearAll();
             location.reload();
         }
         
-        // 页面加载完成后的初始化
-        window.addEventListener('load', function() {
-            // 加载所有数据
-            loadAllData();
+        // ============ 页面初始化 ============
+        document.addEventListener('DOMContentLoaded', () => {
+            // 恢复上次的标签页
+            const savedTab = StorageManager.get(CONFIG.STORAGE_KEYS.CURRENT_TAB);
+            if (savedTab) {
+                PageManager.switchTab(savedTab);
+            }
             
-            // 添加键盘快捷键
-            document.addEventListener('keydown', function(e) {
-                // Ctrl + S 保存当前表单
-                if (e.ctrlKey && e.key === 's') {
-                    e.preventDefault();
-                    
-                    switch(currentTab) {
-                        case 'notice':
-                            if (document.getElementById('notice-upload-form').style.display !== 'none') {
-                                document.getElementById('notice-form').dispatchEvent(new Event('submit'));
-                            }
-                            break;
-                        case 'network':
-                            if (document.getElementById('network-upload-form').style.display !== 'none') {
-                                document.getElementById('network-form').dispatchEvent(new Event('submit'));
-                            }
-                            break;
-                        case 'fee':
-                            if (document.getElementById('fee-upload-form').style.display !== 'none') {
-                                document.getElementById('fee-form').dispatchEvent(new Event('submit'));
-                            }
-                            break;
-                        case 'cabinet':
-                            // 如果在柜信息弹窗打开
-                            if (document.getElementById('cabinet-popup-form').style.display === 'flex') {
-                                document.getElementById('cabinet-form').dispatchEvent(new Event('submit'));
-                            }
-                            break;
-                        case 'poke':
-                            if (document.getElementById('poke-upload-form').style.display !== 'none') {
-                                document.getElementById('poke-form').dispatchEvent(new Event('submit'));
-                            }
-                            break;
-                    }
-                }
-                
-                // Esc 键关闭弹窗
-                if (e.key === 'Escape') {
-                    const cabinetPopup = document.getElementById('cabinet-popup-form');
-                    const receiverPopup = document.getElementById('receiver-popup-form');
-                    const imageModal = document.getElementById('image-modal');
-                    
-                    if (cabinetPopup.style.display === 'flex') {
-                        cabinetPopup.style.display = 'none';
-                    }
-                    
-                    if (receiverPopup.style.display === 'flex') {
-                        receiverPopup.style.display = 'none';
-                    }
-                    
-                    if (imageModal.classList.contains('active')) {
-                        imageModal.classList.remove('active');
-                    }
-                }
-            });
+            // 加载所有数据
+            DataManager.loadAllData();
+            
+            // 初始化事件监听
+            EventHandlers.init();
             
             // 显示欢迎信息
             console.log('里昂星储查询系统已启动！');
-            console.log('系统功能包括：公告管理、网点清单、资费清单、在柜信息管理、取件人信息管理、戳戳我图片管理等');
             console.log('默认管理密码：740302');
+            
+            // 添加版本信息
+            const versionInfo = document.createElement('div');
+            versionInfo.style.position = 'fixed';
+            versionInfo.style.bottom = '10px';
+            versionInfo.style.right = '10px';
+            versionInfo.style.fontSize = '12px';
+            versionInfo.style.color = '#666';
+            versionInfo.style.zIndex = '9999';
+            versionInfo.textContent = 'v1.0.0';
+            document.body.appendChild(versionInfo);
         });
     </script>
 </body>
