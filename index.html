@@ -634,7 +634,6 @@
             <h2 class="tab-title"><i class="fas fa-bullhorn"></i> 系统公告</h2>
             
             <div class="data-display" id="notice-display">
-                <!-- 公告数据将通过JavaScript动态加载 -->
                 <div class="empty-message">暂无公告，请上传公告图片</div>
             </div>
             
@@ -676,7 +675,6 @@
             <h2 class="tab-title"><i class="fas fa-map-marker-alt"></i> 网点清单</h2>
             
             <div class="data-display" id="network-display">
-                <!-- 网点清单数据将通过JavaScript动态加载 -->
                 <div class="empty-message">暂无网点清单，请上传网点清单图片</div>
             </div>
             
@@ -713,7 +711,6 @@
             <h2 class="tab-title"><i class="fas fa-money-bill-wave"></i> 资费清单</h2>
             
             <div class="data-display" id="fee-display">
-                <!-- 资费清单数据将通过JavaScript动态加载 -->
                 <div class="empty-message">暂无资费清单，请上传资费清单图片</div>
             </div>
             
@@ -754,7 +751,6 @@
                 <h3 class="section-title">在柜物品信息</h3>
                 
                 <div class="data-display" id="cabinet-display">
-                    <!-- 在柜信息数据将通过JavaScript动态加载 -->
                     <div class="empty-message">等待数据上传</div>
                 </div>
                 
@@ -768,7 +764,6 @@
                 <h3 class="section-title">取件人信息</h3>
                 
                 <div class="data-display" id="receiver-display">
-                    <!-- 取件人信息数据将通过JavaScript动态加载 -->
                     <div class="empty-message">等待数据上传</div>
                 </div>
                 
@@ -936,6 +931,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- 管理工具区域 -->
+                <div id="admin-tools" class="setting-item" style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
+                    <h3>系统管理工具</h3>
+                    <p>高级管理功能，请谨慎操作</p>
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="exportAllData()">备份所有数据</button>
+                        <button class="btn btn-secondary" onclick="importAllData()">恢复数据</button>
+                        <button class="btn btn-danger" onclick="clearAllData()">清空所有数据</button>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -944,7 +949,6 @@
             <h2 class="tab-title"><i class="fas fa-hand-point-up"></i> 戳戳我</h2>
             
             <div class="poke-image" id="poke-display">
-                <!-- 戳戳我图片将通过JavaScript动态加载 -->
                 <div class="empty-message">暂无图片，请上传图片</div>
             </div>
             
@@ -988,14 +992,6 @@
         // 全局变量
         const DEFAULT_PASSWORD = "740302";
         let currentTab = "notice";
-        let editMode = {
-            notice: false,
-            network: false,
-            fee: false,
-            cabinet: false,
-            receiver: false,
-            poke: false
-        };
         
         // 初始化函数
         document.addEventListener('DOMContentLoaded', function() {
@@ -1025,6 +1021,11 @@
             
             // 设置弹窗功能
             setupPopups();
+            
+            // 初始化弹窗关闭按钮
+            document.getElementById('modal-close').addEventListener('click', function() {
+                document.getElementById('image-modal').classList.remove('active');
+            });
         });
         
         // 标签页切换功能
@@ -1066,6 +1067,7 @@
                     document.getElementById('notice-upload-form').style.display = 'block';
                 } else {
                     alert('密码错误！');
+                    document.getElementById('notice-password').value = '';
                 }
             });
             
@@ -1077,6 +1079,7 @@
                     document.getElementById('network-upload-form').style.display = 'block';
                 } else {
                     alert('密码错误！');
+                    document.getElementById('network-password').value = '';
                 }
             });
             
@@ -1088,6 +1091,7 @@
                     document.getElementById('fee-upload-form').style.display = 'block';
                 } else {
                     alert('密码错误！');
+                    document.getElementById('fee-password').value = '';
                 }
             });
             
@@ -1099,6 +1103,7 @@
                     document.getElementById('settings-content').style.display = 'block';
                 } else {
                     alert('密码错误！');
+                    document.getElementById('settings-password').value = '';
                 }
             });
             
@@ -1110,6 +1115,7 @@
                     document.getElementById('poke-upload-form').style.display = 'block';
                 } else {
                     alert('密码错误！');
+                    document.getElementById('poke-password').value = '';
                 }
             });
         }
@@ -1252,12 +1258,6 @@
         function setupImagePreview() {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
-            const modalClose = document.getElementById('modal-close');
-            
-            // 关闭模态框
-            modalClose.addEventListener('click', function() {
-                modal.classList.remove('active');
-            });
             
             // 点击模态框背景关闭
             modal.addEventListener('click', function(e) {
@@ -1364,7 +1364,6 @@
             
             // 处理多个文件
             const processFiles = (fileList) => {
-                const readers = [];
                 const results = [];
                 
                 for (let i = 0; i < fileList.length; i++) {
@@ -1408,13 +1407,14 @@
             
             if (files.length > 0) {
                 processFiles(files);
-            } else {
+            } else if (id) {
                 // 没有新图片，只更新其他信息
                 const index = noticeData.findIndex(item => item.id === id);
                 if (index !== -1) {
                     noticeData[index] = {
                         ...noticeData[index],
-                        title
+                        title,
+                        uploadDate: getCurrentDateTime()
                     };
                     
                     localStorage.setItem('noticeData', JSON.stringify(noticeData));
@@ -1437,8 +1437,6 @@
                 // 显示表单
                 document.getElementById('notice-password-section').style.display = 'none';
                 document.getElementById('notice-upload-form').style.display = 'block';
-                
-                editMode.notice = true;
             }
         }
         
@@ -1459,7 +1457,6 @@
             document.getElementById('notice-upload-form').style.display = 'none';
             document.getElementById('notice-password-section').style.display = 'block';
             document.getElementById('notice-password').value = '';
-            editMode.notice = false;
         }
         
         // 加载网点清单数据
@@ -1516,7 +1513,6 @@
             
             // 处理多个文件
             const processFiles = (fileList) => {
-                const readers = [];
                 const results = [];
                 
                 for (let i = 0; i < fileList.length; i++) {
@@ -1559,7 +1555,7 @@
             
             if (files.length > 0) {
                 processFiles(files);
-            } else {
+            } else if (id) {
                 // 没有新图片，只更新上传日期
                 const index = networkData.findIndex(item => item.id === id);
                 if (index !== -1) {
@@ -1587,8 +1583,6 @@
                 // 显示表单
                 document.getElementById('network-password-section').style.display = 'none';
                 document.getElementById('network-upload-form').style.display = 'block';
-                
-                editMode.network = true;
             }
         }
         
@@ -1609,7 +1603,6 @@
             document.getElementById('network-upload-form').style.display = 'none';
             document.getElementById('network-password-section').style.display = 'block';
             document.getElementById('network-password').value = '';
-            editMode.network = false;
         }
         
         // 加载资费清单数据
@@ -1666,7 +1659,6 @@
             
             // 处理多个文件
             const processFiles = (fileList) => {
-                const readers = [];
                 const results = [];
                 
                 for (let i = 0; i < fileList.length; i++) {
@@ -1709,7 +1701,7 @@
             
             if (files.length > 0) {
                 processFiles(files);
-            } else {
+            } else if (id) {
                 // 没有新图片，只更新上传日期
                 const index = feeData.findIndex(item => item.id === id);
                 if (index !== -1) {
@@ -1737,8 +1729,6 @@
                 // 显示表单
                 document.getElementById('fee-password-section').style.display = 'none';
                 document.getElementById('fee-upload-form').style.display = 'block';
-                
-                editMode.fee = true;
             }
         }
         
@@ -1759,7 +1749,6 @@
             document.getElementById('fee-upload-form').style.display = 'none';
             document.getElementById('fee-password-section').style.display = 'block';
             document.getElementById('fee-password').value = '';
-            editMode.fee = false;
         }
         
         // 加载在柜信息数据
@@ -1880,8 +1869,6 @@
                 
                 // 显示弹窗
                 document.getElementById('cabinet-popup-form').style.display = 'flex';
-                
-                editMode.cabinet = true;
             }
         }
         
@@ -2004,8 +1991,6 @@
                 
                 // 显示弹窗
                 document.getElementById('receiver-popup-form').style.display = 'flex';
-                
-                editMode.receiver = true;
             }
         }
         
@@ -2034,7 +2019,7 @@
             
             let html = `
             <div class="poke-image-item" data-id="${latestPoke.id}">
-                <img src="${latestPoke.image}" alt="戳戳我图片" onclick="showImagePreview('${latestPoke.image}')">
+                <img src="${latestPoke.image}" alt="戳戳我图片" style="max-width: 300px; max-height: 300px; border-radius: 10px; cursor: pointer;" onclick="showImagePreview('${latestPoke.image}')">
                 <div class="item-detail" style="text-align: center; margin-top: 10px;">上传日期: ${latestPoke.uploadDate}</div>
                 <div class="action-buttons" style="justify-content: center; margin-top: 10px;">
                     <button class="btn btn-primary btn-small" onclick="editPoke('${latestPoke.id}')">编辑</button>
@@ -2101,18 +2086,9 @@
                 // 显示表单
                 document.getElementById('poke-password-section').style.display = 'none';
                 document.getElementById('poke-upload-form').style.display = 'block';
-                
-                editMode.poke = true;
             }
         }
         
-        // 删除戳戳我
-        function deletePoke(id) {
-            if (confirm('确定要删除这张图片吗？')) {
-                const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-                const newData = pokeData.filter(item => item.id !== id);
-                localStorage.setItem('poke
-
         // 删除戳戳我
         function deletePoke(id) {
             if (confirm('确定要删除这张图片吗？')) {
@@ -2131,7 +2107,6 @@
             document.getElementById('poke-upload-form').style.display = 'none';
             document.getElementById('poke-password-section').style.display = 'block';
             document.getElementById('poke-password').value = '';
-            editMode.poke = false;
         }
         
         // 加载设置
@@ -2242,7 +2217,7 @@
             }
         }
         
-        // 数据导出功能（可选）
+        // 数据导出功能
         function exportAllData() {
             const allData = {
                 noticeData: JSON.parse(localStorage.getItem('noticeData') || '[]'),
@@ -2269,7 +2244,7 @@
             alert('数据备份成功！文件已下载。');
         }
         
-        // 数据导入功能（可选）
+        // 数据导入功能
         function importAllData() {
             if (!confirm('导入数据将覆盖当前所有数据，确定要继续吗？')) {
                 return;
@@ -2312,32 +2287,6 @@
             input.click();
         }
         
-        // 添加管理工具按钮（可选）
-        function addAdminTools() {
-            // 检查是否已存在管理工具
-            if (document.getElementById('admin-tools')) return;
-            
-            const settingsTab = document.getElementById('settings');
-            const adminToolsDiv = document.createElement('div');
-            adminToolsDiv.id = 'admin-tools';
-            adminToolsDiv.className = 'setting-item';
-            adminToolsDiv.style.marginTop = '30px';
-            adminToolsDiv.style.borderTop = '2px solid #eee';
-            adminToolsDiv.style.paddingTop = '20px';
-            
-            adminToolsDiv.innerHTML = `
-                <h3>系统管理工具</h3>
-                <p>高级管理功能，请谨慎操作</p>
-                <div class="button-group">
-                    <button class="btn btn-primary" onclick="exportAllData()">备份所有数据</button>
-                    <button class="btn btn-secondary" onclick="importAllData()">恢复数据</button>
-                    <button class="btn btn-danger" onclick="clearAllData()">清空所有数据</button>
-                </div>
-            `;
-            
-            settingsTab.querySelector('#settings-content').appendChild(adminToolsDiv);
-        }
-        
         // 清空所有数据
         function clearAllData() {
             if (!confirm('确定要清空所有数据吗？此操作不可恢复！')) {
@@ -2349,21 +2298,6 @@
             // 重新加载页面
             location.reload();
         }
-        
-        // 在设置页面加载后添加管理工具
-        document.getElementById('settings-auth-btn').addEventListener('click', function() {
-            const password = document.getElementById('settings-password').value;
-            if (password === DEFAULT_PASSWORD) {
-                // 显示设置内容
-                document.getElementById('settings-password-section').style.display = 'none';
-                document.getElementById('settings-content').style.display = 'block';
-                
-                // 添加管理工具
-                setTimeout(() => {
-                    addAdminTools();
-                }, 100);
-            }
-        });
         
         // 页面加载完成后的初始化
         window.addEventListener('load', function() {
