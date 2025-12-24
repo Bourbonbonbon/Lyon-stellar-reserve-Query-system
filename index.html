@@ -1,305 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片管理系统</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: bold;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-right: 10px;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .gallery-item {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .gallery-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .gallery-info {
-            padding: 15px;
-        }
-        
-        .gallery-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .password-section {
-            background: rgba(255,255,255,0.9);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .upload-form {
-            animation: slideDown 0.3s ease;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📸 图片管理系统</h1>
-            <p>上传、管理和分享您的图片</p>
-        </div>
-        
-        <div class="card">
-            <div id="poke-password-section" class="password-section">
-                <h3>管理权限验证</h3>
-                <div class="form-group">
-                    <label for="poke-password">请输入管理密码：</label>
-                    <input type="password" id="poke-password" class="form-control" placeholder="输入密码以管理图片">
-                </div>
-                <button onclick="verifyPassword()" class="btn">验证密码</button>
-            </div>
-            
-            <div id="poke-upload-form" class="upload-form" style="display: none;">
-                <h3 id="form-title">上传新图片</h3>
-                <form id="poke-form" onsubmit="return false;">
-                    <input type="hidden" id="poke-id">
-                    
-                    <div class="form-group">
-                        <label for="poke-file">选择图片：</label>
-                        <input type="file" id="poke-file" class="form-control" accept="image/*" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="poke-description">图片描述（可选）：</label>
-                        <input type="text" id="poke-description" class="form-control" placeholder="请输入图片描述">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="poke-tags">标签（用逗号分隔）：</label>
-                        <input type="text" id="poke-tags" class="form-control" placeholder="例如：风景,旅行,自然">
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button onclick="savePoke()" class="btn" id="save-btn">上传图片</button>
-                        <button onclick="resetPokeForm()" class="btn btn-secondary">取消</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h3>📁 图片库</h3>
-            <div id="poke-gallery" class="gallery">
-                <!-- 图片将通过JavaScript动态加载 -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // 管理密码（在实际应用中应该从服务器获取）
-        const ADMIN_PASSWORD = "admin123";
-        let editMode = { poke: false };
-        
-        // 初始化加载图片数据
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSettings();
-            loadPokeData();
-        });
-        
-        // 验证密码
-        function verifyPassword() {
-            const password = document.getElementById('poke-password').value;
-            if (password === ADMIN_PASSWORD) {
-                document.getElementById('poke-password-section').style.display = 'none';
-                document.getElementById('poke-upload-form').style.display = 'block';
-            } else {
-                alert('密码错误！');
-            }
-        }
-        
-        // 生成唯一ID
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        }
-        
-        // 保存图片数据
-        function savePoke() {
-            const fileInput = document.getElementById('poke-file');
-            const description = document.getElementById('poke-description').value;
-            const tags = document.getElementById('poke-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
-            const id = document.getElementById('poke-id').value;
-            
-            if (!fileInput.files[0] && !id) {
-                alert('请选择一张图片！');
-                return;
-            }
-            
-            if (fileInput.files[0]) {
-                const reader = new FileReader();
-                const uploadDate = new Date().toLocaleString('zh-CN');
-                
-                reader.onload = function(e) {
-                    let pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-                    
-                    if (editMode.poke && id) {
-                        // 更新现有图片
-                        const index = pokeData.findIndex(item => item.id === id);
-                        if (index !== -1) {
-                            pokeData[index] = {
-                                ...pokeData[index],
-                                image: e.target.result,
-                                description,
-                                tags,
-                                uploadDate
-                            };
-                        }
-                    } else {
-                        // 添加新图片
-                        pokeData.push({
-                            id: generateId(),
-                            image: e.target.result,
-                            description,
-                            tags,
-                            uploadDate
-                        });
-                    }
-                    
-                    localStorage.setItem('pokeData', JSON.stringify(pokeData));
-                    resetPokeForm();
-                    loadPokeData();
-                    alert(id ? '图片已更新！' : '图片已上传！');
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
-        
-        // 编辑图片
-        function editPoke(id) {
-            const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-            const item = pokeData.find(item => item.id === id);
-            
-            if (item) {
-                document.getElementById('poke-id').value = item.id;
-                document.getElementById('poke-description').value = item.description || '';
-                document.getElementById('poke-tags').value = item.tags?.join(', ') || '';
-                document.getElementById('form-title').textContent = '编辑图片';
-                document.getElementById('save-btn').textContent = '更新图片';
-                
-                editMode.poke = true;
-            }
-        }
-        
-        // 删除图片
+        // 删除戳戳我
         function deletePoke(id) {
             if (confirm('确定要删除这张图片吗？')) {
                 const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
@@ -310,43 +9,10 @@
             }
         }
         
-        // 加载图片数据并显示
-        function loadPokeData() {
-            const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-            const gallery = document.getElementById('poke-gallery');
-            
-            gallery.innerHTML = '';
-            
-            if (pokeData.length === 0) {
-                gallery.innerHTML = '<div style="text-align: center; padding: 40px; color: #666; grid-column: 1/-1;">暂无图片，请上传第一张图片！</div>';
-                return;
-            }
-            
-            pokeData.forEach(item => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                galleryItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.description}" class="gallery-image">
-                    <div class="gallery-info">
-                        <p><strong>上传时间：</strong>${item.uploadDate}</p>
-                        ${item.description ? `<p><strong>描述：</strong>${item.description}</p>` : ''}
-                        ${item.tags && item.tags.length > 0 ? `<p><strong>标签：</strong>${item.tags.map(tag => `<span style="background: #667eea; color: white; padding: 2px 8px; border-radius: 12px; margin-right: 5px; font-size: 12px;">${tag}</span>`).join('')}</p>` : ''}
-                        <div class="gallery-actions">
-                            <button onclick="editPoke('${item.id}')" class="btn" style="padding: 8px 16px; font-size: 14px;">编辑</button>
-                            <button onclick="deletePoke('${item.id}')" class="btn btn-danger" style="padding: 8px 16px; font-size: 14px;">删除</button>
-                        </div>
-                    </div>
-                `;
-                gallery.appendChild(galleryItem);
-            });
-        }
-        
-        // 重置表单
+        // 重置戳戳我表单
         function resetPokeForm() {
             document.getElementById('poke-form').reset();
             document.getElementById('poke-id').value = '';
-            document.getElementById('form-title').textContent = '上传新图片';
-            document.getElementById('save-btn').textContent = '上传图片';
             document.getElementById('poke-upload-form').style.display = 'none';
             document.getElementById('poke-password-section').style.display = 'block';
             document.getElementById('poke-password').value = '';
@@ -355,44 +21,149 @@
         
         // 加载设置
         function loadSettings() {
-            // 这里可以加载其他设置，如主题、布局等
-            console.log('设置加载完成');
-            
             // 加载LOGO
             const logoData = localStorage.getItem('siteLogo');
             if (logoData) {
-                // 在实际应用中，可以将LOGO显示在页头
-                console.log('LOGO已加载');
+                const logoPreview = document.getElementById('logo-preview-area');
+                const headerLogo = document.getElementById('logo-preview');
+                
+                logoPreview.innerHTML = `<img src="${logoData}" alt="LOGO" style="max-width:100%; max-height:100%;">`;
+                
+                if (headerLogo.classList.contains('logo-placeholder')) {
+                    headerLogo.classList.remove('logo-placeholder');
+                    headerLogo.classList.add('logo');
+                    headerLogo.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = logoData;
+                    img.alt = 'LOGO';
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '10px';
+                    headerLogo.appendChild(img);
+                    
+                    // 点击LOGO可以查看大图
+                    headerLogo.onclick = function() {
+                        showImagePreview(logoData);
+                    };
+                }
             }
             
-            // 可以添加更多初始化设置
-            const settings = JSON.parse(localStorage.getItem('appSettings') || '{}');
-            
-            // 应用主题设置
-            if (settings.theme) {
-                document.body.style.background = settings.theme;
+            // 加载背景
+            const bgData = localStorage.getItem('siteBackground');
+            if (bgData) {
+                document.body.style.backgroundImage = `url(${bgData})`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundAttachment = 'fixed';
+                
+                const bgPreview = document.getElementById('bg-preview-area');
+                bgPreview.innerHTML = `<img src="${bgData}" alt="背景预览" style="max-width:100%; max-height:100%;">`;
             }
         }
         
-        // 导出所有图片数据（备份功能）
-        function exportData() {
-            const pokeData = JSON.parse(localStorage.getItem('pokeData') || '[]');
-            const dataStr = JSON.stringify(pokeData, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        // 上传LOGO
+        function uploadLogo() {
+            const fileInput = document.getElementById('logo-file');
+            if (!fileInput.files[0]) {
+                alert('请选择LOGO文件！');
+                return;
+            }
             
-            const exportFileDefaultName = `poke-backup-${new Date().toISOString().split('T')[0]}.json`;
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                localStorage.setItem('siteLogo', e.target.result);
+                loadSettings();
+                alert('LOGO上传成功！');
+                fileInput.value = '';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // 删除LOGO
+        function deleteLogo() {
+            if (confirm('确定要删除LOGO吗？')) {
+                localStorage.removeItem('siteLogo');
+                loadSettings();
+                alert('LOGO已删除！');
+            }
+        }
+        
+        // 上传背景
+        function uploadBackground() {
+            const fileInput = document.getElementById('bg-file');
+            if (!fileInput.files[0]) {
+                alert('请选择背景文件！');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                localStorage.setItem('siteBackground', e.target.result);
+                loadSettings();
+                alert('背景上传成功！');
+                fileInput.value = '';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // 删除背景
+        function deleteBackground() {
+            if (confirm('确定要删除背景吗？')) {
+                localStorage.removeItem('siteBackground');
+                document.body.style.backgroundImage = '';
+                document.body.style.backgroundColor = '#f5f7fa';
+                
+                const bgPreview = document.getElementById('bg-preview-area');
+                bgPreview.innerHTML = '<span>背景预览</span>';
+                
+                alert('背景已删除！');
+            }
+        }
+        
+        // 数据导出功能（可选）
+        function exportAllData() {
+            const allData = {
+                noticeData: JSON.parse(localStorage.getItem('noticeData') || '[]'),
+                networkData: JSON.parse(localStorage.getItem('networkData') || '[]'),
+                feeData: JSON.parse(localStorage.getItem('feeData') || '[]'),
+                cabinetData: JSON.parse(localStorage.getItem('cabinetData') || '[]'),
+                receiverData: JSON.parse(localStorage.getItem('receiverData') || '[]'),
+                pokeData: JSON.parse(localStorage.getItem('pokeData') || '[]'),
+                siteLogo: localStorage.getItem('siteLogo') || '',
+                siteBackground: localStorage.getItem('siteBackground') || '',
+                exportDate: new Date().toLocaleString('zh-CN')
+            };
+            
+            const dataStr = JSON.stringify(allData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `里昂星储备份_${new Date().toISOString().split('T')[0]}.json`;
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
+            
+            alert('数据备份成功！文件已下载。');
         }
         
-        // 导入数据（恢复功能）
-        function importData() {
+        // 数据导入功能（可选）
+        function importAllData() {
+            if (!confirm('导入数据将覆盖当前所有数据，确定要继续吗？')) {
+                return;
+            }
+            
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.json';
+            
             input.onchange = function(e) {
                 const file = e.target.files[0];
                 const reader = new FileReader();
@@ -400,33 +171,151 @@
                 reader.onload = function(event) {
                     try {
                         const data = JSON.parse(event.target.result);
-                        localStorage.setItem('pokeData', JSON.stringify(data));
-                        loadPokeData();
+                        
+                        // 验证数据格式
+                        if (data.noticeData) localStorage.setItem('noticeData', JSON.stringify(data.noticeData));
+                        if (data.networkData) localStorage.setItem('networkData', JSON.stringify(data.networkData));
+                        if (data.feeData) localStorage.setItem('feeData', JSON.stringify(data.feeData));
+                        if (data.cabinetData) localStorage.setItem('cabinetData', JSON.stringify(data.cabinetData));
+                        if (data.receiverData) localStorage.setItem('receiverData', JSON.stringify(data.receiverData));
+                        if (data.pokeData) localStorage.setItem('pokeData', JSON.stringify(data.pokeData));
+                        if (data.siteLogo) localStorage.setItem('siteLogo', data.siteLogo);
+                        if (data.siteBackground) localStorage.setItem('siteBackground', data.siteBackground);
+                        
+                        // 重新加载所有数据
+                        loadAllData();
                         alert('数据导入成功！');
                     } catch (err) {
-                        alert('文件格式错误！');
+                        alert('文件格式错误或已损坏！');
+                        console.error('数据导入错误:', err);
                     }
                 };
                 
                 reader.readAsText(file);
             };
+            
             input.click();
         }
         
-        // 添加一些示例按钮到页面（可选）
-        function addUtilityButtons() {
-            const card = document.querySelector('.card');
-            const buttons = document.createElement('div');
-            buttons.style.marginTop = '20px';
-            buttons.style.display = 'flex';
-            buttons.style.gap = '10px';
-            buttons.innerHTML = `
-                <button onclick="exportData()" class="btn btn-secondary">备份数据</button>
-                <button onclick="importData()" class="btn btn-secondary">恢复数据</button>
-                <button onclick="localStorage.clear(); loadPokeData(); alert('已清空所有数据！')" class="btn btn-danger">清空所有</button>
+        // 添加管理工具按钮（可选）
+        function addAdminTools() {
+            // 检查是否已存在管理工具
+            if (document.getElementById('admin-tools')) return;
+            
+            const settingsTab = document.getElementById('settings');
+            const adminToolsDiv = document.createElement('div');
+            adminToolsDiv.id = 'admin-tools';
+            adminToolsDiv.className = 'setting-item';
+            adminToolsDiv.style.marginTop = '30px';
+            adminToolsDiv.style.borderTop = '2px solid #eee';
+            adminToolsDiv.style.paddingTop = '20px';
+            
+            adminToolsDiv.innerHTML = `
+                <h3>系统管理工具</h3>
+                <p>高级管理功能，请谨慎操作</p>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="exportAllData()">备份所有数据</button>
+                    <button class="btn btn-secondary" onclick="importAllData()">恢复数据</button>
+                    <button class="btn btn-danger" onclick="clearAllData()">清空所有数据</button>
+                </div>
             `;
-            card.appendChild(buttons);
+            
+            settingsTab.querySelector('#settings-content').appendChild(adminToolsDiv);
         }
+        
+        // 清空所有数据
+        function clearAllData() {
+            if (!confirm('确定要清空所有数据吗？此操作不可恢复！')) {
+                return;
+            }
+            
+            localStorage.clear();
+            
+            // 重新加载页面
+            location.reload();
+        }
+        
+        // 在设置页面加载后添加管理工具
+        document.getElementById('settings-auth-btn').addEventListener('click', function() {
+            const password = document.getElementById('settings-password').value;
+            if (password === DEFAULT_PASSWORD) {
+                // 显示设置内容
+                document.getElementById('settings-password-section').style.display = 'none';
+                document.getElementById('settings-content').style.display = 'block';
+                
+                // 添加管理工具
+                setTimeout(() => {
+                    addAdminTools();
+                }, 100);
+            }
+        });
+        
+        // 页面加载完成后的初始化
+        window.addEventListener('load', function() {
+            // 加载所有数据
+            loadAllData();
+            
+            // 添加键盘快捷键
+            document.addEventListener('keydown', function(e) {
+                // Ctrl + S 保存当前表单
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    
+                    switch(currentTab) {
+                        case 'notice':
+                            if (document.getElementById('notice-upload-form').style.display !== 'none') {
+                                document.getElementById('notice-form').dispatchEvent(new Event('submit'));
+                            }
+                            break;
+                        case 'network':
+                            if (document.getElementById('network-upload-form').style.display !== 'none') {
+                                document.getElementById('network-form').dispatchEvent(new Event('submit'));
+                            }
+                            break;
+                        case 'fee':
+                            if (document.getElementById('fee-upload-form').style.display !== 'none') {
+                                document.getElementById('fee-form').dispatchEvent(new Event('submit'));
+                            }
+                            break;
+                        case 'cabinet':
+                            // 如果在柜信息弹窗打开
+                            if (document.getElementById('cabinet-popup-form').style.display === 'flex') {
+                                document.getElementById('cabinet-form').dispatchEvent(new Event('submit'));
+                            }
+                            break;
+                        case 'poke':
+                            if (document.getElementById('poke-upload-form').style.display !== 'none') {
+                                document.getElementById('poke-form').dispatchEvent(new Event('submit'));
+                            }
+                            break;
+                    }
+                }
+                
+                // Esc 键关闭弹窗
+                if (e.key === 'Escape') {
+                    const cabinetPopup = document.getElementById('cabinet-popup-form');
+                    const receiverPopup = document.getElementById('receiver-popup-form');
+                    const imageModal = document.getElementById('image-modal');
+                    
+                    if (cabinetPopup.style.display === 'flex') {
+                        cabinetPopup.style.display = 'none';
+                    }
+                    
+                    if (receiverPopup.style.display === 'flex') {
+                        receiverPopup.style.display = 'none';
+                    }
+                    
+                    if (imageModal.classList.contains('active')) {
+                        imageModal.classList.remove('active');
+                    }
+                }
+            });
+            
+            // 显示欢迎信息
+            console.log('里昂星储查询系统已启动！');
+            console.log('系统功能包括：公告管理、网点清单、资费清单、在柜信息管理、取件人信息管理、戳戳我图片管理等');
+            console.log('默认管理密码：740302');
+        });
     </script>
 </body>
 </html>
